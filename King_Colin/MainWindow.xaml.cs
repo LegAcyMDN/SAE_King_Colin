@@ -53,7 +53,7 @@ namespace King_Colin
             { Application.Current.Shutdown(); }
 
             //images sur les carrés            
-            imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Jeux.jpg"));
+            imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/fondEcran.png"));
             FondEcran.Fill = imageJeux;
             imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/plateforme.png"));
             plateforme1.Fill = imagePlateforme;
@@ -63,7 +63,8 @@ namespace King_Colin
             princesse.Fill = imagePrincesse;
             imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/colinperenoel.png"));
             donkeykong.Fill = imageDonkey;
-            //imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/ennemi.png"));
+            imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/pigeon.png"));
+            ennemi1.Fill = imageEnnemi;
             imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/echelle.png"));
             echelle1.Fill = imageEchelle;
             //imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
