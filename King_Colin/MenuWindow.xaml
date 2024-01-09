@@ -8,6 +8,7 @@
     Title="Menu"
     Width="800"
     Height="450"
+    FocusManager.FocusedElement="{Binding ElementName=cv_Menu}"
     Loaded="MenuWindow_Loaded"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">

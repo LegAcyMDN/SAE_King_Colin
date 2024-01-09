@@ -51,14 +51,18 @@ namespace King_Colin
             fenetreMenu.ShowDialog();
             if(fenetreMenu.DialogResult == false)
             { Application.Current.Shutdown(); }
+
             //images sur les carrés            
             imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Jeux.jpg"));
             FondEcran.Fill = imageJeux;
             imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/plateforme.png"));
             plateforme1.Fill = imagePlateforme;
-            //imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/joueur.png"));
-            //imagePrincesse.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/princesse.png"));
-            //imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/donkey.png"));
+            imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/marioLou.png"));
+            joueur1.Fill = imageJoueur;
+            imagePrincesse.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/princessejustin.png"));
+            princesse.Fill = imagePrincesse;
+            imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/colinperenoel.png"));
+            donkeykong.Fill = imageDonkey;
             //imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/ennemi.png"));
             imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/echelle.png"));
             echelle1.Fill = imageEchelle;
