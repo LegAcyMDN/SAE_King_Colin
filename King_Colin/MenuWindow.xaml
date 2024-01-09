@@ -11,12 +11,13 @@
     Loaded="MenuWindow_Loaded"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Canvas>
+    <Canvas x:Name="cv_Menu">
         <Rectangle
             Name="FondMenu"
             Width="800"
             Height="434" />
         <Label
+            x:Name="lb_Titre"
             Canvas.Left="298"
             Canvas.Top="59"
             Width="204"
@@ -28,6 +29,7 @@
             FontWeight="Bold"
             Foreground="White" />
         <ComboBox
+            x:Name="cb_Difficulte"
             Canvas.Left="298"
             Canvas.Top="243"
             Width="339"
@@ -41,6 +43,7 @@
             <ComboBoxItem Content="Difficile" />
         </ComboBox>
         <Label
+            x:Name="lb_Difficulte"
             Canvas.Left="147"
             Canvas.Top="243"
             Width="125"
@@ -51,6 +54,7 @@
             FontSize="25"
             Foreground="White" />
         <Button
+            x:Name="bt_Regle"
             Canvas.Left="342"
             Canvas.Top="319"
             Width="116"
@@ -60,6 +64,7 @@
             Content="Règle"
             FontSize="17" />
         <Button
+            x:Name="bt_Credit"
             Canvas.Left="147"
             Canvas.Top="319"
             Width="116"
@@ -69,6 +74,7 @@
             Content="Crédit"
             FontSize="17" />
         <Button
+            x:Name="bt_Jouer"
             Width="116"
             Height="29"
             Margin="521,319,0,0"

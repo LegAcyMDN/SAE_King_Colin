@@ -46,8 +46,10 @@ namespace King_Colin
             timer.Tick += Jeu;
             timer.Interval = TimeSpan.FromMilliseconds(16);
             timer.Start();
+
             MenuWindow fenetreMenu = new MenuWindow();
             fenetreMenu.ShowDialog();
+
             //images sur les carrés            
             imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Jeux.jpg"));
             FondEcran.Fill = imageJeux;
@@ -139,7 +141,7 @@ namespace King_Colin
             };
             Canvas.SetTop(nouveauTirEnnemi, y);
             Canvas.SetLeft(nouveauTirEnnemi, x);
-            LeCanvas.Children.Add(nouveauTirEnnemi);
+            cv_Jeux.Children.Add(nouveauTirEnnemi);
         }
         private void TestTouchéTonneau(System.Windows.Shapes.Rectangle x, Rect joueur)
         {

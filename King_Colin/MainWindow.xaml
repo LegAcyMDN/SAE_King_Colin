@@ -11,7 +11,7 @@
     Loaded="MainWindow_Loaded"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Canvas Name="LeCanvas">
+    <Canvas Name="cv_Jeux">
         <Rectangle
             Name="FondEcran"
             Width="800"
