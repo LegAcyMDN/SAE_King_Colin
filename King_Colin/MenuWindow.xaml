@@ -80,6 +80,7 @@
             Margin="521,319,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
+            Click="bt_Jouer_Click"
             Content="Jouer"
             FontSize="17" />
     </Canvas>

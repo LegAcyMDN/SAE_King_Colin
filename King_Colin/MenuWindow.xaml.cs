@@ -43,5 +43,10 @@ namespace King_Colin
             musiqueMenu.Stop();
             musiqueMenu.Play();
         }
+
+        private void bt_Jouer_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
     }
 }

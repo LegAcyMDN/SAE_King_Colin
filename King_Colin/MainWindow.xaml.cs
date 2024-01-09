@@ -49,7 +49,8 @@ namespace King_Colin
 
             MenuWindow fenetreMenu = new MenuWindow();
             fenetreMenu.ShowDialog();
-
+            if(fenetreMenu.DialogResult == false)
+            { Application.Current.Shutdown(); }
             //images sur les carrés            
             imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Jeux.jpg"));
             FondEcran.Fill = imageJeux;
