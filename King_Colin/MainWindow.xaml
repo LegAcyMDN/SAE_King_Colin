@@ -20,9 +20,8 @@
     </Window.Background>
     <Canvas
         Name="cv_Jeux"
-        Width="0"
-        Margin="556,0,0,0"
-        HorizontalAlignment="Left"
+        Width="800"
+        HorizontalAlignment="Center"
         Focusable="True"
         KeyDown="cv_Jeux_KeyDown"
         KeyUp="cv_Jeux_KeyUp">

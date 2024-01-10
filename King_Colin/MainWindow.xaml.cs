@@ -196,7 +196,7 @@ namespace King_Colin
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
                 }
-                else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width < Application.Current.MainWindow.Width)
+                else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width < cv_Jeux.ActualWidth)
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + vitesseJoueur);
                 }
