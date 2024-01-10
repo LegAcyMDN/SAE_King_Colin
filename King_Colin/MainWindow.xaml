@@ -20,9 +20,12 @@
     </Window.Background>
     <Canvas
         Name="cv_Jeux"
+        Width="0"
         Margin="556,0,0,0"
         HorizontalAlignment="Left"
-        Focusable="True">
+        Focusable="True"
+        KeyDown="cv_Jeux_KeyDown"
+        KeyUp="cv_Jeux_KeyUp">
         <Rectangle
             Name="FondEcran"
             Width="800"
@@ -71,7 +74,7 @@
             VerticalAlignment="Center"
             Fill="Purple" />
         <Rectangle
-            x:Name="echelle5"
+            x:Name="echelle05"
             Canvas.Left="323"
             Canvas.Top="147"
             Width="25"
@@ -80,7 +83,7 @@
             VerticalAlignment="Top"
             Fill="blue" />
         <Rectangle
-            x:Name="echelle1"
+            x:Name="echelle01"
             Canvas.Left="589"
             Canvas.Top="687"
             Width="26"
@@ -89,7 +92,7 @@
             VerticalAlignment="Top"
             Fill="blue" />
         <Rectangle
-            x:Name="echelle2"
+            x:Name="echelle02"
             Canvas.Left="196"
             Canvas.Top="527"
             Width="26"
@@ -98,7 +101,7 @@
             VerticalAlignment="Top"
             Fill="blue" />
         <Rectangle
-            x:Name="echelle3"
+            x:Name="echelle03"
             Canvas.Left="711"
             Canvas.Top="367"
             Width="25"
@@ -107,7 +110,7 @@
             VerticalAlignment="Top"
             Fill="blue" />
         <Rectangle
-            x:Name="echelle4"
+            x:Name="echelle04"
             Canvas.Left="629"
             Canvas.Top="207"
             Width="25"
@@ -116,7 +119,7 @@
             VerticalAlignment="Top"
             Fill="blue" />
         <Rectangle
-            x:Name="echelle6"
+            x:Name="echelle06"
             Canvas.Left="277"
             Canvas.Top="147"
             Width="25"
@@ -125,7 +128,7 @@
             VerticalAlignment="Top"
             Fill="blue" />
         <Rectangle
-            x:Name="echelle7"
+            x:Name="echelle07"
             Canvas.Left="366"
             Canvas.Top="687"
             Width="26"
@@ -134,11 +137,29 @@
             VerticalAlignment="Top"
             Fill="blue" />
         <Rectangle
-            x:Name="echelle8"
+            x:Name="echelle08"
             Canvas.Left="366"
             Canvas.Top="797"
             Width="26"
             Height="50"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Fill="blue" />
+        <Rectangle
+            x:Name="echelle09"
+            Canvas.Left="277"
+            Canvas.Top="-73"
+            Width="25"
+            Height="220"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Fill="blue" />
+        <Rectangle
+            x:Name="echelle10"
+            Canvas.Left="323"
+            Canvas.Top="-73"
+            Width="25"
+            Height="220             "
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Fill="blue" />

@@ -19,6 +19,7 @@ namespace King_Colin
     public partial class MainWindow : Window
     {
         private bool gauche, droite, haut, bas = false, frappe = false;
+        private bool jeuEnPause = false;
 
         //tous les skins
         private ImageBrush imageJeux = new ImageBrush();
@@ -52,20 +53,11 @@ namespace King_Colin
             MenuWindow fenetreMenu = new MenuWindow();
             fenetreMenu.ShowDialog();
             if(fenetreMenu.DialogResult == false)
-            { Application.Current.Shutdown(); }
+            { 
+                Application.Current.Shutdown();
+            }
 
-            ChargeImage();
-            //images sur les carrés            
-            imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/fondEcran.png"));
-            FondEcran.Fill = imageJeux;
-            imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/marioLou.png"));
-            joueur1.Fill = imageJoueur;
-            imagePrincesse.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/princessejustin.png"));
-            princesse.Fill = imagePrincesse;
-            imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/colinperenoel.png"));
-            donkeykong.Fill = imageDonkey;
-            
-            ennemi1.Fill = imageEnnemi;            
+            ChargeImage();         
             //imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
             //imageTirEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tirEnnemi.png"));
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
@@ -79,7 +71,7 @@ namespace King_Colin
             imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/pigeon.png"));
 
             Regex plateforme = new Regex("^plateforme[0-9]$");
-            Regex echelle = new Regex("^echelle[0-9]$");
+            Regex echelle = new Regex("^echelle[0-9]{2}$");
             Regex ennemi = new Regex("^ennemi[0-9]$");
 
             System.Windows.Shapes.Rectangle rectangle;
@@ -100,6 +92,18 @@ namespace King_Colin
                     { rectangle.Fill = imageEnnemi; }
                 }
             }
+
+            imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/fondEcran.png"));
+            FondEcran.Fill = imageJeux;
+
+            imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/marioLou.png"));
+            joueur1.Fill = imageJoueur;
+
+            imagePrincesse.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/princessejustin.png"));
+            princesse.Fill = imagePrincesse;
+
+            imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/colinperenoel.png"));
+            donkeykong.Fill = imageDonkey;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -115,46 +119,89 @@ namespace King_Colin
             musiqueJeux.Play();
         }
 
-        private void AppuieDesTouches(object sender, KeyEventArgs e)
+        private void cv_Jeux_KeyDown(object sender, KeyEventArgs e)
         {
-            // on gère les booléens gauche et droite et haut et bas en fonction de l’appui de la touche (déplacement)
-            if (e.Key == Key.Left)
-            {
-                gauche = true;
-            }
-            if (e.Key == Key.Right)
-            {
-                droite = true;
-            }
-            if (e.Key == Key.Up)
-            {
-                haut = true;
-            }
-            if (e.Key == Key.Down)
-            {
-                bas = true;
-            }
-            // test de l’appui sur la barre espace (frappe)
+            if(e.Key == Key.Q)
+            { gauche = true; }
+
+            if(e.Key == Key.D)
+            { droite = true; }
+            /*
+            if()
+            Condition pour monter les echelles.
+            */
+
+            /*
+            if()
+            Condition pour descendre les echelles.
+            */
+            /*
+            rajouter une condition pour dire disponible suelement dans level bonus
             if (e.Key == Key.Space)
+            { frappe = true; }
+            */
+            if (e.Key == Key.P)
             {
-                frappe = true;
+                if (!jeuEnPause)
+                { 
+                    timer.Stop();
+                    jeuEnPause = true;
+                }
             }
+
+            if (e.Key == Key.R)
+            {
+                if(jeuEnPause)
+                {
+                    timer.Start();
+                    jeuEnPause = false;
+                }
+            }
+
+            if(e.Key == Key.Escape)
+            { Application.Current.Shutdown(); }
+
         }
-        private void MouvementJoueur()
-        { //a revoir 
-            if (gauche && Canvas.GetLeft(joueur1) > 0)
+
+        private void cv_Jeux_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Q)
+            { gauche = false; }
+
+            if (e.Key == Key.D)
+            { droite = false; }
+            /*
+            if()
+            Condition pour monter les echelles.
+            */
+
+            /*
+            if()
+            Condition pour descendre les echelles.
+            */
+            /*
+            rajouter une condition pour dire disponible suelement dans level bonus
+            if (e.Key == Key.Space)
+            { frappe = true; }
+            */
+        }
+
+        private void Jeu(object sender, EventArgs e)
+        {
+            if (!jeuEnPause)
             {
-                Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
-            }
-            else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width <
-            Application.Current.MainWindow.Width)
-            {
-                Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + vitesseJoueur);
-            }
-            else if (haut && Canvas.GetTop(joueur1) + joueur1.Width <
-            Application.Current.MainWindow.Width)
-            {
-                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + vitesseJoueur);
+                Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+
+                if (gauche && Canvas.GetLeft(joueur1) > 0)
+                {
+                    Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
+                }
+                else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width < Application.Current.MainWindow.Width)
+                {
+                    Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + vitesseJoueur);
+                }
+
+                //rajouter la conditions pour le mouvement haut et bas
             }
         }
 
@@ -162,10 +209,11 @@ namespace King_Colin
         {
             //gestion des ennemies, apparition et mouvement
         }
+
         private void TirsEnnemies(double x, double y)
         {
             //gestion des tis ennemies
-            System.Windows.Shapes.Rectangle nouveauTirEnnemi = new System.Windows.Shapes.Rectangle
+            /*System.Windows.Shapes.Rectangle nouveauTirEnnemi = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirEnnemi",
                 Height = 40,
@@ -176,9 +224,10 @@ namespace King_Colin
             };
             Canvas.SetTop(nouveauTirEnnemi, y);
             Canvas.SetLeft(nouveauTirEnnemi, x);
-            cv_Jeux.Children.Add(nouveauTirEnnemi);
+            cv_Jeux.Children.Add(nouveauTirEnnemi);*/
         }
-        private void TestTouchéTonneau(System.Windows.Shapes.Rectangle x, Rect joueur)
+
+        /*private void TestTouchéTonneau(System.Windows.Shapes.Rectangle x, Rect joueur)
         {
             if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "ennemies")
             {
@@ -192,6 +241,7 @@ namespace King_Colin
                 }
             }
         }
+
         private void TestTouchéEnnemi(System.Windows.Shapes.Rectangle x, Rect joueur)
         {
             if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "ennemies")
@@ -206,6 +256,7 @@ namespace King_Colin
                 }
             }
         }
+
         /*private void TestVictoire()
         {
             if (/*si le joueur touche donkey avec son arme*//*)
@@ -218,6 +269,7 @@ namespace King_Colin
                 MessageBoxImage.Exclamation);
             }
         }*/
+
         /*private void FinBonus()
         {
             if (/*le joueur obtient le jetpack*//*)
@@ -233,6 +285,7 @@ namespace King_Colin
         {
             //mouvement de droite à gauche sur la plateforme la plus haute, en suivant le joueur 
         }
+
         private void MouvementMarteau()
         {
             //gif marteau qui tappe  
@@ -244,15 +297,6 @@ namespace King_Colin
         private void AfficherLesCredits()
         {
 
-        }
-
-
-        private void Jeu(object sender, EventArgs e)
-        {
-            // création d’un rectangle joueur pour la détection de collision
-
-            Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1),
-            joueur1.Width, joueur1.Height);
         }
     }
 }
