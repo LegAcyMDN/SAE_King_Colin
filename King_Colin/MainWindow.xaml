@@ -21,7 +21,8 @@
     <Canvas
         Name="cv_Jeux"
         Margin="556,0,0,0"
-        HorizontalAlignment="Left">
+        HorizontalAlignment="Left"
+        Focusable="True">
         <Rectangle
             Name="FondEcran"
             Width="800"
@@ -183,7 +184,9 @@
             Canvas.Top="141"
             Width="54"
             Height="66"
-            Fill="Pink" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Fill="Pink" />
         <Rectangle
             x:Name="donkeykong"
             Canvas.Left="136"

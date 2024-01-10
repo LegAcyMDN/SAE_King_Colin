@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -52,25 +54,52 @@ namespace King_Colin
             if(fenetreMenu.DialogResult == false)
             { Application.Current.Shutdown(); }
 
+            ChargeImage();
             //images sur les carrés            
             imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/fondEcran.png"));
             FondEcran.Fill = imageJeux;
-            imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/plateforme.png"));
-            plateforme1.Fill = imagePlateforme;
             imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/marioLou.png"));
             joueur1.Fill = imageJoueur;
             imagePrincesse.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/princessejustin.png"));
             princesse.Fill = imagePrincesse;
             imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/colinperenoel.png"));
             donkeykong.Fill = imageDonkey;
-            imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/pigeon.png"));
-            ennemi1.Fill = imageEnnemi;
-            imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/echelle.png"));
-            echelle1.Fill = imageEchelle;
+            
+            ennemi1.Fill = imageEnnemi;            
             //imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
             //imageTirEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tirEnnemi.png"));
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
             //lancement du timer 
+        }
+
+        private void ChargeImage()
+        {
+            imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/plateforme.png"));
+            imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/echelle.png"));
+            imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/pigeon.png"));
+
+            Regex plateforme = new Regex("^plateforme[0-9]$");
+            Regex echelle = new Regex("^echelle[0-9]$");
+            Regex ennemi = new Regex("^ennemi[0-9]$");
+
+            System.Windows.Shapes.Rectangle rectangle;
+
+            foreach (UIElement element in cv_Jeux.Children)
+            {
+                if (element is System.Windows.Shapes.Rectangle)
+                {
+                    rectangle = (System.Windows.Shapes.Rectangle)element;
+
+                    if (plateforme.IsMatch(rectangle.Name))
+                    { rectangle.Fill = imagePlateforme; }
+
+                    if (echelle.IsMatch(rectangle.Name))
+                    { rectangle.Fill = imageEchelle; }
+
+                    if(ennemi.IsMatch(rectangle.Name)) 
+                    { rectangle.Fill = imageEnnemi; }
+                }
+            }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
