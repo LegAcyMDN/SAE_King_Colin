@@ -191,12 +191,12 @@
             Fill="Orange" />
         <Rectangle
             x:Name="joueur1"
-            Canvas.Left="155"
+            Canvas.Left="49"
             Canvas.Top="787"
-            Width="43"
+            Width="47"
             Height="60"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Fill="Red" />
         <Rectangle
             x:Name="princesse"
