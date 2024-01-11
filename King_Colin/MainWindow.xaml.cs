@@ -79,18 +79,18 @@ namespace King_Colin
         }
 
         private void Gravite(object sender, EventArgs e)
-        {           
-            double maxY = cv_Jeux.ActualHeight - joueur1.ActualHeight;
+        {
+            /*double maxY = cv_Jeux.Height - joueur1.Height;
             double actuelY = Canvas.GetTop(joueur1);
 
             bool touchePlateforme = false;
 
             if (enSaut)
             {
-                Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
-
                 velociteY += gravite;
-                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
+                double nouvelY = Canvas.GetTop(joueur1) + velociteY;
+
+                Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
 
                 foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
                 {
@@ -100,9 +100,48 @@ namespace King_Colin
                     if (joueurBornes.IntersectsWith(plateformeBornes) && velociteY >= 0)
                     {
                         touchePlateforme = true;
-                        velociteY = 0;
-                        Canvas.SetTop(joueur1, Canvas.GetTop(plateforme) - joueur1.ActualHeight);                        
+                        nouvelY = Canvas.GetTop(plateforme) - joueur1.Height;
+                        velociteY = 0;                  
                         enSaut = false;
+                    }
+                }
+
+                Canvas.SetTop(joueur1, nouvelY);
+
+                if (!touchePlateforme)
+                {
+                    if (actuelY > maxY)
+                    {
+                        Canvas.SetTop(joueur1, maxY);
+                        velociteY = 0;
+                        enSaut = false;
+                    }
+                }
+            }*/
+
+            double maxY = cv_Jeux.Height - joueur1.Height;
+            double actuelY = Canvas.GetTop(joueur1);
+
+            bool touchePlateforme = false;
+
+            if (enSaut)
+            {
+                velociteY += gravite;
+                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
+
+                foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
+                {
+                    Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+                    Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
+
+                    if (joueur.IntersectsWith(plateformeBornes) && velociteY >= 0)
+                    {
+                        touchePlateforme = true;
+                        velociteY = 0;
+                        enSaut = false;
+
+                        // Ajuster la position du joueur au sommet de la plateforme
+                        Canvas.SetTop(joueur1, plateformeBornes.Top - joueur1.Height);
                     }
                 }
 
@@ -285,12 +324,10 @@ namespace King_Colin
 
                 if (devantEchelle)
                 {
-                    // Récupérer la première échelle devant laquelle le joueur est positionné
                     System.Windows.Shapes.Rectangle echelle = ListeDesEchelles().FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
 
                     if (echelle != null)
                     {
-                        // Limiter le mouvement vertical en fonction de la position de l'échelle
                         double topEchelle = Canvas.GetTop(echelle);
                         double bottomEchelle = topEchelle + echelle.Height;
 
@@ -300,7 +337,6 @@ namespace King_Colin
                         }
                         else if (haut && Canvas.GetTop(joueur1) <= topEchelle)
                         {
-                            // Si le joueur est au niveau ou au-dessus du haut de l'échelle, le mouvement vers le haut est autorisé
                             Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - vitesseJoueur);
                         }
                         else if (bas && Canvas.GetTop(joueur1) + joueur1.Height < bottomEchelle)
@@ -309,7 +345,6 @@ namespace King_Colin
                         }
                     }
 
-                    // Gestion du mouvement horizontal si nécessaire (gauche et droite)
                     if (gauche && Canvas.GetLeft(joueur1) > 0)
                     {
                         Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
@@ -321,7 +356,6 @@ namespace King_Colin
                 }
                 else
                 {
-                    // Gestion du mouvement horizontal si nécessaire (gauche et droite)
                     if (gauche && Canvas.GetLeft(joueur1) > 0)
                     {
                         Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
