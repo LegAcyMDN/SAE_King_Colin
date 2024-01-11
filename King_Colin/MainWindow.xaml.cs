@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace King_Colin
 {
@@ -20,6 +22,12 @@ namespace King_Colin
     {
         private bool gauche, droite, haut, bas = false, frappe = false;
         private bool jeuEnPause = false;
+
+        private readonly Regex plateforme = new Regex("^plateforme[0-9]$");
+        private readonly Regex echelle = new Regex("^echelle[0-9]{2}$");
+        private readonly Regex ennemi = new Regex("^ennemi[0-9]$");
+
+        private System.Windows.Shapes.Rectangle rectangle;
 
         //tous les skins
         private ImageBrush imageJeux = new ImageBrush();
@@ -39,16 +47,16 @@ namespace King_Colin
         private int vitesseTirTonneau = 10;
         private int timerTonneau;
         private int timerTirEnnemi;
-        private DispatcherTimer timer = new DispatcherTimer();
+        private DispatcherTimer temps = new DispatcherTimer();
 
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
         public MainWindow()
         {
             InitializeComponent();
-            timer.Tick += Jeu;
-            timer.Interval = TimeSpan.FromMilliseconds(16);
-            timer.Start();
+            temps.Tick += Jeu;
+            temps.Interval = TimeSpan.FromMilliseconds(16);
+            temps.Start();
 
             MenuWindow fenetreMenu = new MenuWindow();
             fenetreMenu.ShowDialog();
@@ -69,12 +77,6 @@ namespace King_Colin
             imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/plateforme.png"));
             imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/echelle.png"));
             imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/pigeon.png"));
-
-            Regex plateforme = new Regex("^plateforme[0-9]$");
-            Regex echelle = new Regex("^echelle[0-9]{2}$");
-            Regex ennemi = new Regex("^ennemi[0-9]$");
-
-            System.Windows.Shapes.Rectangle rectangle;
 
             foreach (UIElement element in cv_Jeux.Children)
             {
@@ -126,15 +128,12 @@ namespace King_Colin
 
             if(e.Key == Key.D)
             { droite = true; }
-            /*
-            if()
-            Condition pour monter les echelles.
-            */
+            
+            if(e.Key == Key.Z)
+            { haut = true; }
 
-            /*
-            if()
-            Condition pour descendre les echelles.
-            */
+            if(e.Key == Key.S)
+            { bas = true; }
             /*
             rajouter une condition pour dire disponible suelement dans level bonus
             if (e.Key == Key.Space)
@@ -144,7 +143,7 @@ namespace King_Colin
             {
                 if (!jeuEnPause)
                 { 
-                    timer.Stop();
+                    temps.Stop();
                     jeuEnPause = true;
                 }
             }
@@ -153,7 +152,7 @@ namespace King_Colin
             {
                 if(jeuEnPause)
                 {
-                    timer.Start();
+                    temps.Start();
                     jeuEnPause = false;
                 }
             }
@@ -170,15 +169,12 @@ namespace King_Colin
 
             if (e.Key == Key.D)
             { droite = false; }
-            /*
-            if()
-            Condition pour monter les echelles.
-            */
 
-            /*
-            if()
-            Condition pour descendre les echelles.
-            */
+            if (e.Key == Key.Z)
+            { haut = false; }
+
+            if (e.Key == Key.S)
+            { bas = false; }
             /*
             rajouter une condition pour dire disponible suelement dans level bonus
             if (e.Key == Key.Space)
@@ -186,22 +182,84 @@ namespace King_Colin
             */
         }
 
+        private List<System.Windows.Shapes.Rectangle> ListeDesEchelles()
+        {
+            List<System.Windows.Shapes.Rectangle> echelles = new List<System.Windows.Shapes.Rectangle>();
+            echelles.Add(echelle01);
+            echelles.Add(echelle02);
+            echelles.Add(echelle03);
+            echelles.Add(echelle04);
+            echelles.Add(echelle05);
+            echelles.Add(echelle06);
+            echelles.Add(echelle09);
+            echelles.Add(echelle10);
+            return echelles;
+        }
+
         private void Jeu(object sender, EventArgs e)
         {
             if (!jeuEnPause)
             {
                 Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+                bool devantEchelle = false;
 
-                if (gauche && Canvas.GetLeft(joueur1) > 0)
+                foreach (System.Windows.Shapes.Rectangle echelle in ListeDesEchelles())
                 {
-                    Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
-                }
-                else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width < cv_Jeux.ActualWidth)
-                {
-                    Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + vitesseJoueur);
+                    if(joueur.IntersectsWith(new Rect(Canvas.GetLeft(echelle), Canvas.GetTop(echelle), echelle.Width, echelle.Height)))
+                    {
+                        devantEchelle = true;
+                        break;
+                    }
                 }
 
-                //rajouter la conditions pour le mouvement haut et bas
+                if (devantEchelle)
+                {
+                    // Récupérer la première échelle devant laquelle le joueur est positionné
+                    System.Windows.Shapes.Rectangle echelle = ListeDesEchelles().FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
+
+                    if (echelle != null)
+                    {
+                        // Limiter le mouvement vertical en fonction de la position de l'échelle
+                        double topEchelle = Canvas.GetTop(echelle);
+                        double bottomEchelle = topEchelle + echelle.Height;
+
+                        if (haut && Canvas.GetTop(joueur1) > topEchelle)
+                        {
+                            Canvas.SetTop(joueur1, Math.Max(topEchelle, Canvas.GetTop(joueur1) - vitesseJoueur));
+                        }
+                        else if (haut && Canvas.GetTop(joueur1) <= topEchelle)
+                        {
+                            // Si le joueur est au niveau ou au-dessus du haut de l'échelle, le mouvement vers le haut est autorisé
+                            Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - vitesseJoueur);
+                        }
+                        else if (bas && Canvas.GetTop(joueur1) + joueur1.Height < bottomEchelle)
+                        {
+                            Canvas.SetTop(joueur1, Math.Min(bottomEchelle - joueur1.Height, Canvas.GetTop(joueur1) + vitesseJoueur));
+                        }
+                    }
+
+                    // Gestion du mouvement horizontal si nécessaire (gauche et droite)
+                    if (gauche && Canvas.GetLeft(joueur1) > 0)
+                    {
+                        Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
+                    }
+                    else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width < cv_Jeux.ActualWidth)
+                    {
+                        Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + vitesseJoueur);
+                    }
+                }
+                else
+                {
+                    // Gestion du mouvement horizontal si nécessaire (gauche et droite)
+                    if (gauche && Canvas.GetLeft(joueur1) > 0)
+                    {
+                        Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
+                    }
+                    else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width < cv_Jeux.ActualWidth)
+                    {
+                        Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + vitesseJoueur);
+                    }
+                }
             }
         }
 

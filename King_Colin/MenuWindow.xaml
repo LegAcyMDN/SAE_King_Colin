@@ -55,30 +55,11 @@
             FontSize="25"
             Foreground="White" />
         <Button
-            x:Name="bt_Regle"
+            x:Name="bt_Jouer"
             Canvas.Left="342"
             Canvas.Top="319"
             Width="116"
             Height="29"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Règle"
-            FontSize="17" />
-        <Button
-            x:Name="bt_Credit"
-            Canvas.Left="147"
-            Canvas.Top="319"
-            Width="116"
-            Height="29"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Crédit"
-            FontSize="17" />
-        <Button
-            x:Name="bt_Jouer"
-            Width="116"
-            Height="29"
-            Margin="521,319,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="bt_Jouer_Click"
