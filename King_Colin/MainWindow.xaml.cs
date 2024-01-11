@@ -101,8 +101,7 @@ namespace King_Colin
                     {
                         touchePlateforme = true;
                         velociteY = 0;
-                        Canvas.SetTop(joueur1, Canvas.GetTop(plateforme) - joueur1.ActualHeight);
-                        
+                        Canvas.SetTop(joueur1, Canvas.GetTop(plateforme) - joueur1.ActualHeight);                        
                         enSaut = false;
                     }
                 }
