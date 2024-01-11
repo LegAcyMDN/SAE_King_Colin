@@ -70,6 +70,7 @@ namespace King_Colin
                 Application.Current.Shutdown();
             }
 
+            temps.Tick += Gravite;
             ChargeImage();         
             //imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
             //imageTirEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tirEnnemi.png"));
@@ -77,11 +78,8 @@ namespace King_Colin
             //lancement du timer 
         }
 
-        private void Temps_Tick(object sender, EventArgs e)
-        {
-            velociteY += gravite;
-            Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
-
+        private void Gravite(object sender, EventArgs e)
+        {           
             double maxY = cv_Jeux.ActualHeight - joueur1.ActualHeight;
             double actuelY = Canvas.GetTop(joueur1);
 
@@ -89,16 +87,22 @@ namespace King_Colin
 
             if (enSaut)
             {
+                Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+
+                velociteY += gravite;
+                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
+
                 foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
                 {
-                    Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.ActualWidth, joueur1.ActualHeight);
                     Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
+                    Console.WriteLine(velociteY);
 
                     if (joueurBornes.IntersectsWith(plateformeBornes) && velociteY >= 0)
                     {
                         touchePlateforme = true;
                         velociteY = 0;
                         Canvas.SetTop(joueur1, Canvas.GetTop(plateforme) - joueur1.ActualHeight);
+                        
                         enSaut = false;
                     }
                 }
@@ -112,12 +116,6 @@ namespace King_Colin
                         enSaut = false;
                     }
                 }
-            }
-
-            else
-            {
-                velociteY += gravite;
-                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
             }
         }
 
@@ -196,12 +194,8 @@ namespace King_Colin
             { bas = true; }
 
             if (e.Key == Key.Space)
-            {
-                if (!enSaut)
-                {
-                    enSaut = true;
-                    velociteY = -5;
-                }
+            { 
+                enSaut = false;
             }
             
             //rajouter une condition pour dire disponible suelement dans level bonus
@@ -247,10 +241,10 @@ namespace King_Colin
 
             if (e.Key == Key.Space)
             {
-                if (enSaut)
+                if (!enSaut)
                 {
-                    enSaut = false;
-                    velociteY += gravite;
+                    enSaut = true;
+                    velociteY = -3.25;
                 }
             }
             /*
