@@ -52,6 +52,7 @@ namespace King_Colin
         //gravié pour le joueur
         private double velociteY = 0;
         private const double gravite = 0.1;
+        private bool enSaut = false;
 
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
@@ -82,7 +83,53 @@ namespace King_Colin
             Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
 
             double maxY = cv_Jeux.ActualHeight - joueur1.ActualHeight;
-            double 
+            double actuelY = Canvas.GetTop(joueur1);
+
+            bool touchePlateforme = false;
+
+            if (enSaut)
+            {
+                foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
+                {
+                    Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.ActualWidth, joueur1.ActualHeight);
+                    Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
+
+                    if (joueurBornes.IntersectsWith(plateformeBornes) && velociteY >= 0)
+                    {
+                        touchePlateforme = true;
+                        velociteY = 0;
+                        Canvas.SetTop(joueur1, Canvas.GetTop(plateforme) - joueur1.ActualHeight);
+                        enSaut = false;
+                    }
+                }
+
+                if (!touchePlateforme)
+                {
+                    if (actuelY > maxY)
+                    {
+                        Canvas.SetTop(joueur1, maxY);
+                        velociteY = 0;
+                        enSaut = false;
+                    }
+                }
+            }
+
+            else
+            {
+                velociteY += gravite;
+                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
+            }
+        }
+
+        private List<System.Windows.Shapes.Rectangle> ListeDesPlateformes()
+        {
+            List<System.Windows.Shapes.Rectangle> plateformes = new List<System.Windows.Shapes.Rectangle>();
+            plateformes.Add(plateforme1);
+            plateformes.Add(plateforme2);
+            plateformes.Add(plateforme3);
+            plateformes.Add(plateforme4);
+            plateformes.Add(plateforme5);
+            return plateformes;
         }
 
         private void ChargeImage()
@@ -147,11 +194,20 @@ namespace King_Colin
 
             if(e.Key == Key.S)
             { bas = true; }
-            /*
-            rajouter une condition pour dire disponible suelement dans level bonus
+
             if (e.Key == Key.Space)
-            { frappe = true; }
-            */
+            {
+                if (!enSaut)
+                {
+                    enSaut = true;
+                    velociteY = -5;
+                }
+            }
+            
+            //rajouter une condition pour dire disponible suelement dans level bonus
+            /*if ( == Mouse.LeftButton)
+            { frappe = true; }*/
+            
             if (e.Key == Key.P)
             {
                 if (!jeuEnPause)
@@ -188,6 +244,15 @@ namespace King_Colin
 
             if (e.Key == Key.S)
             { bas = false; }
+
+            if (e.Key == Key.Space)
+            {
+                if (enSaut)
+                {
+                    enSaut = false;
+                    velociteY += gravite;
+                }
+            }
             /*
             rajouter une condition pour dire disponible suelement dans level bonus
             if (e.Key == Key.Space)
@@ -207,7 +272,7 @@ namespace King_Colin
             echelles.Add(echelle09);
             echelles.Add(echelle10);
             return echelles;
-        }
+        }        
 
         private void Jeu(object sender, EventArgs e)
         {
