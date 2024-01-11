@@ -71,6 +71,7 @@ namespace King_Colin
                 Application.Current.Shutdown();
             }
 
+            temps.Tick += Gravite;
             ChargeImage();         
             //imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
             //imageTirEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tirEnnemi.png"));
@@ -78,29 +79,70 @@ namespace King_Colin
             //lancement du timer 
         }
 
-        private void Temps_Tick(object sender, EventArgs e)
+        private void Gravite(object sender, EventArgs e)
         {
-            velociteY += gravite;
-            Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
-
-            double maxY = cv_Jeux.ActualHeight - joueur1.ActualHeight;
+            /*double maxY = cv_Jeux.Height - joueur1.Height;
             double actuelY = Canvas.GetTop(joueur1);
 
             bool touchePlateforme = false;
 
             if (enSaut)
             {
+                velociteY += gravite;
+                double nouvelY = Canvas.GetTop(joueur1) + velociteY;
+
+                Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+
                 foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
                 {
-                    Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.ActualWidth, joueur1.ActualHeight);
                     Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
+                    Console.WriteLine(velociteY);
 
                     if (joueurBornes.IntersectsWith(plateformeBornes) && velociteY >= 0)
                     {
                         touchePlateforme = true;
-                        velociteY = 0;
-                        Canvas.SetTop(joueur1, Canvas.GetTop(plateforme) - joueur1.ActualHeight);
+                        nouvelY = Canvas.GetTop(plateforme) - joueur1.Height;
+                        velociteY = 0;                  
                         enSaut = false;
+                    }
+                }
+
+                Canvas.SetTop(joueur1, nouvelY);
+
+                if (!touchePlateforme)
+                {
+                    if (actuelY > maxY)
+                    {
+                        Canvas.SetTop(joueur1, maxY);
+                        velociteY = 0;
+                        enSaut = false;
+                    }
+                }
+            }*/
+
+            double maxY = cv_Jeux.Height - joueur1.Height;
+            double actuelY = Canvas.GetTop(joueur1);
+
+            bool touchePlateforme = false;
+
+            if (enSaut)
+            {
+                velociteY += gravite;
+                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
+
+                foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
+                {
+                    Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+                    Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
+
+                    if (joueur.IntersectsWith(plateformeBornes) && velociteY >= 0)
+                    {
+                        touchePlateforme = true;
+                        velociteY = 0;
+                        enSaut = false;
+
+                        // Ajuster la position du joueur au sommet de la plateforme
+                        Canvas.SetTop(joueur1, plateformeBornes.Top - joueur1.Height);
                     }
                 }
 
@@ -113,12 +155,6 @@ namespace King_Colin
                         enSaut = false;
                     }
                 }
-            }
-
-            else
-            {
-                velociteY += gravite;
-                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
             }
         }
 
@@ -197,12 +233,8 @@ namespace King_Colin
             { bas = true; }
 
             if (e.Key == Key.Space)
-            {
-                if (!enSaut)
-                {
-                    enSaut = true;
-                    velociteY = -5;
-                }
+            { 
+                enSaut = false;
             }
             
             //rajouter une condition pour dire disponible suelement dans level bonus
@@ -248,10 +280,10 @@ namespace King_Colin
 
             if (e.Key == Key.Space)
             {
-                if (enSaut)
+                if (!enSaut)
                 {
-                    enSaut = false;
-                    velociteY += gravite;
+                    enSaut = true;
+                    velociteY = -3.25;
                 }
             }
             /*
@@ -293,12 +325,10 @@ namespace King_Colin
 
                 if (devantEchelle)
                 {
-                    // Récupérer la première échelle devant laquelle le joueur est positionné
                     System.Windows.Shapes.Rectangle echelle = ListeDesEchelles().FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
 
                     if (echelle != null)
                     {
-                        // Limiter le mouvement vertical en fonction de la position de l'échelle
                         double topEchelle = Canvas.GetTop(echelle);
                         double bottomEchelle = topEchelle + echelle.Height;
 
@@ -308,7 +338,6 @@ namespace King_Colin
                         }
                         else if (haut && Canvas.GetTop(joueur1) <= topEchelle)
                         {
-                            // Si le joueur est au niveau ou au-dessus du haut de l'échelle, le mouvement vers le haut est autorisé
                             Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - vitesseJoueur);
                         }
                         else if (bas && Canvas.GetTop(joueur1) + joueur1.Height < bottomEchelle)
