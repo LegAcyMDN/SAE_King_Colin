@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace King_Colin
 {
@@ -315,29 +316,43 @@ namespace King_Colin
                             Canvas.SetTop(joueur1, Math.Min(bottomEchelle - joueur1.Height, Canvas.GetTop(joueur1) + vitesseJoueur));
                         }
                     }
-
-                    // Gestion du mouvement horizontal si nécessaire (gauche et droite)
-                    if (gauche && Canvas.GetLeft(joueur1) > 0)
-                    {
-                        Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
-                    }
-                    else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width < cv_Jeux.ActualWidth)
-                    {
-                        Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + vitesseJoueur);
-                    }
+                    MouvementHorizontaux();
                 }
                 else
                 {
-                    // Gestion du mouvement horizontal si nécessaire (gauche et droite)
-                    if (gauche && Canvas.GetLeft(joueur1) > 0)
-                    {
-                        Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - vitesseJoueur);
-                    }
-                    else if (droite && Canvas.GetLeft(joueur1) + joueur1.Width < cv_Jeux.ActualWidth)
-                    {
-                        Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + vitesseJoueur);
-                    }
+                    MouvementHorizontaux();
                 }
+            }
+        }
+        // Gestion du mouvement horizontal si nécessaire (gauche et droite)
+        private void MouvementHorizontaux()
+        {
+            double canvasMax = cv_Jeux.ActualWidth;
+            double joueurX = Canvas.GetLeft(joueur1);
+            double joueurWidth = joueur1.Width;
+
+            if (gauche && droite)
+                return;
+
+            if (gauche && joueurX <= 0)
+            {
+                Canvas.SetLeft(joueur1, 0);
+                return;
+            }
+            if(droite && joueurX + joueurWidth >= canvasMax)
+            {
+                Canvas.SetLeft(joueur1, canvasMax - joueurWidth); 
+                return;
+            }
+            if (droite)
+            {
+                Canvas.SetLeft(joueur1, joueurX + vitesseJoueur);
+                return;
+            }
+            if (gauche)
+            {
+                Canvas.SetLeft(joueur1, joueurX - vitesseJoueur);
+                return;
             }
         }
 
