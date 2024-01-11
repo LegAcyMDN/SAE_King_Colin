@@ -49,6 +49,10 @@ namespace King_Colin
         private int timerTirEnnemi;
         private DispatcherTimer temps = new DispatcherTimer();
 
+        //gravié pour le joueur
+        private double velociteY = 0;
+        private const double gravite = 0.1;
+
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
         public MainWindow()
@@ -70,6 +74,15 @@ namespace King_Colin
             //imageTirEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tirEnnemi.png"));
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
             //lancement du timer 
+        }
+
+        private void Temps_Tick(object sender, EventArgs e)
+        {
+            velociteY += gravite;
+            Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + velociteY);
+
+            double maxY = cv_Jeux.ActualHeight - joueur1.ActualHeight;
+            double 
         }
 
         private void ChargeImage()
