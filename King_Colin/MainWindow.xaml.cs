@@ -514,8 +514,17 @@ namespace King_Colin
 
         private void LancerBarille()
         {
-            //image tonneau
-
+            System.Windows.Shapes.Rectangle tirsEnnemi = new System.Windows.Shapes.Rectangle
+            {
+                Tag = "tirsEnnemi",
+                Height = 40,
+                Width = 15,
+                Fill = Brushes.Yellow,
+                StrokeThickness = 5
+            };
+            Canvas.SetTop(tirsEnnemi, Canvas.GetTop(donkeykong) + donkeykong.Height);
+            Canvas.SetLeft(tirsEnnemi, Canvas.GetLeft(donkeykong) + donkeykong.Width / 2);
+            cv_Jeux.Children.Add(tirsEnnemi);
         }
 
         private void MouvementMarteau()
