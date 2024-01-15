@@ -43,7 +43,7 @@ namespace King_Colin
         private ImageBrush imageTirEnnemi = new ImageBrush();
 
         //vitesses et timer
-        private int vitesseDonkey = 6;
+        private int vitesseDonkey = 3;
         private int vitesseJoueur = 10;
         private int vitesseTirEnnemi = 10;
         private int vitesseTirTonneau = 10;
@@ -490,13 +490,35 @@ namespace King_Colin
                  cv_Jeux.Children.Remove(y);
              }
          }
-        private void MouvementTonneaux()
+        
+        private void MouvementDonkey(Object sender, EventArgs e)
         {
-            //vitesse, deplacement de haut en bas 
+            if (Canvas.GetLeft(donkeykong) < Canvas.GetLeft(joueur1))
+            { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) + vitesseDonkey); }
+
+            else if (Canvas.GetLeft(donkeykong) > Canvas.GetLeft(joueur1))
+            { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) - vitesseDonkey); }
+
+            if (lancéBarille.Next(100) < 2)
+            {
+                if (aUnBarille)
+                {
+                    LancerBarille();
+                    aUnBarille = false;
+                }
+
+                else
+                { 
+                    Canvas.SetLeft(donkeykong, Canvas.GetLeft(plateforme4));
+                    aUnBarille = true;
+                }
+            }
         }
-        private void MouvementDonkey()
+
+        private void LancerBarille()
         {
-            
+            //image tonneau
+
         }
 
         private void MouvementMarteau()
