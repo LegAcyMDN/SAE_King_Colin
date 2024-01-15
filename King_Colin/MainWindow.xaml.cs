@@ -40,7 +40,7 @@ namespace King_Colin
         private ImageBrush imageEchelle = new ImageBrush();
         private ImageBrush imagePlateforme = new ImageBrush();
         private ImageBrush imageTonneau = new ImageBrush();
-        private ImageBrush imageTirEnnemi = new ImageBrush();
+        private ImageBrush imageTirBoss = new ImageBrush();
 
         //vitesses et timer
         private int vitesseDonkey = 3;
@@ -78,8 +78,8 @@ namespace King_Colin
 
             temps.Tick += Gravite;
             ChargeImage();         
-            //imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
-            //imageTirEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tirEnnemi.png"));
+            imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
+            imageTirBoss.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/.png"));
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
             //lancement du timer 
         }
@@ -183,9 +183,9 @@ namespace King_Colin
         }
         private void ChargeImage()
         {
-            imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/plateforme.png"));
-            imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/echelle.png"));
-            imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/pigeon.png"));
+            imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/plateforme.png"));
+            imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/echelle.png"));
+            imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Ennemi/pigeon.png"));
 
             foreach (UIElement element in cv_Jeux.Children)
             {
@@ -204,16 +204,16 @@ namespace King_Colin
                 }
             }
 
-            imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/fondEcran.png"));
+            imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/fondEcran.png"));
             FondEcran.Fill = imageJeux;
 
-            imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/marioLou.png"));
+            imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/marioLou.png"));
             joueur1.Fill = imageJoueur;
 
             imagePrincesse.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/princessejustin.png"));
             princesse.Fill = imagePrincesse;
 
-            imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/colinperenoel.png"));
+            imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/colinperenoel.png"));
             donkeykong.Fill = imageDonkey;
         }
 
@@ -489,7 +489,7 @@ namespace King_Colin
 
         private void LancerTonneau()
         {
-            System.Windows.Shapes.Rectangle tirsEnnemi = new System.Windows.Shapes.Rectangle
+            System.Windows.Shapes.Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirsEnnemi",
                 Height = 40,
@@ -498,18 +498,18 @@ namespace King_Colin
                 StrokeThickness = 5
             };
 
-            Canvas.SetTop(tirsEnnemi, Canvas.GetTop(donkeykong) + donkeykong.Height);
-            Canvas.SetLeft(tirsEnnemi, Canvas.GetLeft(donkeykong) + donkeykong.Width / 2);
-            cv_Jeux.Children.Add(tirsEnnemi);
+            Canvas.SetTop(tirsBoss, Canvas.GetTop(donkeykong) + donkeykong.Height);
+            Canvas.SetLeft(tirsBoss, Canvas.GetLeft(donkeykong) + donkeykong.Width / 2);
+            cv_Jeux.Children.Add(tirsBoss);
 
             DispatcherTimer tempsTirBaril = new DispatcherTimer();
             tempsTirBaril.Tick += (sender, e) =>
             {
-                Canvas.SetTop(tirsEnnemi, Canvas.GetTop(tirsEnnemi) + vitesseTirTonneau);
+                Canvas.SetTop(tirsBoss, Canvas.GetTop(tirsBoss) + vitesseTirTonneau);
 
-                if (Canvas.GetTop(tirsEnnemi) > cv_Jeux.ActualHeight) 
+                if (Canvas.GetTop(tirsBoss) > cv_Jeux.ActualHeight) 
                 {
-                    cv_Jeux.Children.Remove(tirsEnnemi);
+                    cv_Jeux.Children.Remove(tirsBoss);
                     tempsTirBaril.Stop();
                 }
             };
