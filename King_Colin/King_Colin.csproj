@@ -8,22 +8,40 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="Img\Boss\barilC1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Boss\barilC2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Boss\barilD2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Boss\colinperenoel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Img\colinperenoel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\echelle.png">
+    <None Update="Img\Element\echelle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\fondEcran.png">
+    <None Update="Img\Element\fondEcran.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\jetpack.png">
+    <None Update="Img\Element\jetpack.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Jeux.jpg">
+    <None Update="Img\Element\Jeux.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\loumariojetpack.png">
+    <None Update="Img\Ennemi\pigeon2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Ennemi\toastenfeu2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Mario\loumariojetpack.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\loumariosaut.png">
@@ -32,22 +50,28 @@
     <None Update="Img\marioLou.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Img\Mario\loumariosaut.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Mario\marioLou.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Img\Menu.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\pigeon.png">
+    <None Update="Img\Ennemi\pigeon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\plateforme.png">
+    <None Update="Img\Element\plateforme.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\plateformelongue.png">
+    <None Update="Img\Element\plateformelongue.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\princessejustin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\toastenfeu.png">
+    <None Update="Img\Ennemi\toastenfeu.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Musique\LadyOfThe80.mp3">

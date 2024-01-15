@@ -214,5 +214,39 @@
             Width="108"
             Height="128"
             Fill="Green" />
+        <Rectangle
+            x:Name="baril3"
+            Canvas.Left="10"
+            Canvas.Top="301"
+            Width="51"
+            Height="66"
+            Fill="White" />
+        <Rectangle
+            x:Name="baril1"
+            Canvas.Left="10"
+            Canvas.Top="235"
+            Width="51"
+            Height="66"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Fill="White" />
+        <Rectangle
+            x:Name="baril4"
+            Canvas.Left="61"
+            Canvas.Top="301"
+            Width="51"
+            Height="66"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Fill="White" />
+        <Rectangle
+            x:Name="baril2"
+            Canvas.Left="61"
+            Canvas.Top="235"
+            Width="51"
+            Height="66"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Fill="White" />
     </Canvas>
 </Window>
