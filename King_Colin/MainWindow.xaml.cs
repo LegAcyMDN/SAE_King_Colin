@@ -21,7 +21,7 @@ namespace King_Colin
     public partial class MainWindow : Window
     {
         private bool gauche, droite, haut, bas = false, frappe = false;
-        private bool jeuEnPause = false;
+        private bool jeuEnPause = false;        
 
         private readonly Regex plateforme = new Regex("^plateforme[0-9]$");
         private readonly Regex echelle = new Regex("^echelle[0-9]{2}$");
@@ -54,13 +54,17 @@ namespace King_Colin
         private const double gravite = 0.1;
         private bool enSaut = false;
 
+        //Donkey Kong aka Colin
+        private bool aUnBarille = true;
+        private Random lancéBarille = new Random();
+
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
         public MainWindow()
         {
             InitializeComponent();
             temps.Tick += Jeu;
-            temps.Interval = TimeSpan.FromMilliseconds(16);
+            temps.Interval = TimeSpan.FromMilliseconds(10);
             temps.Start();
 
             MenuWindow fenetreMenu = new MenuWindow();
@@ -446,7 +450,7 @@ namespace King_Colin
         }
         private void MouvementDonkey()
         {
-            //mouvement de droite à gauche sur la plateforme la plus haute, en suivant le joueur 
+            
         }
 
         private void MouvementMarteau()
