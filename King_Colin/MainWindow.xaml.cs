@@ -173,7 +173,14 @@ namespace King_Colin
             plateformes.Add(plateforme5);
             return plateformes;
         }
-
+        private List<System.Windows.Shapes.Rectangle> ListeDesPigeons()
+        {
+            List<System.Windows.Shapes.Rectangle> ennemis = new List<System.Windows.Shapes.Rectangle>();
+            ennemis.Add(ennemi1);
+            ennemis.Add(ennemi2);
+            ennemis.Add(ennemi3);
+            return ennemis;
+        }
         private void ChargeImage()
         {
             imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/plateforme.png"));
