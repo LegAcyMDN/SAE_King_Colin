@@ -417,36 +417,7 @@ namespace King_Colin
             cv_Jeux.Children.Add(nouveauTirEnnemi);
         }
 
-        private void TestTouchéTonneau(System.Windows.Shapes.Rectangle x, Rect joueur)
-        {
-            if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "ennemies")
-            {
-                // vérification de la collision avec le joueur
-                Rect ennemi = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-                if (joueur.IntersectsWith(ennemi))
-                {
-                    // collision avec le joueur et fin de la partie !! ajouter systeme de vie!!!
-                    temps.Stop();
-                    MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK, MessageBoxImage.Stop);
-                }
-            }
-        }
-
-        private void TestTouchéEnnemi(System.Windows.Shapes.Rectangle x, Rect joueur)
-        {
-            if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "ennemies")
-            {
-                // vérification de la collision avec le joueur
-                Rect ennemi = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-                if (joueur.IntersectsWith(ennemi))
-                {
-                    // collision avec le joueur et fin de la partie !! ajouter systeme de vie!!!
-                    temps.Stop();
-                    MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK, MessageBoxImage.Stop);
-                }
-            }
-        }
-        private void MouvementTestTirEnnemi(System.Windows.Shapes.Rectangle x, Rect player)
+        private void Defaite(System.Windows.Shapes.Rectangle x, Rect player)
         {
             if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "enemyBullet")
             {
