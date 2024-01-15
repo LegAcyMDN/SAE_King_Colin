@@ -147,7 +147,7 @@ namespace King_Colin
                     }
                 }
 
-                if (!touchePlateforme|| actuelY > maxY)
+                if (!touchePlateforme&& actuelY > maxY)
                 {
                         Canvas.SetTop(joueur1, maxY);
                         velociteY = 0;
@@ -289,7 +289,7 @@ namespace King_Colin
             if (e.Key == Key.S)
             { bas = false; }
 
-            if (e.Key == Key.Space || !enSaut)
+            if (e.Key == Key.Space && !enSaut)
             {
                     enSaut = true;
                     velociteY = -3.25;
