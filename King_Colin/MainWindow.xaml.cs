@@ -27,6 +27,7 @@ namespace King_Colin
         private readonly Regex plateforme = new Regex("^plateforme[0-9]$");
         private readonly Regex echelle = new Regex("^echelle[0-9]{2}$");
         private readonly Regex ennemi = new Regex("^ennemi[0-9]$");
+        private readonly Regex baril = new Regex("^baril[0-9]$");
         // liste des éléments rectangles
         private List<System.Windows.Shapes.Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();
         private System.Windows.Shapes.Rectangle rectangle;
@@ -78,8 +79,7 @@ namespace King_Colin
 
             temps.Tick += Gravite;
             ChargeImage();         
-            imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
-            imageTirBoss.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/.png"));
+            
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
             //lancement du timer 
         }
@@ -186,6 +186,9 @@ namespace King_Colin
             imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/plateforme.png"));
             imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/echelle.png"));
             imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Ennemi/pigeon.png"));
+            imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/barilC1.png"));
+            imageTirBoss.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/barilC2.png"));
+
 
             foreach (UIElement element in cv_Jeux.Children)
             {
@@ -201,6 +204,9 @@ namespace King_Colin
 
                     if(ennemi.IsMatch(rectangle.Name)) 
                     { rectangle.Fill = imageEnnemi; }
+
+                    if(baril.IsMatch(rectangle.Name))
+                    { rectangle.Fill = imageTonneau; }
                 }
             }
 
@@ -493,10 +499,9 @@ namespace King_Colin
             System.Windows.Shapes.Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirsEnnemi",
-                Height = 40,
-                Width = 15,
-                Fill = Brushes.Yellow,
-                StrokeThickness = 5
+                Height = 51,
+                Width = 66,
+                Fill = imageTirBoss
             };
 
             Canvas.SetTop(tirsBoss, Canvas.GetTop(donkeykong) + donkeykong.Height);
