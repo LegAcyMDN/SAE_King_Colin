@@ -355,6 +355,7 @@ namespace King_Colin
                 else
                 {
                     MouvementHorizontaux();
+                    RetireLesItems();
                 }
             }
         }
@@ -388,12 +389,6 @@ namespace King_Colin
                 Canvas.SetLeft(joueur1, joueurX - vitesseJoueur);
                 return;
             }
-        }
-
-        private void Ennemis()
-        {
-
-            //gestion des ennemies, apparition et mouvement
         }
 
         private void TirsEnnemies(double x, double y)
@@ -462,18 +457,20 @@ namespace King_Colin
                 }
             }
         }
-        /*private void TestVictoire()
+       private void TestVictoire()
         {
-            if (/*si le joueur touche donkey avec son arme*//*)
+            Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+            Rect peach = new Rect(Canvas.GetLeft(princesse), Canvas.GetTop(princesse), princesse.Width, princesse.Height);
+            if (joueur.IntersectsWith(peach))
             {
-                timer.Stop();
+                temps.Stop();
                 //systeme de pause a configurer
                 //finOuPause.Visibility = Visibility.Visible;
                 //fin.Visibility = Visibility.Visible;
                 MessageBox.Show("Gagné !!", "Fin de partie", MessageBoxButton.OK,
                 MessageBoxImage.Exclamation);
             }
-        }*/
+        }
 
         /*private void FinBonus()
         {
