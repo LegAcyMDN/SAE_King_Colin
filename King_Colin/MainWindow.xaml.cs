@@ -364,6 +364,8 @@ namespace King_Colin
                     MouvementHorizontaux();
                     RetireLesItems();
                 }
+
+                MouvementDonkey();
             }
         }
         // Gestion du mouvement horizontal si nécessaire (gauche et droite)
@@ -495,8 +497,10 @@ namespace King_Colin
              }
          }
         
-        private void MouvementDonkey(Object sender, EventArgs e)
+        private void MouvementDonkey()
         {
+            double joueurX = Canvas.GetLeft(joueur1);
+
             if (Canvas.GetLeft(donkeykong) < Canvas.GetLeft(joueur1))
             { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) + vitesseDonkey); }
 
@@ -507,19 +511,12 @@ namespace King_Colin
             {
                 if (aUnBarille)
                 {
-                    LancerBarille();
-                    aUnBarille = false;
-                }
-
-                else
-                { 
-                    Canvas.SetLeft(donkeykong, Canvas.GetLeft(plateforme4));
-                    aUnBarille = true;
+                    LancerTonneau();
                 }
             }
         }
 
-        private void LancerBarille()
+        private void LancerTonneau()
         {
             System.Windows.Shapes.Rectangle tirsEnnemi = new System.Windows.Shapes.Rectangle
             {
@@ -529,9 +526,25 @@ namespace King_Colin
                 Fill = Brushes.Yellow,
                 StrokeThickness = 5
             };
+
             Canvas.SetTop(tirsEnnemi, Canvas.GetTop(donkeykong) + donkeykong.Height);
             Canvas.SetLeft(tirsEnnemi, Canvas.GetLeft(donkeykong) + donkeykong.Width / 2);
             cv_Jeux.Children.Add(tirsEnnemi);
+
+            DispatcherTimer tempsTirBaril = new DispatcherTimer();
+            tempsTirBaril.Tick += (sender, e) =>
+            {
+                Canvas.SetTop(tirsEnnemi, Canvas.GetTop(tirsEnnemi) + vitesseTirTonneau);
+
+                if (Canvas.GetTop(tirsEnnemi) > cv_Jeux.ActualHeight) 
+                {
+                    cv_Jeux.Children.Remove(tirsEnnemi);
+                    tempsTirBaril.Stop();
+                }
+            };
+
+            tempsTirBaril.Interval = TimeSpan.FromMilliseconds(10);
+            tempsTirBaril.Start();
         }
 
         private void MouvementMarteau()
