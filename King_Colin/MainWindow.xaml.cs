@@ -366,6 +366,7 @@ namespace King_Colin
                 }
 
                 MouvementDonkey();
+                MouvementEnnemis();
             }
         }
         // Gestion du mouvement horizontal si nécessaire (gauche et droite)
@@ -471,12 +472,12 @@ namespace King_Colin
         private void MouvementDonkey()
         {
             double joueurX = Canvas.GetLeft(joueur1);
+            double donkey = Canvas.GetLeft(donkeykong);
+            if (donkey < joueurX)
+            { Canvas.SetLeft(donkeykong, donkey + vitesseDonkey); }
 
-            if (Canvas.GetLeft(donkeykong) < Canvas.GetLeft(joueur1))
-            { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) + vitesseDonkey); }
-
-            else if (Canvas.GetLeft(donkeykong) > Canvas.GetLeft(joueur1))
-            { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) - vitesseDonkey); }
+            else if (Canvas.GetLeft(donkeykong) > joueurX)
+            { Canvas.SetLeft(donkeykong, donkey - vitesseDonkey); }
 
             if (lancéBarille.Next(100) < 2)
             {
@@ -516,6 +517,55 @@ namespace King_Colin
 
             tempsTirBaril.Interval = TimeSpan.FromMilliseconds(10);
             tempsTirBaril.Start();
+        }
+        private void MouvementEnnemis()
+        {
+            double joueurX = Canvas.GetLeft(joueur1);
+            double ennemi = Canvas.GetLeft(ennemi1);
+            Random mouvements = new Random();
+            if (Canvas.GetLeft(donkeykong) < Canvas.GetLeft(joueur1))
+            { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) + vitesseDonkey); }
+
+            else if (Canvas.GetLeft(donkeykong) > Canvas.GetLeft(joueur1))
+            { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) - vitesseDonkey); }
+
+            if (lancéBarille.Next(100) < 2)
+            {
+                if (aUnBarille)
+                {
+                    LancerToastFeu();
+                }
+            }
+        }
+        private void LancerToastFeu()
+        {
+            System.Windows.Shapes.Rectangle tirsEnnemi = new System.Windows.Shapes.Rectangle
+            {
+                Tag = "tirsEnnemi",
+                Height = 40,
+                Width = 15,
+                Fill = Brushes.Yellow,
+                StrokeThickness = 5
+            };
+
+            Canvas.SetRight(tirsEnnemi,  + Canvas.GetLeft(ennemi1) + ennemi1.Height);
+            Canvas.SetLeft(tirsEnnemi, Canvas.GetLeft(ennemi1) + ennemi1.Width / 2);
+            cv_Jeux.Children.Add(tirsEnnemi);
+
+            DispatcherTimer tempsTirEnnemi = new DispatcherTimer();
+            tempsTirEnnemi.Tick += (sender, e) =>
+            {
+                Canvas.SetLeft(tirsEnnemi, Canvas.GetLeft(tirsEnnemi) + vitesseTirEnnemi);
+
+                if (Canvas.GetLeft(tirsEnnemi) > cv_Jeux.ActualHeight)
+                {
+                    cv_Jeux.Children.Remove(tirsEnnemi);
+                    tempsTirEnnemi.Stop();
+                }
+            };
+
+            tempsTirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
+            tempsTirEnnemi.Start();
         }
 
         private void MouvementMarteau()
