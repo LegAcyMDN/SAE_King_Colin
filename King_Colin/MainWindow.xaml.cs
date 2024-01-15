@@ -29,7 +29,7 @@ namespace King_Colin
         private ImageBrush imageTonneau = new ImageBrush();
         private ImageBrush imageTirEnnemi = new ImageBrush();
 
-        //vitesses et timer
+        //vitesses et timer 
         private int vitesseDonkey = 6;
         private int vitesseJoueur = 10;
         private int vitesseTirEnnemi = 10;
