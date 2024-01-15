@@ -54,9 +54,8 @@ namespace King_Colin
         private bool enSaut = false;
 
         //Donkey Kong aka Colin
-        private Random mouvements = new Random(2);
         private Random tir = new Random();
-
+        Random random = new Random();
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
         public MainWindow()
@@ -74,8 +73,8 @@ namespace King_Colin
             }
 
             temps.Tick += Gravite;
-            ChargeImage();         
-            
+            ChargeImage();
+
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
             //lancement du timer 
         }
@@ -201,7 +200,7 @@ namespace King_Colin
                     if (ennemi.IsMatch(rectangle.Name))
                     { rectangle.Fill = imageEnnemi; }
 
-                    if(baril.IsMatch(rectangle.Name))
+                    if (baril.IsMatch(rectangle.Name))
                     { rectangle.Fill = imageTonneau; }
                 }
             }
@@ -403,23 +402,6 @@ namespace King_Colin
             }
         }
 
-        private void TirsEnnemies(double x, double y)
-        {
-            //gestion des tis ennemies
-            System.Windows.Shapes.Rectangle nouveauTirEnnemi = new System.Windows.Shapes.Rectangle
-            {
-                Tag = "tirEnnemi",
-                Height = 40,
-                Width = 15,
-                Fill = Brushes.Yellow,
-                Stroke = Brushes.Black,
-                StrokeThickness = 5
-            };
-            Canvas.SetTop(nouveauTirEnnemi, y);
-            Canvas.SetLeft(nouveauTirEnnemi, x);
-            cv_Jeux.Children.Add(nouveauTirEnnemi);
-        }
-
         private void Defaite(System.Windows.Shapes.Rectangle x, Rect player)
         {
             if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "enemyBullet")
@@ -504,7 +486,7 @@ namespace King_Colin
             {
                 Canvas.SetTop(tirsBoss, Canvas.GetTop(tirsBoss) + vitesseTirTonneau);
 
-                if (Canvas.GetTop(tirsBoss) > cv_Jeux.ActualHeight) 
+                if (Canvas.GetTop(tirsBoss) > cv_Jeux.ActualHeight)
                 {
                     cv_Jeux.Children.Remove(tirsBoss);
                     tempsTirBaril.Stop();
@@ -516,20 +498,30 @@ namespace King_Colin
         }
         private void MouvementEnnemis()
         {
-            double joueurX = Canvas.GetLeft(joueur1);
+            double canvasMax = cv_Jeux.ActualWidth;
+            int mouvements = random.Next(0, 3);
             double ennemi = Canvas.GetLeft(ennemi1);
-      
-            if (mouvements.ToString() == "1")
-            { Canvas.SetLeft(ennemi1, ennemi + vitesseEnnemi); }
+            if (ennemi == canvasMax)
+            {
+                return;
+            }
+            else
+            {
+                if (mouvements == 1)
+                {
+                    Canvas.SetLeft(ennemi1, ennemi + vitesseEnnemi);
+                }
 
-            else if (mouvements.ToString() == "2")
-            { Canvas.SetRight(ennemi1, ennemi - vitesseEnnemi); }
+                else if (mouvements == 2)
+                { Canvas.SetLeft(ennemi1, ennemi - vitesseEnnemi); }
+
+            }
 
             if (tir.Next(100) < 2)
-                LancerToastFeu();
-            
+                LancerToastFeu(2, 2);
+
         }
-        private void LancerToastFeu()
+        private void LancerToastFeu(double x, double y)
         {
             System.Windows.Shapes.Rectangle tirsEnnemi = new System.Windows.Shapes.Rectangle
             {
@@ -558,6 +550,19 @@ namespace King_Colin
 
             tempsTirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
             tempsTirEnnemi.Start();
+            //gestion des tis ennemies
+            System.Windows.Shapes.Rectangle nouveauTirEnnemi = new System.Windows.Shapes.Rectangle
+            {
+                Tag = "tirEnnemi",
+                Height = 40,
+                Width = 15,
+                Fill = Brushes.Yellow,
+                Stroke = Brushes.Black,
+                StrokeThickness = 5
+            };
+            Canvas.SetTop(nouveauTirEnnemi, y);
+            Canvas.SetLeft(nouveauTirEnnemi, x);
+            cv_Jeux.Children.Add(nouveauTirEnnemi);
         }
 
         private void MouvementMarteau()
