@@ -1,18 +1,13 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Net.NetworkInformation;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
 
 namespace King_Colin
 {
@@ -22,7 +17,7 @@ namespace King_Colin
     public partial class MainWindow : Window
     {
         private bool gauche, droite, haut, bas = false, frappe = false;
-        private bool jeuEnPause = false;        
+        private bool jeuEnPause = false;
 
         private readonly Regex plateforme = new Regex("^plateforme[0-9]$");
         private readonly Regex echelle = new Regex("^echelle[0-9]{2}$");
@@ -45,6 +40,7 @@ namespace King_Colin
         //vitesses et timer
         private int vitesseDonkey = 3;
         private int vitesseJoueur = 10;
+        private int vitesseEnnemi = 10;
         private int vitesseTirEnnemi = 10;
         private int vitesseTirTonneau = 10;
         private int timerTonneau;
@@ -57,8 +53,8 @@ namespace King_Colin
         private bool enSaut = false;
 
         //Donkey Kong aka Colin
-        private bool aUnBarille = true;
-        private Random lancéBarille = new Random();
+        private Random mouvements = new Random(2);
+        private Random tir = new Random();
 
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
@@ -71,13 +67,13 @@ namespace King_Colin
 
             MenuWindow fenetreMenu = new MenuWindow();
             fenetreMenu.ShowDialog();
-            if(fenetreMenu.DialogResult == false)
-            { 
+            if (fenetreMenu.DialogResult == false)
+            {
                 Application.Current.Shutdown();
             }
 
             temps.Tick += Gravite;
-            ChargeImage();         
+            ChargeImage();
             //imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tonneau.png"));
             //imageTirEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/tirEnnemi.png"));
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
@@ -199,7 +195,7 @@ namespace King_Colin
                     if (echelle.IsMatch(rectangle.Name))
                     { rectangle.Fill = imageEchelle; }
 
-                    if(ennemi.IsMatch(rectangle.Name)) 
+                    if (ennemi.IsMatch(rectangle.Name))
                     { rectangle.Fill = imageEnnemi; }
                 }
             }
@@ -232,31 +228,31 @@ namespace King_Colin
 
         private void cv_Jeux_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Q)
+            if (e.Key == Key.Q)
             { gauche = true; }
 
-            if(e.Key == Key.D)
+            if (e.Key == Key.D)
             { droite = true; }
-            
-            if(e.Key == Key.Z)
+
+            if (e.Key == Key.Z)
             { haut = true; }
 
-            if(e.Key == Key.S)
+            if (e.Key == Key.S)
             { bas = true; }
 
             if (e.Key == Key.Space)
-            { 
+            {
                 enSaut = false;
             }
-            
+
             //rajouter une condition pour dire disponible suelement dans level bonus
             /*if ( == Mouse.LeftButton)
             { frappe = true; }*/
-            
+
             if (e.Key == Key.P)
             {
                 if (!jeuEnPause)
-                { 
+                {
                     temps.Stop();
                     jeuEnPause = true;
                 }
@@ -264,14 +260,14 @@ namespace King_Colin
 
             if (e.Key == Key.R)
             {
-                if(jeuEnPause)
+                if (jeuEnPause)
                 {
                     temps.Start();
                     jeuEnPause = false;
                 }
             }
 
-            if(e.Key == Key.Escape)
+            if (e.Key == Key.Escape)
             { Application.Current.Shutdown(); }
 
         }
@@ -317,7 +313,7 @@ namespace King_Colin
             echelles.Add(echelle09);
             echelles.Add(echelle10);
             return echelles;
-        }        
+        }
 
         private void Jeu(object sender, EventArgs e)
         {
@@ -328,7 +324,7 @@ namespace King_Colin
 
                 foreach (System.Windows.Shapes.Rectangle echelle in ListeDesEchelles())
                 {
-                    if(joueur.IntersectsWith(new Rect(Canvas.GetLeft(echelle), Canvas.GetTop(echelle), echelle.Width, echelle.Height)))
+                    if (joueur.IntersectsWith(new Rect(Canvas.GetLeft(echelle), Canvas.GetTop(echelle), echelle.Width, echelle.Height)))
                     {
                         devantEchelle = true;
                         break;
@@ -384,9 +380,9 @@ namespace King_Colin
                 Canvas.SetLeft(joueur1, 0);
                 return;
             }
-            if(droite && joueurX + joueurWidth >= canvasMax)
+            if (droite && joueurX + joueurWidth >= canvasMax)
             {
-                Canvas.SetLeft(joueur1, canvasMax - joueurWidth); 
+                Canvas.SetLeft(joueur1, canvasMax - joueurWidth);
                 return;
             }
             if (droite)
@@ -438,7 +434,7 @@ namespace King_Colin
                 }
             }
         }
-       private void TestVictoire()
+        private void TestVictoire()
         {
             Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
             Rect peach = new Rect(Canvas.GetLeft(princesse), Canvas.GetTop(princesse), princesse.Width, princesse.Height);
@@ -461,14 +457,14 @@ namespace King_Colin
             }
         }*/
         private void RetireLesItems()
-         {
-             foreach (System.Windows.Shapes.Rectangle y in itemsARetirer)
-             {
-                 // on les enlève du canvas
-                 cv_Jeux.Children.Remove(y);
-             }
-         }
-        
+        {
+            foreach (System.Windows.Shapes.Rectangle y in itemsARetirer)
+            {
+                // on les enlève du canvas
+                cv_Jeux.Children.Remove(y);
+            }
+        }
+
         private void MouvementDonkey()
         {
             double joueurX = Canvas.GetLeft(joueur1);
@@ -479,13 +475,8 @@ namespace King_Colin
             else if (Canvas.GetLeft(donkeykong) > joueurX)
             { Canvas.SetLeft(donkeykong, donkey - vitesseDonkey); }
 
-            if (lancéBarille.Next(100) < 2)
-            {
-                if (aUnBarille)
-                {
-                    LancerTonneau();
-                }
-            }
+            if (tir.Next(100) < 2)
+                LancerTonneau();
         }
 
         private void LancerTonneau()
@@ -508,7 +499,7 @@ namespace King_Colin
             {
                 Canvas.SetTop(tirsEnnemi, Canvas.GetTop(tirsEnnemi) + vitesseTirTonneau);
 
-                if (Canvas.GetTop(tirsEnnemi) > cv_Jeux.ActualHeight) 
+                if (Canvas.GetTop(tirsEnnemi) > cv_Jeux.ActualHeight)
                 {
                     cv_Jeux.Children.Remove(tirsEnnemi);
                     tempsTirBaril.Stop();
@@ -522,20 +513,16 @@ namespace King_Colin
         {
             double joueurX = Canvas.GetLeft(joueur1);
             double ennemi = Canvas.GetLeft(ennemi1);
-            Random mouvements = new Random();
-            if (Canvas.GetLeft(donkeykong) < Canvas.GetLeft(joueur1))
-            { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) + vitesseDonkey); }
+      
+            if (mouvements.ToString() == "1")
+            { Canvas.SetLeft(ennemi1, ennemi + vitesseEnnemi); }
 
-            else if (Canvas.GetLeft(donkeykong) > Canvas.GetLeft(joueur1))
-            { Canvas.SetLeft(donkeykong, Canvas.GetLeft(donkeykong) - vitesseDonkey); }
+            else if (mouvements.ToString() == "2")
+            { Canvas.SetRight(ennemi1, ennemi - vitesseEnnemi); }
 
-            if (lancéBarille.Next(100) < 2)
-            {
-                if (aUnBarille)
-                {
-                    LancerToastFeu();
-                }
-            }
+            if (tir.Next(100) < 2)
+                LancerToastFeu();
+            
         }
         private void LancerToastFeu()
         {
@@ -548,7 +535,7 @@ namespace King_Colin
                 StrokeThickness = 5
             };
 
-            Canvas.SetTop(tirsEnnemi,  + Canvas.GetLeft(ennemi1) + ennemi1.Height);
+            Canvas.SetLeft(tirsEnnemi, +Canvas.GetLeft(ennemi1) + ennemi1.Height);
             Canvas.SetLeft(tirsEnnemi, Canvas.GetLeft(ennemi1) + ennemi1.Width / 2);
             cv_Jeux.Children.Add(tirsEnnemi);
 
@@ -557,7 +544,7 @@ namespace King_Colin
             {
                 Canvas.SetTop(tirsEnnemi, Canvas.GetTop(tirsEnnemi) + vitesseTirEnnemi);
 
-                if (Canvas.GetTop(tirsEnnemi) > cv_Jeux.ActualHeight)
+                if (Canvas.GetLeft(tirsEnnemi) > cv_Jeux.ActualHeight)
                 {
                     cv_Jeux.Children.Remove(tirsEnnemi);
                     tempsTirEnnemi.Stop();
