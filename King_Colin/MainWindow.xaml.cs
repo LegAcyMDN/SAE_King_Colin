@@ -66,16 +66,17 @@ namespace King_Colin
         public MainWindow()
         {
             InitializeComponent();
-            temps.Tick += Jeu;
-            temps.Interval = TimeSpan.FromMilliseconds(10);
-            temps.Start();
-
+           
             MenuWindow fenetreMenu = new MenuWindow();
             fenetreMenu.ShowDialog();
             if(fenetreMenu.DialogResult == false)
             { 
                 Application.Current.Shutdown();
             }
+
+            temps.Tick += Jeu;
+            temps.Interval = TimeSpan.FromMilliseconds(10);
+            temps.Start();
 
             temps.Tick += Gravite;
             ChargeImage();         
@@ -378,8 +379,10 @@ namespace King_Colin
         // Gestion du mouvement horizontal si nécessaire (gauche et droite)
         private void MouvementHorizontaux()
         {
-            double canvasMax = cv_Jeux.ActualWidth;
+            double canvasMax = App.Current.MainWindow.ActualWidth;
+            Console.WriteLine("Largeur Canvas : " + canvasMax);
             double joueurX = Canvas.GetLeft(joueur1);
+            Console.WriteLine("Position en X joueur : " + joueurX);
             double joueurWidth = joueur1.Width;
 
             if (gauche && droite)
@@ -387,7 +390,9 @@ namespace King_Colin
 
             if (gauche && joueurX <= 0)
             {
+                
                 Canvas.SetLeft(joueur1, 0);
+                Console.WriteLine("Gauche et pas bouger  " + joueurX);
                 return;
             }
             if(droite && joueurX + joueurWidth >= canvasMax)
@@ -402,6 +407,7 @@ namespace King_Colin
             }
             if (gauche)
             {
+                Console.WriteLine("Gauche et pas bouger  " + joueurX);
                 Canvas.SetLeft(joueur1, joueurX - vitesseJoueur);
                 return;
             }

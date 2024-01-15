@@ -21,6 +21,7 @@
     <Canvas
         Name="cv_Jeux"
         Width="800"
+        Height="1080"
         HorizontalAlignment="Center"
         Focusable="True"
         KeyDown="cv_Jeux_KeyDown"
