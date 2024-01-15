@@ -33,7 +33,7 @@ namespace King_Colin
 
         private void MenuWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/TheDying.mp3", UriKind.Relative);
+            Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/TheDying2.mp3", UriKind.Relative);
             musiqueMenu.Open(uri);
             musiqueMenu.Play();
         }
@@ -47,6 +47,7 @@ namespace King_Colin
         private void bt_Jouer_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
+            musiqueMenu.Stop();
         }
     }
 }
