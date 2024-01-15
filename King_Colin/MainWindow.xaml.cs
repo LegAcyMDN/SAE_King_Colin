@@ -27,7 +27,8 @@ namespace King_Colin
         private readonly Regex plateforme = new Regex("^plateforme[0-9]$");
         private readonly Regex echelle = new Regex("^echelle[0-9]{2}$");
         private readonly Regex ennemi = new Regex("^ennemi[0-9]$");
-
+        // liste des éléments rectangles
+        private List<System.Windows.Shapes.Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();
         private System.Windows.Shapes.Rectangle rectangle;
 
         //tous les skins
@@ -387,13 +388,14 @@ namespace King_Colin
 
         private void Ennemis()
         {
+
             //gestion des ennemies, apparition et mouvement
         }
 
         private void TirsEnnemies(double x, double y)
         {
             //gestion des tis ennemies
-            /*System.Windows.Shapes.Rectangle nouveauTirEnnemi = new System.Windows.Shapes.Rectangle
+            System.Windows.Shapes.Rectangle nouveauTirEnnemi = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirEnnemi",
                 Height = 40,
@@ -404,10 +406,10 @@ namespace King_Colin
             };
             Canvas.SetTop(nouveauTirEnnemi, y);
             Canvas.SetLeft(nouveauTirEnnemi, x);
-            cv_Jeux.Children.Add(nouveauTirEnnemi);*/
+            cv_Jeux.Children.Add(nouveauTirEnnemi);
         }
 
-        /*private void TestTouchéTonneau(System.Windows.Shapes.Rectangle x, Rect joueur)
+        private void TestTouchéTonneau(System.Windows.Shapes.Rectangle x, Rect joueur)
         {
             if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "ennemies")
             {
@@ -416,7 +418,7 @@ namespace King_Colin
                 if (joueur.IntersectsWith(ennemi))
                 {
                     // collision avec le joueur et fin de la partie !! ajouter systeme de vie!!!
-                    timer.Stop();
+                    temps.Stop();
                     MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
             }
@@ -431,12 +433,31 @@ namespace King_Colin
                 if (joueur.IntersectsWith(ennemi))
                 {
                     // collision avec le joueur et fin de la partie !! ajouter systeme de vie!!!
-                    timer.Stop();
+                    temps.Stop();
                     MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
             }
         }
-
+        private void MouvementTestTirEnnemi(System.Windows.Shapes.Rectangle x, Rect player)
+        {
+            if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "enemyBullet")
+            {
+                // déplacement vers le bas avec bulletEnemySpeed pixels
+                Canvas.SetTop(x, Canvas.GetTop(x) + vitesseTirEnnemi);
+                // si le tir sort de l’écran on l’ajoute à la liste à supprimer
+                if (Canvas.GetTop(x) > ActualHeight + x.ActualHeight)
+                    itemsARetirer.Add(x);
+                // on conserve le tir
+                Rect enemyBullets = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                // détection de collision entre le joueur et le tir ennemi
+                if (enemyBullets.IntersectsWith(player))
+                {
+                    // arrêt du timer et fin du jeu
+                    temps.Stop();
+                    MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK, MessageBoxImage.Stop);
+                }
+            }
+        }
         /*private void TestVictoire()
         {
             if (/*si le joueur touche donkey avec son arme*//*)
@@ -457,6 +478,14 @@ namespace King_Colin
                 //deblocage du jeu bonus
             }
         }*/
+        private void RetireLesItems()
+         {
+             foreach (System.Windows.Shapes.Rectangle y in itemsARetirer)
+             {
+                 // on les enlève du canvas
+                 cv_Jeux.Children.Remove(y);
+             }
+         }
         private void MouvementTonneaux()
         {
             //vitesse, deplacement de haut en bas 
