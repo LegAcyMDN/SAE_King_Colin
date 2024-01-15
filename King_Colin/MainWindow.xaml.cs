@@ -402,9 +402,11 @@ namespace King_Colin
             }
         }
 
-        private void Defaite(System.Windows.Shapes.Rectangle x, Rect player)
+        private void Defaite()
         {
-            if (x is System.Windows.Shapes.Rectangle && (string)x.Tag == "enemyBullet")
+            Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+            Rect donkey = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+            /*if (joueur.IntersectsWith())
             {
                 // déplacement vers le bas avec bulletEnemySpeed pixels
                 Canvas.SetTop(x, Canvas.GetTop(x) + vitesseTirEnnemi);
@@ -420,7 +422,7 @@ namespace King_Colin
                     temps.Stop();
                     MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
-            }
+            }*/
         }
         private void TestVictoire()
         {
@@ -501,24 +503,29 @@ namespace King_Colin
             double canvasMax = cv_Jeux.ActualWidth;
             int mouvements = random.Next(0, 3);
             double ennemi = Canvas.GetLeft(ennemi1);
-            if (ennemi == canvasMax)
+           
+            foreach (System.Windows.Shapes.Rectangle ennemis in ListeDesPigeons())
             {
-                return;
-            }
-            else
-            {
-                if (mouvements == 1)
+                if (ennemi == canvasMax)
                 {
-                    Canvas.SetLeft(ennemi1, ennemi + vitesseEnnemi);
+                    return;
                 }
+                else
+                {
+                    if (mouvements == 1)
+                    {
+                        Canvas.SetLeft(ennemis, ennemi + vitesseEnnemi);
+                    }
 
-                else if (mouvements == 2)
-                { Canvas.SetLeft(ennemi1, ennemi - vitesseEnnemi); }
+                    else if (mouvements == 2)
+                    { Canvas.SetLeft(ennemis, ennemi - vitesseEnnemi); }
 
+                }
+                if (tir.Next(100) < 2)
+                LancerToastFeu(2, 2);
             }
 
-            if (tir.Next(100) < 2)
-                LancerToastFeu(2, 2);
+            
 
         }
         private void LancerToastFeu(double x, double y)
