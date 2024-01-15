@@ -548,16 +548,16 @@ namespace King_Colin
                 StrokeThickness = 5
             };
 
-            Canvas.SetRight(tirsEnnemi,  + Canvas.GetLeft(ennemi1) + ennemi1.Height);
+            Canvas.SetTop(tirsEnnemi,  + Canvas.GetLeft(ennemi1) + ennemi1.Height);
             Canvas.SetLeft(tirsEnnemi, Canvas.GetLeft(ennemi1) + ennemi1.Width / 2);
             cv_Jeux.Children.Add(tirsEnnemi);
 
             DispatcherTimer tempsTirEnnemi = new DispatcherTimer();
             tempsTirEnnemi.Tick += (sender, e) =>
             {
-                Canvas.SetLeft(tirsEnnemi, Canvas.GetLeft(tirsEnnemi) + vitesseTirEnnemi);
+                Canvas.SetTop(tirsEnnemi, Canvas.GetTop(tirsEnnemi) + vitesseTirEnnemi);
 
-                if (Canvas.GetLeft(tirsEnnemi) > cv_Jeux.ActualHeight)
+                if (Canvas.GetTop(tirsEnnemi) > cv_Jeux.ActualHeight)
                 {
                     cv_Jeux.Children.Remove(tirsEnnemi);
                     tempsTirEnnemi.Stop();
