@@ -275,7 +275,7 @@ namespace King_Colin
 
             if (e.Key == Key.Space)
             { enSaut = false; }
-            
+
             //faire un switch ??? a mediter
             //rajouter une condition pour dire disponible suelement dans level bonus
 
@@ -346,70 +346,64 @@ namespace King_Colin
             switch (LancementNiveauBonus())
             {
                 case false:
-       
-                        AnimationImage();
 
-                        Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
-                        bool devantEchelle = false;
+                    AnimationImage();
 
-                        foreach (System.Windows.Shapes.Rectangle echelle in ListeDesEchelles())
+                    Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+                    bool devantEchelle = false;
+
+                    foreach (System.Windows.Shapes.Rectangle echelle in ListeDesEchelles())
+                    {
+                        if (joueur.IntersectsWith(new Rect(Canvas.GetLeft(echelle), Canvas.GetTop(echelle), echelle.Width, echelle.Height)))
                         {
-                            if (joueur.IntersectsWith(new Rect(Canvas.GetLeft(echelle), Canvas.GetTop(echelle), echelle.Width, echelle.Height)))
-                            {
-                                devantEchelle = true;
-                                break;
-                            }
+                            devantEchelle = true;
+                            break;
                         }
-
-                        if (devantEchelle)
-                        {
-                            System.Windows.Shapes.Rectangle echelle = ListeDesEchelles().FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
-
-                            if (echelle != null)
-                            {
-                                double topEchelle = Canvas.GetTop(echelle);
-                                double bottomEchelle = topEchelle + echelle.Height;
-
-                                if (haut && Canvas.GetTop(joueur1) > topEchelle)
-                                {
-                                    Canvas.SetTop(joueur1, Math.Max(topEchelle, Canvas.GetTop(joueur1) - vitesseJoueur));
-                                }
-                                else if (haut && Canvas.GetTop(joueur1) <= topEchelle)
-                                {
-                                    Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - vitesseJoueur);
-                                }
-                                else if (bas && Canvas.GetTop(joueur1) + joueur1.Height < bottomEchelle)
-                                {
-                                    Canvas.SetTop(joueur1, Math.Min(bottomEchelle - joueur1.Height, Canvas.GetTop(joueur1) + vitesseJoueur));
-                                }
-                            }
-                            MouvementHorizontaux();
-                        }
-                        else
-                        {
-
-                            MouvementHorizontaux();
-                            RetireLesItems();
-                        }
-                        MouvementDonkey();
-                        MouvementEnnemis();
-                        Victoire();
                     }
-                    break;
-                case true:
+
+                    if (devantEchelle)
+                    {
+                        System.Windows.Shapes.Rectangle echelle = ListeDesEchelles().FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
+
+                        if (echelle != null)
+                        {
+                            double topEchelle = Canvas.GetTop(echelle);
+                            double bottomEchelle = topEchelle + echelle.Height;
+
+                            if (haut && Canvas.GetTop(joueur1) > topEchelle)
+                            {
+                                Canvas.SetTop(joueur1, Math.Max(topEchelle, Canvas.GetTop(joueur1) - vitesseJoueur));
+                            }
+                            else if (haut && Canvas.GetTop(joueur1) <= topEchelle)
+                            {
+                                Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - vitesseJoueur);
+                            }
+                            else if (bas && Canvas.GetTop(joueur1) + joueur1.Height < bottomEchelle)
+                            {
+                                Canvas.SetTop(joueur1, Math.Min(bottomEchelle - joueur1.Height, Canvas.GetTop(joueur1) + vitesseJoueur));
+                            }
+                        }
+                        MouvementHorizontaux();
+                    }
+                    else
+                    {
+
+                        MouvementHorizontaux();
+                        RetireLesItems();
+                    }
+                    MouvementDonkey();
+                    MouvementEnnemis();
+                    Victoire();
                     break;
 
+                case true:
+                    //oe c'est greg
+                    break;
             }
 
         }
 
-        private void AnimationImage()
-        {
-            animePortail++;
-            if (animePortail > 16) { animePortail = 0; }
-            imagePortail.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Portail/portail-" + animePortail / 2 + ".png"));
-            Portail.Fill = imagePortail;
-        }
+
 
         // Gestion du mouvement horizontal si nécessaire (gauche et droite)
         private void MouvementHorizontaux()
@@ -491,7 +485,7 @@ namespace King_Colin
             Canvas.SetLeft(tirsBoss, Canvas.GetLeft(donkeykong) + donkeykong.Width / 2);
             cv_Jeux.Children.Add(tirsBoss);
 
-            
+
             tempsTirBaril.Tick += (sender, e) =>
             {
                 tempsTirBaril.Start();
