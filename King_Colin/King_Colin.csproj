@@ -38,6 +38,9 @@
     <None Update="Img\Element\map3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Img\Element\salleSecrette.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Img\Ennemi\pigeon2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -71,31 +74,31 @@
     <None Update="Img\Element\plateformelongue.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-0.png">
+    <None Update="Img\Portail\portail-0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-1.png">
+    <None Update="Img\Portail\portail-1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-2.png">
+    <None Update="Img\Portail\portail-2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-3.png">
+    <None Update="Img\Portail\portail-3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-4.png">
+    <None Update="Img\Portail\portail-4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-5.png">
+    <None Update="Img\Portail\portail-5.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-6.png">
+    <None Update="Img\Portail\portail-6.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-7.png">
+    <None Update="Img\Portail\portail-7.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Portal\portal-8.png">
+    <None Update="Img\Portail\portail-8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\princessejustin.png">
