@@ -396,8 +396,8 @@ namespace King_Colin
         private void AnimationImage()
         {
             animePortail++;
-            if (animePortail > 8) { animePortail = 0; }
-            imagePortail.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Portail/portail-" + animePortail + ".png"));
+            if (animePortail > 16) { animePortail = 0; }
+            imagePortail.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Portail/portail-" + animePortail / 2 + ".png"));
             Portail.Fill = imagePortail;
         }
 
