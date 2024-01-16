@@ -18,236 +18,297 @@
     <Window.Background>
         <SolidColorBrush Opacity="0" />
     </Window.Background>
-    <Canvas
-        Name="cv_Jeux"
-        Width="800"
-        Height="1080"
-        HorizontalAlignment="Center"
-        Focusable="True"
-        KeyDown="cv_Jeux_KeyDown"
-        KeyUp="cv_Jeux_KeyUp">
-        <Rectangle
-            Name="FondEcran"
+    <Grid>
+        <Canvas
+            Name="cv_Jeux"
             Width="800"
             Height="1080"
             HorizontalAlignment="Center"
-            VerticalAlignment="Top" />
-        <Rectangle
-            Name="plateforme1"
-            Canvas.Top="847"
-            Width="800"
-            Height="25"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Fill="Purple" />
-        <Rectangle
-            Name="plateforme2"
-            Canvas.Top="687"
-            Width="800"
-            Height="25"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="Purple" />
-        <Rectangle
-            Name="plateforme3"
-            Canvas.Top="527"
-            Width="800"
-            Height="24"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="Purple" />
-        <Rectangle
-            Name="plateforme4"
-            Canvas.Top="367"
-            Width="800"
-            Height="24"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="Purple" />
-        <Rectangle
-            Name="plateforme5"
-            Canvas.Left="348"
-            Canvas.Top="207"
-            Width="350"
-            Height="24"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Fill="Purple" />
-        <Rectangle
-            x:Name="echelle05"
-            Canvas.Left="323"
-            Canvas.Top="147"
-            Width="25"
-            Height="220             "
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle01"
-            Canvas.Left="589"
-            Canvas.Top="687"
-            Width="26"
-            Height="160"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle02"
-            Canvas.Left="196"
-            Canvas.Top="527"
-            Width="26"
-            Height="160"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle03"
-            Canvas.Left="711"
-            Canvas.Top="367"
-            Width="25"
-            Height="160"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle04"
-            Canvas.Left="629"
-            Canvas.Top="207"
-            Width="25"
-            Height="160"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle06"
-            Canvas.Left="277"
-            Canvas.Top="147"
-            Width="25"
-            Height="220"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle07"
-            Canvas.Left="366"
-            Canvas.Top="687"
-            Width="26"
-            Height="60"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle08"
-            Canvas.Left="366"
-            Canvas.Top="797"
-            Width="26"
-            Height="50"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle09"
-            Canvas.Left="277"
-            Canvas.Top="-73"
-            Width="25"
-            Height="220"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="echelle10"
-            Canvas.Left="323"
-            Canvas.Top="-73"
-            Width="25"
-            Height="220             "
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="blue" />
-        <Rectangle
-            x:Name="ennemi1"
-            Canvas.Left="534"
-            Canvas.Top="797"
-            Width="50"
-            Height="50"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Fill="Orange" />
-        <Rectangle
-            x:Name="ennemi2"
-            Canvas.Left="238"
-            Canvas.Top="637"
-            Width="50"
-            Height="50"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="Orange" />
-        <Rectangle
-            x:Name="ennemi3"
-            Canvas.Left="455"
-            Canvas.Top="477"
-            Width="50"
-            Height="50"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="Orange" />
-        <Rectangle
-            x:Name="baril3"
-            Canvas.Left="10"
-            Canvas.Top="301"
-            Width="51"
-            Height="66"
-            Fill="White" />
-        <Rectangle
-            x:Name="baril1"
-            Canvas.Left="10"
-            Canvas.Top="235"
-            Width="51"
-            Height="66"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="White" />
-        <Rectangle
-            x:Name="baril4"
-            Canvas.Left="61"
-            Canvas.Top="301"
-            Width="51"
-            Height="66"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Fill="White" />
-        <Rectangle
-            x:Name="baril2"
-            Canvas.Left="61"
-            Canvas.Top="235"
-            Width="51"
-            Height="66"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="White" />
-        <Rectangle
-            x:Name="joueur1"
-            Canvas.Left="49"
-            Canvas.Top="787"
-            Width="47"
-            Height="60"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Fill="Red" />
-        <Rectangle
-            x:Name="princesse"
-            Canvas.Left="400"
-            Canvas.Top="141"
-            Width="54"
-            Height="66"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="Pink" />
-        <Rectangle
-            x:Name="donkeykong"
-            Canvas.Left="136"
-            Canvas.Top="239"
-            Width="108"
-            Height="128"
-            Fill="Green" />        
-    </Canvas>    
+            Focusable="True"
+            KeyDown="cv_Jeux_KeyDown"
+            KeyUp="cv_Jeux_KeyUp">
+            <Rectangle
+                Name="FondEcran"
+                Width="800"
+                Height="1080"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top" />
+            <Rectangle
+                Name="plateforme1"
+                Canvas.Top="847"
+                Width="800"
+                Height="25"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Fill="Purple" />
+            <Rectangle
+                Name="plateforme2"
+                Canvas.Top="687"
+                Width="800"
+                Height="25"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="Purple" />
+            <Rectangle
+                Name="plateforme3"
+                Canvas.Top="527"
+                Width="800"
+                Height="24"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="Purple" />
+            <Rectangle
+                Name="plateforme4"
+                Canvas.Top="367"
+                Width="800"
+                Height="24"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="Purple" />
+            <Rectangle
+                Name="plateforme5"
+                Canvas.Left="348"
+                Canvas.Top="207"
+                Width="350"
+                Height="24"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Fill="Purple" />
+            <Rectangle
+                x:Name="echelle05"
+                Canvas.Left="323"
+                Canvas.Top="147"
+                Width="25"
+                Height="220             "
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle01"
+                Canvas.Left="589"
+                Canvas.Top="687"
+                Width="26"
+                Height="160"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle02"
+                Canvas.Left="196"
+                Canvas.Top="527"
+                Width="26"
+                Height="160"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle03"
+                Canvas.Left="711"
+                Canvas.Top="367"
+                Width="25"
+                Height="160"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle04"
+                Canvas.Left="629"
+                Canvas.Top="207"
+                Width="25"
+                Height="160"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle06"
+                Canvas.Left="277"
+                Canvas.Top="147"
+                Width="25"
+                Height="220"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle07"
+                Canvas.Left="366"
+                Canvas.Top="687"
+                Width="26"
+                Height="60"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle08"
+                Canvas.Left="366"
+                Canvas.Top="797"
+                Width="26"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle09"
+                Canvas.Left="277"
+                Canvas.Top="-73"
+                Width="25"
+                Height="220"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="echelle10"
+                Canvas.Left="323"
+                Canvas.Top="-73"
+                Width="25"
+                Height="220             "
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="blue" />
+            <Rectangle
+                x:Name="ennemi1"
+                Canvas.Left="534"
+                Canvas.Top="797"
+                Width="50"
+                Height="50"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Fill="Orange" />
+            <Rectangle
+                x:Name="ennemi2"
+                Canvas.Left="238"
+                Canvas.Top="637"
+                Width="50"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="Orange" />
+            <Rectangle
+                x:Name="ennemi3"
+                Canvas.Left="455"
+                Canvas.Top="477"
+                Width="50"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="Orange" />
+            <Rectangle
+                x:Name="baril3"
+                Canvas.Left="10"
+                Canvas.Top="301"
+                Width="51"
+                Height="66"
+                Fill="White" />
+            <Rectangle
+                x:Name="baril1"
+                Canvas.Left="10"
+                Canvas.Top="235"
+                Width="51"
+                Height="66"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="White" />
+            <Rectangle
+                x:Name="baril4"
+                Canvas.Left="61"
+                Canvas.Top="301"
+                Width="51"
+                Height="66"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Fill="White" />
+            <Rectangle
+                x:Name="baril2"
+                Canvas.Left="61"
+                Canvas.Top="235"
+                Width="51"
+                Height="66"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="White" />
+            <Rectangle
+                x:Name="joueur1"
+                Canvas.Left="49"
+                Canvas.Top="787"
+                Width="47"
+                Height="60"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Fill="Red" />
+            <Rectangle
+                x:Name="princesse"
+                Canvas.Left="400"
+                Canvas.Top="141"
+                Width="54"
+                Height="66"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Fill="Pink" />
+            <Rectangle
+                x:Name="donkeykong"
+                Canvas.Left="136"
+                Canvas.Top="239"
+                Width="108"
+                Height="128"
+                Fill="Green" />
+        </Canvas>
+
+        <Canvas x:Name="cv_Combat" Visibility="Collapsed">
+            <Rectangle
+                x:Name="FondEcran2"
+                Width="1920"
+                Height="1080" />
+            <Rectangle
+                x:Name="plat_combat"
+                Canvas.Left="208"
+                Canvas.Top="888"
+                Width="1470"
+                Height="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
+            <Rectangle
+                x:Name="joueur"
+                Canvas.Left="1387"
+                Canvas.Top="685"
+                Width="135"
+                Height="203"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Fill="Red" />
+            <Rectangle
+                x:Name="Dk_Street"
+                Canvas.Left="394"
+                Canvas.Top="600"
+                Width="243"
+                Height="288"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Fill="Green" />
+            <Grid
+                Canvas.Left="73"
+                Canvas.Top="58"
+                Width="600"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top" />
+            <Label
+                Canvas.Left="23"
+                Canvas.Top="59"
+                Width="45"
+                Height="49"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Content="PV"
+                FontSize="30" />
+            <Label
+                Canvas.Left="23"
+                Canvas.Top="18"
+                Width="150"
+                Height="40"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Colin"
+                FontSize="25"
+                FontWeight="Bold" />
+        </Canvas>
+    </Grid>
 </Window>

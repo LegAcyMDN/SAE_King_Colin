@@ -35,6 +35,9 @@
     <None Update="Img\Element\Jeux.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Img\Element\map3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Img\Ennemi\pigeon2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

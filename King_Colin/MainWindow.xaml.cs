@@ -31,6 +31,7 @@ namespace King_Colin
 
         //tous les skins
         private ImageBrush imageJeux = new ImageBrush();
+        private ImageBrush imageStreetFighter = new ImageBrush();
         private ImageBrush imageJoueur = new ImageBrush();
         private ImageBrush imagePrincesse = new ImageBrush();
         private ImageBrush imageDonkey = new ImageBrush();
@@ -211,6 +212,9 @@ namespace King_Colin
 
             imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/fondEcran.png"));
             FondEcran.Fill = imageJeux;
+
+            imageStreetFighter.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/map3.png"));
+            FondEcran2.Fill = imageStreetFighter;
 
             imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/marioLou.png"));
             joueur1.Fill = imageJoueur;
