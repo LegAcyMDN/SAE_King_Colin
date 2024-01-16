@@ -49,10 +49,10 @@ namespace King_Colin
 
         //vitesses et timer
         private int vitesseDonkey = 3;
-        private int vitesseJoueur = 10;
-        private int vitesseEnnemi = 10;
-        private int vitesseTirEnnemi = 10;
-        private int vitesseTirTonneau = 10;
+        private int vitesseJoueur = 5;
+        private int vitesseEnnemi = 3;
+        private int vitesseTirEnnemi = 7;
+        private int vitesseTirTonneau = 7;
         private int timerTonneau;
         private int timerTirEnnemi;
 
@@ -67,8 +67,8 @@ namespace King_Colin
         private bool enSaut = false;
 
         //Donkey Kong aka Colin
-        private Random tir = new Random();
-        private Random random = new Random();
+        private Random tirEnnemi = new Random();
+        private Random deplacementEnnemi = new Random();
 
         //Musique
         private MediaPlayer musiqueJeux = new MediaPlayer();
@@ -274,13 +274,10 @@ namespace King_Colin
             { bas = true; }
 
             if (e.Key == Key.Space)
-            {
-                enSaut = false;
-            }
+            { enSaut = false; }
+            
             //faire un switch ??? a mediter
             //rajouter une condition pour dire disponible suelement dans level bonus
-            /*if ( == Mouse.LeftButton)
-            { frappe = true; }*/
 
             if (e.Key == Key.P)
             {
@@ -328,11 +325,6 @@ namespace King_Colin
                 enSaut = true;
                 velociteY = -3.25;
             }
-            /*
-            rajouter une condition pour dire disponible suelement dans level bonus
-            if (e.Key == Key.Space)
-            { frappe = true; }
-            */
         }
 
         private List<System.Windows.Shapes.Rectangle> ListeDesEchelles()
@@ -402,13 +394,21 @@ namespace King_Colin
                         MouvementDonkey();
                         MouvementEnnemis();
                         Victoire();
-                    
+                    }
                     break;
                 case true:
                     break;
 
             }
 
+        }
+
+        private void AnimationImage()
+        {
+            animePortail++;
+            if (animePortail > 16) { animePortail = 0; }
+            imagePortail.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Portail/portail-" + animePortail / 2 + ".png"));
+            Portail.Fill = imagePortail;
         }
 
         // Gestion du mouvement horizontal si nécessaire (gauche et droite)
@@ -474,7 +474,7 @@ namespace King_Colin
                 Canvas.SetLeft(donkeykong, canvasMax - (donkeykong.Width + joueur1.Width));
             }
 
-            if (tir.Next(100) < 2)
+            if (tirEnnemi.Next(100) < 2)
                 LancerTonneau();
         }
         private void LancerTonneau()
@@ -515,7 +515,7 @@ namespace King_Colin
             foreach (System.Windows.Shapes.Rectangle ennemis in ListeDesPigeons())
             {
                 double ennemi = Canvas.GetLeft(ennemis);
-                int mouvements = random.Next(0, 3);
+                int mouvements = deplacementEnnemi.Next(0, 3);
                 if (Canvas.GetRight(ennemis) + ennemi1.Width >= canvasMax)
                 {
                     Canvas.SetRight(ennemis, canvasMax - ennemi1.Width);
