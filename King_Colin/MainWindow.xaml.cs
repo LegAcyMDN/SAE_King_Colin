@@ -514,7 +514,6 @@ namespace King_Colin
         private void MouvementEnnemis()
         {
             double canvasMax = cv_Jeux.ActualWidth;
-            
 
             foreach (System.Windows.Shapes.Rectangle ennemis in ListeDesPigeons())
             {
@@ -526,7 +525,7 @@ namespace King_Colin
                 }
                 else if (Canvas.GetLeft(ennemis) <= 0)
                 {
-                    Canvas.SetLeft(ennemis, 0); //prblm avec les limites canvas
+                    Canvas.SetLeft(ennemis, 0 + vitesseEnnemi); //prblm avec les limites canvas + pigeon limite gauche reste au meme endroit + droite sort du champs
                 }
                 else if (mouvements ==1)
                 {
@@ -542,6 +541,7 @@ namespace King_Colin
         }
         private void LancerToastFeu()
         {
+            double joueurX = Canvas.GetLeft(joueur1);
             double ennemi = Canvas.GetLeft(ennemi1);
             foreach (System.Windows.Shapes.Rectangle ennemis in ListeDesPigeons())
             {
@@ -558,19 +558,27 @@ namespace King_Colin
                 cv_Jeux.Children.Add(tirsEnn);
 
                 DispatcherTimer tempstirEnnemi = new DispatcherTimer();
-                tempstirEnnemi.Tick += (sender, e) =>
+                if (joueurX <= ennemi)
                 {
-                    Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) + vitesseTirEnnemi);
-
-                    if (Canvas.GetTop(tirsEnn) > cv_Jeux.ActualHeight)
+                    tempstirEnnemi.Tick += (sender, e) =>
                     {
-                        cv_Jeux.Children.Remove(tirsEnn);
-                        tempstirEnnemi.Stop();
-                    }
-                };
+                        Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) - vitesseTirEnnemi);
+                    };
+                }
+                else
+                {
+                    tempstirEnnemi.Tick += (sender, e) =>
+                    {
+                        Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) + vitesseTirEnnemi);
+                    };
+                }
                 tempstirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
                 tempstirEnnemi.Start();
-                Rect tir = new Rect();
+                if (Canvas.GetTop(tirsEnn) >= cv_Jeux.ActualWidth)
+                {
+                    cv_Jeux.Children.Remove(tirsEnn);
+                    tempstirEnnemi.Stop();
+                }// remove toast a revoir 
             }
         }
         private void CollisionTirs(System.Windows.Shapes.Rectangle rectangle)
