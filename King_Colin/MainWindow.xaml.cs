@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -9,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Xml.Serialization;
 
 namespace King_Colin
 {
@@ -20,7 +18,8 @@ namespace King_Colin
     {
         private bool gauche, droite, haut, bas = false, frappe = false;
         private bool jeuEnPause = false;
-        private bool touche=false;
+        private bool touche = false;
+        private bool possedeMarteau = false;
 
         private readonly Regex plateforme = new Regex("^plateforme[0-9]$");
         private readonly Regex echelle = new Regex("^echelle[0-9]{2}$");
@@ -266,13 +265,16 @@ namespace King_Colin
             { bas = true; }
 
             if (e.Key == Key.Space)
+            { enSaut = false; }
+
+            if (!possedeMarteau)
             {
-                enSaut = false;
+                if (e.Key == Key.A)
+                    frappe = true;
+
             }
             //faire un switch ??? a mediter
             //rajouter une condition pour dire disponible suelement dans level bonus
-            /*if ( == Mouse.LeftButton)
-            { frappe = true; }*/
 
             if (e.Key == Key.P)
             {
@@ -316,11 +318,12 @@ namespace King_Colin
                 enSaut = true;
                 velociteY = -3.25;
             }
-            /*
-            rajouter une condition pour dire disponible suelement dans level bonus
-            if (e.Key == Key.Space)
-            { frappe = true; }
-            */
+
+            if (!possedeMarteau)
+            {
+                if (e.Key == Key.A)
+                    frappe = false;
+            }
         }
 
         private List<System.Windows.Shapes.Rectangle> ListeDesEchelles()
@@ -387,18 +390,18 @@ namespace King_Colin
                             MouvementHorizontaux();
                             RetireLesItems();
                         }
-                            MouvementDonkey();
-                            MouvementEnnemis();
-                        
+                        MouvementDonkey();
+                        MouvementEnnemis();
+
 
                         VictoireouDefaite();
                     }
-                    break; 
+                    break;
                 case true:
                     break;
-                    
+
             }
-            
+
         }
 
         private void AnimationImage()
@@ -450,7 +453,7 @@ namespace King_Colin
                 MessageBoxImage.Exclamation);
                 AfficherLesCredits();
             }
-            else if ( touche == true )
+            else if (touche == true)
             {
                 touche = false;
                 temps.Stop();
@@ -483,22 +486,24 @@ namespace King_Colin
             double donkey = Canvas.GetLeft(donkeykong);
 
             if (donkey < joueurX)
-            { Canvas.SetLeft(donkeykong, donkey + vitesseDonkey);
+            {
+                Canvas.SetLeft(donkeykong, donkey + vitesseDonkey);
             }
 
             else if (donkey > joueurX)
-            { Canvas.SetLeft(donkeykong, donkey - vitesseDonkey);
+            {
+                Canvas.SetLeft(donkeykong, donkey - vitesseDonkey);
             }
             else if (donkey <= 0)
             {
                 Canvas.SetLeft(donkeykong, 0);
             }
-            else if (donkey + donkeykong.Width >= canvasMax )
+            else if (donkey + donkeykong.Width >= canvasMax)
             {
                 Canvas.SetLeft(donkeykong, canvasMax - donkeykong.Width);
             }
 
-            if (tir.Next(100) <2 )
+            if (tir.Next(100) < 2)
                 LancerTonneau();
         }
         private void LancerTonneau()
@@ -546,11 +551,11 @@ namespace King_Colin
                 {
                     Canvas.SetLeft(ennemis, 0 + vitesseEnnemi); //prblm avec les limites canvas + pigeon limite gauche reste au meme endroit + droite sort du champs
                 }
-                else if (mouvements ==1)
+                else if (mouvements == 1)
                 {
                     Canvas.SetLeft(ennemis, ennemi + vitesseEnnemi);
                 }
-                else if (mouvements ==2)
+                else if (mouvements == 2)
                 {
                     Canvas.SetLeft(ennemis, ennemi - vitesseEnnemi);
                 }
@@ -621,7 +626,7 @@ namespace King_Colin
         }
         private void AfficherLesCredits()
         {
-            
+
         }
     }
 }

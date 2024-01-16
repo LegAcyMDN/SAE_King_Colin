@@ -21,6 +21,7 @@
     <Grid>
         <Canvas x:Name="cv_Global">
             <Canvas
+                x:Name="cv_Secrette"
                 Canvas.Left="160"
                 Canvas.Top="447"
                 Width="400"
@@ -45,7 +46,7 @@
                         <TransformGroup>
                             <ScaleTransform />
                             <SkewTransform />
-                            <RotateTransform Angle="180.381" />
+                            <RotateTransform Angle="180" />
                             <TranslateTransform />
                         </TransformGroup>
                     </Rectangle.RenderTransform>
@@ -287,7 +288,7 @@
             </Canvas>
         </Canvas>
 
-        <Canvas x:Name="cv_Combat" Visibility="Collapsed">
+        <Canvas x:Name="cv_Combat" Visibility="Hidden">
             <Rectangle
                 x:Name="FondEcran2"
                 Width="1920"
@@ -310,7 +311,7 @@
                 VerticalAlignment="Center"
                 Fill="Red" />
             <Rectangle
-                x:Name="Dk_Street"
+                x:Name="Diard_Jedi"
                 Canvas.Left="394"
                 Canvas.Top="600"
                 Width="243"
