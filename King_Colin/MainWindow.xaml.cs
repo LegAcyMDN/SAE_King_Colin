@@ -220,11 +220,6 @@ namespace King_Colin
                 }
             }
 
-            animePortail++;
-            if (animePortail > 16) { animePortail = 0; }
-            imagePortail.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Portail/portail-" + animePortail + ".png"));
-            Portail.Fill = imagePortail;
-
             imageSecrette.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/salleSecrette.jpg"));
             Salle_Secret.Fill = imageSecrette;
 
@@ -350,6 +345,8 @@ namespace King_Colin
                 case false:
                     if (!jeuEnPause)
                     {
+                        AnimationImage();
+
                         Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
                         bool devantEchelle = false;
 
@@ -405,6 +402,15 @@ namespace King_Colin
             }
             
         }
+
+        private void AnimationImage()
+        {
+            animePortail++;
+            if (animePortail > 8) { animePortail = 0; }
+            imagePortail.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Portail/portail-" + animePortail + ".png"));
+            Portail.Fill = imagePortail;
+        }
+
         // Gestion du mouvement horizontal si nécessaire (gauche et droite)
         private void MouvementHorizontaux()
         {
