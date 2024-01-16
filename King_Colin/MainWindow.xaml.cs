@@ -459,6 +459,7 @@ namespace King_Colin
 
         private void MouvementDonkey()
         {
+            double canvasMax = cv_Jeux.ActualWidth;
             double joueurX = Canvas.GetLeft(joueur1);
             double donkey = Canvas.GetLeft(donkeykong);
 
