@@ -191,31 +191,6 @@
             VerticalAlignment="Top"
             Fill="Orange" />
         <Rectangle
-            x:Name="joueur1"
-            Canvas.Left="49"
-            Canvas.Top="787"
-            Width="47"
-            Height="60"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Fill="Red" />
-        <Rectangle
-            x:Name="princesse"
-            Canvas.Left="400"
-            Canvas.Top="141"
-            Width="54"
-            Height="66"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Fill="Pink" />
-        <Rectangle
-            x:Name="donkeykong"
-            Canvas.Left="136"
-            Canvas.Top="239"
-            Width="108"
-            Height="128"
-            Fill="Green" />
-        <Rectangle
             x:Name="baril3"
             Canvas.Left="10"
             Canvas.Top="301"
@@ -249,5 +224,30 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Fill="White" />
-    </Canvas>
+        <Rectangle
+            x:Name="joueur1"
+            Canvas.Left="49"
+            Canvas.Top="787"
+            Width="47"
+            Height="60"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Fill="Red" />
+        <Rectangle
+            x:Name="princesse"
+            Canvas.Left="400"
+            Canvas.Top="141"
+            Width="54"
+            Height="66"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Fill="Pink" />
+        <Rectangle
+            x:Name="donkeykong"
+            Canvas.Left="136"
+            Canvas.Top="239"
+            Width="108"
+            Height="128"
+            Fill="Green" />        
+    </Canvas>    
 </Window>

@@ -23,6 +23,7 @@ namespace King_Colin
         private readonly Regex echelle = new Regex("^echelle[0-9]{2}$");
         private readonly Regex ennemi = new Regex("^ennemi[0-9]$");
         private readonly Regex baril = new Regex("^baril[0-9]$");
+
         // liste des éléments rectangles
         private List<System.Windows.Shapes.Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();
         private System.Windows.Shapes.Rectangle rectangle;
@@ -46,6 +47,8 @@ namespace King_Colin
         private int vitesseTirTonneau = 10;
         private int timerTonneau;
         private int timerTirEnnemi;
+
+        //Différent DispatcherTimer pour gérer différent éléments
         private DispatcherTimer temps = new DispatcherTimer();
 
         //gravié pour le joueur
@@ -55,13 +58,15 @@ namespace King_Colin
 
         //Donkey Kong aka Colin
         private Random tir = new Random();
-        Random random = new Random();
+        private Random random = new Random();
+
+        //Musique
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
         public MainWindow()
         {
             InitializeComponent();
-           
+
             MenuWindow fenetreMenu = new MenuWindow();
             fenetreMenu.ShowDialog();
             if (fenetreMenu.DialogResult == false)
@@ -147,11 +152,11 @@ namespace King_Colin
                     }
                 }
 
-                if (!touchePlateforme&& actuelY > maxY)
+                if (!touchePlateforme && actuelY > maxY)
                 {
-                        Canvas.SetTop(joueur1, maxY);
-                        velociteY = 0;
-                        enSaut = false;
+                    Canvas.SetTop(joueur1, maxY);
+                    velociteY = 0;
+                    enSaut = false;
                 }
             }
         }
@@ -291,8 +296,8 @@ namespace King_Colin
 
             if (e.Key == Key.Space && !enSaut)
             {
-                    enSaut = true;
-                    velociteY = -3.25;
+                enSaut = true;
+                velociteY = -3.25;
             }
             /*
             rajouter une condition pour dire disponible suelement dans level bonus
@@ -422,6 +427,7 @@ namespace King_Colin
                 //deblocage du jeu bonus
             }
         }*/
+
         private void RetireLesItems()
         {
             foreach (System.Windows.Shapes.Rectangle y in itemsARetirer)
@@ -435,19 +441,21 @@ namespace King_Colin
         {
             double joueurX = Canvas.GetLeft(joueur1);
             double donkey = Canvas.GetLeft(donkeykong);
+
             if (donkey < joueurX)
             { Canvas.SetLeft(donkeykong, donkey + vitesseDonkey); }
 
             else if (Canvas.GetLeft(donkeykong) > joueurX)
             { Canvas.SetLeft(donkeykong, donkey - vitesseDonkey); }
 
-            if (tir.Next(100) < 2)
+            if (tir.Next(1000) < 2)
                 LancerTonneau();
         }
 
         private bool LancerTonneau()
         {
             bool touche = false;
+
             System.Windows.Shapes.Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirsEnnemi",
@@ -455,6 +463,7 @@ namespace King_Colin
                 Width = 66,
                 Fill = imageTirBoss
             };
+
             Canvas.SetTop(tirsBoss, Canvas.GetTop(donkeykong) + donkeykong.Height);
             Canvas.SetLeft(tirsBoss, Canvas.GetLeft(donkeykong) + donkeykong.Width / 2);
             cv_Jeux.Children.Add(tirsBoss);
@@ -470,9 +479,12 @@ namespace King_Colin
                     tempsTirBaril.Stop();
                 }
             };
+
             tempsTirBaril.Interval = TimeSpan.FromMilliseconds(10);
             tempsTirBaril.Start();
-            if (Canvas.GetLeft(tirsBoss).Equals(Canvas.GetLeft(joueur1))) {  touche = true; }
+
+            if (Canvas.GetLeft(tirsBoss).Equals(Canvas.GetLeft(joueur1))) { touche = true; }
+
             return touche;
         }
         private void MouvementEnnemis()
@@ -535,7 +547,7 @@ namespace King_Colin
 
                     if (Canvas.GetLeft(tirsEnnemi) > cv_Jeux.ActualHeight)
                     {
-                       // cv_Jeux.Children.Remove(tirsEnnemi);
+                        // cv_Jeux.Children.Remove(tirsEnnemi);
                         tempsTirEnnemi.Stop();
                     }
                 };
@@ -548,7 +560,7 @@ namespace King_Colin
         private bool GestionCollision()
         {
             bool touche = false;
-   //a voir si utile ? 
+            //a voir si utile ? 
             return touche;
         }
 
