@@ -31,6 +31,9 @@ namespace King_Colin
         private List<System.Windows.Shapes.Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();
         private System.Windows.Shapes.Rectangle rectangle;
 
+        //animation jeux
+        private int animePortail = 0;
+
         //tous les skins
         private ImageBrush imageJeux = new ImageBrush();
         private ImageBrush imageStreetFighter = new ImageBrush();
@@ -43,6 +46,8 @@ namespace King_Colin
         private ImageBrush imageTonneau = new ImageBrush();
         private ImageBrush imageTirBoss = new ImageBrush();
         private ImageBrush imageTirEnn = new ImageBrush();
+        private ImageBrush imagePortail = new ImageBrush();
+        private ImageBrush imageSecrette = new ImageBrush();
 
         //vitesses et timer
         private int vitesseDonkey = 3;
@@ -213,6 +218,14 @@ namespace King_Colin
                     { rectangle.Fill = imageTonneau; }
                 }
             }
+
+            animePortail++;
+            if (animePortail > 16) { animePortail = 0; }
+            imagePortail.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Portail/portail-" + animePortail + ".png"));
+            Portail.Fill = imagePortail;
+
+            imageSecrette.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/salleSecrette.jpg"));
+            Salle_Secret.Fill = imageSecrette;
 
             imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/fondEcran.png"));
             FondEcran.Fill = imageJeux;
