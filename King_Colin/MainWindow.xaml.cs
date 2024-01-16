@@ -18,6 +18,7 @@ namespace King_Colin
     {
         private bool gauche, droite, haut, bas = false, frappe = false;
         private bool jeuEnPause = false;
+        private bool touche=false;
 
         private readonly Regex plateforme = new Regex("^plateforme[0-9]$");
         private readonly Regex echelle = new Regex("^echelle[0-9]{2}$");
@@ -51,7 +52,7 @@ namespace King_Colin
         //Différent DispatcherTimer pour gérer différent éléments
         private DispatcherTimer temps = new DispatcherTimer();
 
-        //gravié pour le joueur
+        //gravité pour le joueur
         private double velociteY = 0;
         private const double gravite = 0.1;
         private bool enSaut = false;
@@ -411,8 +412,9 @@ namespace King_Colin
                 MessageBox.Show("Gagné !!", "Fin de partie", MessageBoxButton.OK,
                 MessageBoxImage.Exclamation);
             }
-            else if ((LancerTonneau() == true || LancerToastFeu() == true))
+            else if ( touche == true )
             {
+                touche = false;
                 temps.Stop();
                 MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK,
                 MessageBoxImage.Stop);
@@ -427,7 +429,15 @@ namespace King_Colin
                 //deblocage du jeu bonus
             }
         }*/
-
+        private void CollisionTirs(System.Windows.Shapes.Rectangle rectangle)
+        {
+             bool touche = false;
+            Rect tirBoss = new Rect(Canvas.GetLeft(rectangle), Canvas.GetTop(rectangle), rectangle.Width, rectangle.Height);
+           // Rect tirEnnemi = new Rect(Canvas.GetLeft(), Canvas.GetTop(), .Width, .Height);
+                Rect joueur = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+            if (tirBoss.IntersectsWith(joueur)) {  touche = true; }
+            //else if (Canvas.GetLeft(tirEnnemi).Equals(Canvas.GetLeft(joueur1))) { touche = true; }
+        }
         private void RetireLesItems()
         {
             foreach (System.Windows.Shapes.Rectangle y in itemsARetirer)
@@ -452,10 +462,8 @@ namespace King_Colin
                 LancerTonneau();
         }
 
-        private bool LancerTonneau()
+        private void LancerTonneau()
         {
-            bool touche = false;
-
             System.Windows.Shapes.Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirsEnnemi",
@@ -467,7 +475,6 @@ namespace King_Colin
             Canvas.SetTop(tirsBoss, Canvas.GetTop(donkeykong) + donkeykong.Height);
             Canvas.SetLeft(tirsBoss, Canvas.GetLeft(donkeykong) + donkeykong.Width / 2);
             cv_Jeux.Children.Add(tirsBoss);
-
             DispatcherTimer tempsTirBaril = new DispatcherTimer();
             tempsTirBaril.Tick += (sender, e) =>
             {
@@ -482,10 +489,7 @@ namespace King_Colin
 
             tempsTirBaril.Interval = TimeSpan.FromMilliseconds(10);
             tempsTirBaril.Start();
-
-            if (Canvas.GetLeft(tirsBoss).Equals(Canvas.GetLeft(joueur1))) { touche = true; }
-
-            return touche;
+            CollisionTirs(tirsBoss);
         }
         private void MouvementEnnemis()
         {
@@ -522,9 +526,8 @@ namespace King_Colin
             }
 
         }
-        private bool LancerToastFeu()
+        private void LancerToastFeu()
         {
-            bool touche = false;
             double ennemi = Canvas.GetLeft(ennemi1);
             System.Windows.Shapes.Rectangle tirsEnnemi = new System.Windows.Shapes.Rectangle
             {
@@ -554,8 +557,6 @@ namespace King_Colin
                 tempsTirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
                 tempsTirEnnemi.Start();
             }
-            if (Canvas.GetLeft(tirsEnnemi).Equals(Canvas.GetLeft(joueur1))) { touche = true; }
-            return touche;
         }
         private bool GestionCollision()
         {
