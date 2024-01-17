@@ -31,24 +31,38 @@ namespace King_Colin
 
         //animation jeux
         private int animePortail = 0;
-        private int animeMario = 0;
+        private int animeMarteau = 0;
+        private int animeStatique = 0;
+        private int animeCourir = 0;
 
-        //tous les skins
+        //img scene
         private ImageBrush imageJeux = new ImageBrush();
         private ImageBrush imageStreetFighter = new ImageBrush();
+        private ImageBrush imageSecrette = new ImageBrush();
+
+        //img personnage et ennemi
         private ImageBrush imageJoueur = new ImageBrush();
         private ImageBrush imagePrincesse = new ImageBrush();
         private ImageBrush imageDonkey = new ImageBrush();
         private ImageBrush imageEnnemi = new ImageBrush();
+
+        //img mario
+        private ImageBrush imageMarioMarteau = new ImageBrush();
+        private ImageBrush imageMarioStatique = new ImageBrush();
+        private ImageBrush imageMarioCourir = new ImageBrush();
+        private ImageBrush imageMarioSaut = new ImageBrush();
+
+        //img element
         private ImageBrush imageEchelle = new ImageBrush();
         private ImageBrush imagePlateforme = new ImageBrush();
         private ImageBrush imageTonneau = new ImageBrush();
+        private ImageBrush imagePortail = new ImageBrush();
+        private ImageBrush imageMarteau = new ImageBrush();
+
+        //img tir
         private ImageBrush imageTirBoss = new ImageBrush();
         private ImageBrush imageTirEnn = new ImageBrush();
-        private ImageBrush imagePortail = new ImageBrush();
-        private ImageBrush imageSecrette = new ImageBrush();
-        private ImageBrush imageMarteau = new ImageBrush();
-        private ImageBrush imageMarioMarteau = new ImageBrush();
+
 
         //vitesses et timer
         private int vitesseDonkey = 3;
@@ -307,7 +321,10 @@ namespace King_Colin
 
             imageMarteau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/marteauNoir.png"));
             rect_Marteau.Fill = imageMarteau;
+
+            imageMarioSaut.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Courir/courir-5.png"));
         }
+
         private void AnimationImage()
         {
             animePortail++;
@@ -315,10 +332,17 @@ namespace King_Colin
             imagePortail.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Portail/portail-" + animePortail / 2 + ".png"));
             rect_Portail.Fill = imagePortail;
 
-            animeMario++;
-            if (animeMario > 10) { animeMario = 0; }
-            imageMarioMarteau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Marteau/marteau-" + animeMario / 2 + ".png"));
+            animeMarteau++;
+            if (animeMarteau > 10) { animeMarteau = 0; }
+            imageMarioMarteau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Marteau/marteau-" + animeMarteau / 2 + ".png"));
 
+            animeStatique++;
+            if (animeStatique > 12) { animeStatique = 0; }
+            imageMarioStatique.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Statique/statique-" + animeStatique / 2 + ".png"));
+
+            animeCourir++;
+            if (animeCourir > 18) { animeCourir = 0; }
+            imageMarioCourir.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Courir/courir-" + animeCourir / 2 + ".png"));
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -337,10 +361,26 @@ namespace King_Colin
         private void cv_Jeux_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Q)
-            { gauche = true; }
+            {
+                gauche = true;
+                AppliquerMiroirDroite(rect_joueur1);
+
+                if (aMarteau)
+                { rect_joueur1.Fill = imageMarioMarteau; }
+                else
+                    MarioCourtImage();
+            }
 
             if (e.Key == Key.D)
-            { droite = true; }
+            {
+                droite = true;
+                AppliquerMiroirGauche(rect_joueur1);
+
+                if (aMarteau)
+                { rect_joueur1.Fill = imageMarioMarteau; }
+                else
+                    MarioCourtImage();
+            }
 
             if (e.Key == Key.Z)
             { haut = true; }
@@ -351,6 +391,11 @@ namespace King_Colin
             if (e.Key == Key.Space)
             {
                 enSaut = false;
+
+                if (aMarteau)
+                { rect_joueur1.Fill = imageMarioMarteau; }
+                else
+                    rect_joueur1.Fill = imageMarioStatique;
                 // JumpStart();
             }
 
@@ -384,16 +429,58 @@ namespace King_Colin
         private void cv_Jeux_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Q)
-            { gauche = false; }
+            {
+                gauche = false;                
+
+                if (aMarteau)
+                {
+                    AppliquerMiroirDroite(rect_joueur1);
+                    rect_joueur1.Fill = imageMarioMarteau; 
+                }
+
+                else
+                {
+                    AppliquerMiroirGauche(rect_joueur1);
+                    rect_joueur1.Fill = imageMarioStatique; 
+                }
+            }
 
             if (e.Key == Key.D)
-            { droite = false; }
+            {
+                droite = false;                
+
+                if (aMarteau)
+                {
+                    AppliquerMiroirGauche(rect_joueur1);
+                    rect_joueur1.Fill = imageMarioMarteau; 
+                }
+
+                else
+                {
+                    AppliquerMiroirDroite(rect_joueur1);
+                    rect_joueur1.Fill = imageMarioStatique; 
+                }
+            }
 
             if (e.Key == Key.Z)
-            { haut = false; }
+            {
+                haut = false;
+
+                if (aMarteau)
+                { rect_joueur1.Fill = imageMarioMarteau; }
+                else
+                    rect_joueur1.Fill = imageMarioStatique;
+            }
 
             if (e.Key == Key.S)
-            { bas = false; }
+            {
+                bas = false;
+
+                if (aMarteau)
+                { rect_joueur1.Fill = imageMarioMarteau; }
+                else
+                    rect_joueur1.Fill = imageMarioStatique;
+            }
 
             if (e.Key == Key.Space)
             {
@@ -404,6 +491,25 @@ namespace King_Colin
                 }
                 //  JumpEnd(); 
             }
+        }
+
+        private void AppliquerMiroirGauche(System.Windows.Shapes.Rectangle rectangle)
+        {
+            ScaleTransform transformation = new ScaleTransform(-1, 1);
+            rectangle.RenderTransform = transformation;
+        }
+
+        private void AppliquerMiroirDroite(System.Windows.Shapes.Rectangle rectangle)
+        {
+            ScaleTransform transformation = new ScaleTransform(1, 1);
+            rectangle.RenderTransform = transformation;
+        }
+
+        private void MarioCourtImage()
+        {
+            rect_joueur1.Fill = imageMarioCourir;
+            rect_joueur1.Width = 55;
+            rect_joueur1.Height = 71;
         }
 
         private List<System.Windows.Shapes.Rectangle> ListeDesEchelles()
@@ -427,6 +533,7 @@ namespace King_Colin
             {
                 case false:
                     // timeJump += deltaTime;
+                    ActionMarteau();
                     AnimationImage();
 
                     Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
@@ -476,7 +583,6 @@ namespace King_Colin
                     MouvementDonkey();
                     MouvementEnnemis();
                     //   Victoire();
-                    ActionMarteau();
                     break;
 
                 case true:
