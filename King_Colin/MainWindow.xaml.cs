@@ -478,6 +478,7 @@ namespace King_Colin
                     MouvementDonkey();
                     MouvementEnnemis();
                     //   Victoire();
+                    ActionMarteau();
                     break;
 
                 case true:
@@ -485,6 +486,36 @@ namespace King_Colin
                     break;
             }
 
+        }
+
+        private void ActionMarteau()
+        {
+            Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
+            Rect marteau = new Rect(Canvas.GetLeft(rect_Marteau), Canvas.GetTop(rect_Marteau), rect_Marteau.Width, rect_Marteau.Height);
+
+            if (joueur.IntersectsWith(marteau))
+            {
+                rect_joueur1.Fill = imageMarioMarteau;
+                rect_joueur1.Height = 60;
+                rect_joueur1.Width = 60;
+                rect_Marteau.Visibility = Visibility.Hidden;
+            }
+
+            Passage();
+        }
+
+        private void Passage()
+        {
+            Rect passage = new Rect(Canvas.GetLeft(rect_passage), Canvas.GetTop(rect_passage), rect_passage.Width, rect_passage.Height);
+            Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
+
+            if (passage.IntersectsWith(joueur))
+            {
+                cv_Secrette.Visibility = Visibility.Visible;
+
+                if (Canvas.GetLeft(rect_joueur1) + rect_joueur1.Width >= Canvas.GetLeft(cv_Secrette) + cv_Secrette.Width)
+                { cv_Jeux.Visibility = Visibility.Hidden; }
+            }
         }
 
         private void MouvementHorizontaux()
@@ -704,10 +735,7 @@ namespace King_Colin
             AfficherLesCredits();
             return;
         }*/
-        private void MouvementMarteau()
-        {
-            //gif marteau qui tappe  
-        }
+
         private bool LancementNiveauBonus()
         {
             bool lancement = false;
