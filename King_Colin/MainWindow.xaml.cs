@@ -635,6 +635,20 @@ namespace King_Colin
                 aMarteau = true;
             }
 
+            foreach (var tirEnnemi in cv_Jeux.Children.OfType<System.Windows.Shapes.Rectangle>().Where(r => r.Tag.Equals("tirsEnnemi")))
+            {
+                Rect tirRect = new Rect(Canvas.GetLeft(tirEnnemi), Canvas.GetTop(tirEnnemi), tirEnnemi.Width, tirEnnemi.Height);
+
+                if (joueur.IntersectsWith(tirRect) && aMarteau)
+                { itemsARetirer.Add(tirEnnemi); }
+            }
+
+            foreach (var ennemiRect in ListeDesPigeons().Select(e => new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))
+            {
+                if (joueur.IntersectsWith(ennemiRect) && aMarteau)
+                { itemsARetirer.Add(ListeDesPigeons().First(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))); }
+            }
+
             if (aMarteau && passage.IntersectsWith(joueur))
             {
                 cv_Secrete.Visibility = Visibility.Visible;
