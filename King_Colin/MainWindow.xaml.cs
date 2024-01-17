@@ -18,7 +18,7 @@ namespace King_Colin
     {
         private bool gauche, droite, haut, bas = false, frappe = false;
         private bool jeuEnPause = false;
-
+        private bool aMarteau = false;
 
         private readonly Regex plateforme = new Regex("^rect_plateforme[0-9]$");
         private readonly Regex echelle = new Regex("^rect_echelle[0-9]{2}$");
@@ -492,6 +492,7 @@ namespace King_Colin
         {
             Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
             Rect marteau = new Rect(Canvas.GetLeft(rect_Marteau), Canvas.GetTop(rect_Marteau), rect_Marteau.Width, rect_Marteau.Height);
+            Rect passage = new Rect(Canvas.GetLeft(rect_passage), Canvas.GetTop(rect_passage), rect_passage.Width, rect_passage.Height);
 
             if (joueur.IntersectsWith(marteau))
             {
@@ -499,17 +500,10 @@ namespace King_Colin
                 rect_joueur1.Height = 60;
                 rect_joueur1.Width = 60;
                 rect_Marteau.Visibility = Visibility.Hidden;
+                aMarteau = true;
             }
 
-            Passage();
-        }
-
-        private void Passage()
-        {
-            Rect passage = new Rect(Canvas.GetLeft(rect_passage), Canvas.GetTop(rect_passage), rect_passage.Width, rect_passage.Height);
-            Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
-
-            if (passage.IntersectsWith(joueur))
+            if (aMarteau && passage.IntersectsWith(joueur))
             {
                 cv_Secrette.Visibility = Visibility.Visible;
 
