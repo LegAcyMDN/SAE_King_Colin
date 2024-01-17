@@ -312,7 +312,7 @@ namespace King_Colin
             imageStreetFighter.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/map3.png"));
             rect_FondEcran2.Fill = imageStreetFighter;
 
-            imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/marioLou.png"));
+            imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Statique/statique-0.png"));
             rect_joueur1.Fill = imageJoueur;
 
             imagePrincesse.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/princessejustin.png"));
@@ -645,6 +645,20 @@ namespace King_Colin
                 rect_Marteau.Visibility = Visibility.Hidden;
                 aMarteau = true;
             }
+
+            /*foreach (var tirEnnemi in cv_Jeux.Children.OfType<System.Windows.Shapes.Rectangle>().Where(r => r.Tag.Equals("tirsEnnemi")))
+            {
+                Rect tirRect = new Rect(Canvas.GetLeft(tirEnnemi), Canvas.GetTop(tirEnnemi), tirEnnemi.Width, tirEnnemi.Height);
+
+                if (joueur.IntersectsWith(tirRect) && aMarteau)
+                { itemsARetirer.Add(tirEnnemi); }
+            }
+
+            foreach (var ennemiRect in ListeDesPigeons().Select(e => new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))
+            {
+                if (aMarteau && joueur.IntersectsWith(ennemiRect))
+                { itemsARetirer.Add(ListeDesPigeons().First(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))); }
+            }*/
 
             if (aMarteau && passage.IntersectsWith(joueur))
             {
