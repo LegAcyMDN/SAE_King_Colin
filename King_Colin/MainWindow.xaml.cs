@@ -16,6 +16,7 @@ namespace King_Colin
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool sensJoueur = true;
         private bool gauche, droite, haut, bas = false, frappe = false;
         private bool jeuEnPause = false;
         private bool aMarteau = false;
@@ -348,8 +349,8 @@ namespace King_Colin
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/RipeSeeds.mp3", UriKind.Relative);
-          //  musiqueJeux.Open(uri);
-           // musiqueJeux.Play();
+            //  musiqueJeux.Open(uri);
+            // musiqueJeux.Play();
         }
 
         private void MusiqueJeu_Fin(object sender, EventArgs e)
@@ -430,35 +431,35 @@ namespace King_Colin
         {
             if (e.Key == Key.Q)
             {
-                gauche = false;                
+                gauche = false;
 
                 if (aMarteau)
                 {
                     AppliquerMiroirDroite(rect_joueur1);
-                    rect_joueur1.Fill = imageMarioMarteau; 
+                    rect_joueur1.Fill = imageMarioMarteau;
                 }
 
                 else
                 {
                     AppliquerMiroirGauche(rect_joueur1);
-                    rect_joueur1.Fill = imageMarioStatique; 
+                    rect_joueur1.Fill = imageMarioStatique;
                 }
             }
 
             if (e.Key == Key.D)
             {
-                droite = false;                
+                droite = false;
 
                 if (aMarteau)
                 {
                     AppliquerMiroirGauche(rect_joueur1);
-                    rect_joueur1.Fill = imageMarioMarteau; 
+                    rect_joueur1.Fill = imageMarioMarteau;
                 }
 
                 else
                 {
                     AppliquerMiroirDroite(rect_joueur1);
-                    rect_joueur1.Fill = imageMarioStatique; 
+                    rect_joueur1.Fill = imageMarioStatique;
                 }
             }
 
@@ -495,14 +496,29 @@ namespace King_Colin
 
         private void AppliquerMiroirGauche(System.Windows.Shapes.Rectangle rectangle)
         {
-            ScaleTransform transformation = new ScaleTransform(-1, 1);
-            rectangle.RenderTransform = transformation;
+            double joueurX = Canvas.GetLeft(rect_joueur1);
+            double joueurWidth = rect_joueur1.Width;
+            if (sensJoueur== true)
+            {
+                ScaleTransform transformation = new ScaleTransform(-1, 1);
+                rectangle.RenderTransform = transformation;
+                Canvas.SetLeft(rect_joueur1, joueurX + joueurWidth);
+            }
+           sensJoueur = false;
         }
 
         private void AppliquerMiroirDroite(System.Windows.Shapes.Rectangle rectangle)
         {
-            ScaleTransform transformation = new ScaleTransform(1, 1);
-            rectangle.RenderTransform = transformation;
+            double joueurX = Canvas.GetLeft(rect_joueur1);
+            double joueurWidth = rect_joueur1.Width;
+            if (sensJoueur == false)
+            {
+                ScaleTransform transformation = new ScaleTransform(1, 1);
+                rectangle.RenderTransform = transformation;
+                Canvas.SetLeft(rect_joueur1, joueurX - joueurWidth);
+            }
+
+            sensJoueur = true;
         }
 
         private void MarioCourtImage()
@@ -621,7 +637,8 @@ namespace King_Colin
             double canvasMax = cv_Jeux.ActualWidth;
             double joueurX = Canvas.GetLeft(rect_joueur1);
             double joueurWidth = rect_joueur1.Width;
-
+            Console.WriteLine(joueurX + " " + joueurWidth);
+            Console.WriteLine(joueurX + joueurWidth);
             if (gauche && droite)
                 return;
             if (gauche && joueurX <= 0)
@@ -629,9 +646,9 @@ namespace King_Colin
                 Canvas.SetLeft(rect_joueur1, 0);
                 return;
             }
-            if (droite && joueurX + joueurWidth >= canvasMax)
+            if (droite && joueurX >= canvasMax)
             {
-                Canvas.SetLeft(rect_joueur1, canvasMax - joueurWidth);
+                Canvas.SetLeft(rect_joueur1, canvasMax);
                 return;
             }
             if (droite)
