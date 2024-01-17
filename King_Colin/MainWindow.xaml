@@ -21,7 +21,7 @@
     <Grid>
         <Canvas x:Name="cv_Global">
             <Canvas
-                x:Name="cv_Secrette"
+                x:Name="cv_Secrete"
                 Canvas.Left="160"
                 Canvas.Top="456"
                 Width="400"
@@ -30,7 +30,7 @@
                 VerticalAlignment="Top"
                 Visibility="Visible">
                 <Rectangle
-                    x:Name="rect_Salle_Secret"
+                    x:Name="rect_Salle_Secrete"
                     Width="400"
                     Height="400"
                     HorizontalAlignment="Left"

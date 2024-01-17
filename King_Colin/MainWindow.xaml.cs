@@ -288,7 +288,7 @@ namespace King_Colin
             }
 
             imageSecrette.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/salleSecrette.jpg"));
-            rect_Salle_Secret.Fill = imageSecrette;
+            rect_Salle_Secrete.Fill = imageSecrette;
 
             imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/fondEcran.png"));
             rect_FondEcran.Fill = imageJeux;
@@ -307,8 +307,6 @@ namespace King_Colin
 
             imageMarteau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/marteauNoir.png"));
             rect_Marteau.Fill = imageMarteau;
-
-            imageMarioMarteau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/loumariojetpack.png"));
         }
         private void AnimationImage()
         {
@@ -505,9 +503,9 @@ namespace King_Colin
 
             if (aMarteau && passage.IntersectsWith(joueur))
             {
-                cv_Secrette.Visibility = Visibility.Visible;
+                cv_Secrete.Visibility = Visibility.Visible;
 
-                if (Canvas.GetLeft(rect_joueur1) + rect_joueur1.Width >= Canvas.GetLeft(cv_Secrette) + cv_Secrette.Width)
+                if (Canvas.GetLeft(rect_joueur1) + rect_joueur1.Width >= Canvas.GetLeft(cv_Secrete) + cv_Secrete.Width)
                 { cv_Jeux.Visibility = Visibility.Hidden; }
             }
         }
