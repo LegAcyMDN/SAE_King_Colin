@@ -21,27 +21,30 @@
     <Grid>
         <Canvas x:Name="cv_Global">
             <Canvas
-                x:Name="cv_Secrette"
+                x:Name="cv_Secrete"
                 Canvas.Left="160"
-                Canvas.Top="447"
+                Canvas.Top="456"
                 Width="400"
                 Height="400"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center">
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Visibility="Visible">
                 <Rectangle
-                    x:Name="Salle_Secret"
+                    x:Name="rect_Salle_Secrete"
                     Width="400"
                     Height="400"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top" />
+                <Image Height="400" Source="/Img/Element/salleSecrette.jpg" Stretch="Fill" Width="400"/>
+                <Rectangle Height="8" Width="400" HorizontalAlignment="Center" Canvas.Top="392" VerticalAlignment="Top"/>
                 <Rectangle
-                    x:Name="Portail"
-                    Canvas.Top="255"
+                    x:Name="rect_Portail"
+                    Canvas.Top="266"
                     Width="125"
                     Height="125"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
-                    RenderTransformOrigin="0.5,0.5">
+                    RenderTransformOrigin="0.5,0.5" Canvas.Left="17">
                     <Rectangle.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform />
@@ -63,13 +66,21 @@
                 KeyDown="cv_Jeux_KeyDown"
                 KeyUp="cv_Jeux_KeyUp">
                 <Rectangle
-                    Name="FondEcran"
+                    Name="rect_FondEcran"
                     Width="800"
                     Height="1080"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top" />
                 <Rectangle
-                    Name="plateforme1"
+                    x:Name="rect_Marteau"
+                    Canvas.Left="442"
+                    Canvas.Top="551"
+                    Width="60"
+                    Height="52"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top" />
+                <Rectangle
+                    Name="rect_plateforme1"
                     Canvas.Top="847"
                     Width="800"
                     Height="25"
@@ -77,7 +88,7 @@
                     VerticalAlignment="Center"
                     Fill="Purple" />
                 <Rectangle
-                    Name="plateforme2"
+                    Name="rect_plateforme2"
                     Canvas.Top="687"
                     Width="800"
                     Height="25"
@@ -85,7 +96,7 @@
                     VerticalAlignment="Top"
                     Fill="Purple" />
                 <Rectangle
-                    Name="plateforme3"
+                    Name="rect_plateforme3"
                     Canvas.Top="527"
                     Width="800"
                     Height="24"
@@ -93,7 +104,7 @@
                     VerticalAlignment="Top"
                     Fill="Purple" />
                 <Rectangle
-                    Name="plateforme4"
+                    Name="rect_plateforme4"
                     Canvas.Top="367"
                     Width="800"
                     Height="24"
@@ -101,7 +112,7 @@
                     VerticalAlignment="Top"
                     Fill="Purple" />
                 <Rectangle
-                    Name="plateforme5"
+                    Name="rect_plateforme5"
                     Canvas.Left="348"
                     Canvas.Top="207"
                     Width="350"
@@ -110,7 +121,7 @@
                     VerticalAlignment="Center"
                     Fill="Purple" />
                 <Rectangle
-                    x:Name="echelle05"
+                    x:Name="rect_echelle05"
                     Canvas.Left="323"
                     Canvas.Top="147"
                     Width="25"
@@ -119,7 +130,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle01"
+                    x:Name="rect_echelle01"
                     Canvas.Left="589"
                     Canvas.Top="687"
                     Width="26"
@@ -128,7 +139,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle02"
+                    x:Name="rect_echelle02"
                     Canvas.Left="196"
                     Canvas.Top="527"
                     Width="26"
@@ -137,7 +148,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle03"
+                    x:Name="rect_echelle03"
                     Canvas.Left="711"
                     Canvas.Top="367"
                     Width="25"
@@ -146,7 +157,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle04"
+                    x:Name="rect_echelle04"
                     Canvas.Left="629"
                     Canvas.Top="207"
                     Width="25"
@@ -155,7 +166,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle06"
+                    x:Name="rect_echelle06"
                     Canvas.Left="277"
                     Canvas.Top="147"
                     Width="25"
@@ -164,7 +175,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle07"
+                    x:Name="rect_echelle07"
                     Canvas.Left="366"
                     Canvas.Top="687"
                     Width="26"
@@ -173,7 +184,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle08"
+                    x:Name="rect_echelle08"
                     Canvas.Left="366"
                     Canvas.Top="797"
                     Width="26"
@@ -182,7 +193,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle09"
+                    x:Name="rect_echelle09"
                     Canvas.Left="277"
                     Canvas.Top="-73"
                     Width="25"
@@ -191,7 +202,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="echelle10"
+                    x:Name="rect_echelle10"
                     Canvas.Left="323"
                     Canvas.Top="-73"
                     Width="25"
@@ -200,7 +211,7 @@
                     VerticalAlignment="Top"
                     Fill="blue" />
                 <Rectangle
-                    x:Name="ennemi1"
+                    x:Name="rect_ennemi1"
                     Canvas.Left="534"
                     Canvas.Top="797"
                     Width="50"
@@ -209,7 +220,7 @@
                     VerticalAlignment="Top"
                     Fill="Orange" />
                 <Rectangle
-                    x:Name="ennemi2"
+                    x:Name="rect_ennemi2"
                     Canvas.Left="238"
                     Canvas.Top="637"
                     Width="50"
@@ -218,7 +229,7 @@
                     VerticalAlignment="Top"
                     Fill="Orange" />
                 <Rectangle
-                    x:Name="ennemi3"
+                    x:Name="rect_ennemi3"
                     Canvas.Left="455"
                     Canvas.Top="477"
                     Width="50"
@@ -227,14 +238,14 @@
                     VerticalAlignment="Top"
                     Fill="Orange" />
                 <Rectangle
-                    x:Name="baril3"
+                    x:Name="rect_baril3"
                     Canvas.Left="10"
                     Canvas.Top="301"
                     Width="51"
                     Height="66"
                     Fill="White" />
                 <Rectangle
-                    x:Name="baril1"
+                    x:Name="rect_baril1"
                     Canvas.Left="10"
                     Canvas.Top="235"
                     Width="51"
@@ -243,7 +254,7 @@
                     VerticalAlignment="Top"
                     Fill="White" />
                 <Rectangle
-                    x:Name="baril4"
+                    x:Name="rect_baril4"
                     Canvas.Left="61"
                     Canvas.Top="301"
                     Width="51"
@@ -252,7 +263,7 @@
                     VerticalAlignment="Top"
                     Fill="White" />
                 <Rectangle
-                    x:Name="baril2"
+                    x:Name="rect_baril2"
                     Canvas.Left="61"
                     Canvas.Top="235"
                     Width="51"
@@ -261,7 +272,16 @@
                     VerticalAlignment="Top"
                     Fill="White" />
                 <Rectangle
-                    x:Name="joueur1"
+                    x:Name="rect_passage"
+                    Canvas.Top="717"
+                    Width="10"
+                    Height="130"
+                    Canvas.Left="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Fill="Black" />
+                <Rectangle
+                    x:Name="rect_joueur1"
                     Canvas.Left="49"
                     Canvas.Top="787"
                     Width="47"
@@ -270,7 +290,7 @@
                     VerticalAlignment="Center"
                     Fill="Red" />
                 <Rectangle
-                    x:Name="princesse"
+                    x:Name="rect_princesse"
                     Canvas.Left="400"
                     Canvas.Top="141"
                     Width="54"
@@ -279,7 +299,7 @@
                     VerticalAlignment="Top"
                     Fill="Pink" />
                 <Rectangle
-                    x:Name="donkeykong"
+                    x:Name="rect_donkeykong"
                     Canvas.Left="136"
                     Canvas.Top="239"
                     Width="108"
@@ -290,11 +310,11 @@
 
         <Canvas x:Name="cv_Combat" Visibility="Hidden">
             <Rectangle
-                x:Name="FondEcran2"
+                x:Name="rect_FondEcran2"
                 Width="1920"
                 Height="1080" />
             <Rectangle
-                x:Name="plat_combat"
+                x:Name="rect_plat_combat"
                 Canvas.Left="208"
                 Canvas.Top="888"
                 Width="1470"
@@ -302,7 +322,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" />
             <Rectangle
-                x:Name="joueur"
+                x:Name="rect_joueur2"
                 Canvas.Left="1387"
                 Canvas.Top="685"
                 Width="135"
@@ -311,7 +331,7 @@
                 VerticalAlignment="Center"
                 Fill="Red" />
             <Rectangle
-                x:Name="Diard_Jedi"
+                x:Name="rect_Diard_Jedi"
                 Canvas.Left="394"
                 Canvas.Top="600"
                 Width="243"
