@@ -228,17 +228,18 @@ namespace King_Colin
             {
                 velociteY += gravite;
                 Canvas.SetTop(rect_joueur1, Canvas.GetTop(rect_joueur1) + velociteY);
-
                 foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
                 {
                     Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
                     Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
 
-                    if (joueur.IntersectsWith(plateformeBornes) && velociteY >= 0)
+                    if (joueur.IntersectsWith(plateformeBornes))
                     {
+                        Console.WriteLine("touché!");
                         touchePlateforme = true;
                         velociteY = 0;
                         enSaut = false;
+                        Canvas.SetBottom(rect_joueur1, Canvas.GetTop(plateforme));
 
                         // Ajuster la position du joueur au sommet de la plateforme
                         Canvas.SetTop(rect_joueur1, plateformeBornes.Top - rect_joueur1.Height);
@@ -364,6 +365,7 @@ namespace King_Colin
             if (e.Key == Key.Q)
             {
                 gauche = true;
+                droite = false;
                 AppliquerMiroirDroite(rect_joueur1);
 
                 if (aMarteau)
@@ -375,12 +377,17 @@ namespace King_Colin
             if (e.Key == Key.D)
             {
                 droite = true;
+                gauche = false;
                 AppliquerMiroirGauche(rect_joueur1);
 
                 if (aMarteau)
                 { rect_joueur1.Fill = imageMarioMarteau; }
                 else
                     MarioCourtImage();
+            }
+            if (e.Key == Key.D && e.Key == Key.Q)
+            {
+                return;
             }
 
             if (e.Key == Key.Z)
@@ -392,7 +399,6 @@ namespace King_Colin
             if (e.Key == Key.Space)
             {
                 enSaut = false;
-
                 if (aMarteau)
                 { rect_joueur1.Fill = imageMarioMarteau; }
                 else
@@ -432,7 +438,6 @@ namespace King_Colin
             if (e.Key == Key.Q)
             {
                 gauche = false;
-
                 if (aMarteau)
                 {
                     AppliquerMiroirDroite(rect_joueur1);
@@ -449,7 +454,6 @@ namespace King_Colin
             if (e.Key == Key.D)
             {
                 droite = false;
-
                 if (aMarteau)
                 {
                     AppliquerMiroirGauche(rect_joueur1);
@@ -462,6 +466,8 @@ namespace King_Colin
                     rect_joueur1.Fill = imageMarioStatique;
                 }
             }
+      
+
 
             if (e.Key == Key.Z)
             {
@@ -503,8 +509,9 @@ namespace King_Colin
                 ScaleTransform transformation = new ScaleTransform(-1, 1);
                 rectangle.RenderTransform = transformation;
                 Canvas.SetLeft(rect_joueur1, joueurX + joueurWidth);
+                sensJoueur = false;
             }
-           sensJoueur = false;
+           
         }
 
         private void AppliquerMiroirDroite(System.Windows.Shapes.Rectangle rectangle)
@@ -516,9 +523,10 @@ namespace King_Colin
                 ScaleTransform transformation = new ScaleTransform(1, 1);
                 rectangle.RenderTransform = transformation;
                 Canvas.SetLeft(rect_joueur1, joueurX - joueurWidth);
+                sensJoueur = true;
             }
 
-            sensJoueur = true;
+            
         }
 
         private void MarioCourtImage()
@@ -544,10 +552,11 @@ namespace King_Colin
 
         private void Jeu(object sender, EventArgs e)
         {
-
             switch (LancementNiveauBonus())
             {
                 case false:
+                    if (tirEnnemi.Next(100) < 1)
+                        LancerTonneau();
                     // timeJump += deltaTime;
                     ActionMarteau();
                     AnimationImage();
@@ -596,11 +605,14 @@ namespace King_Colin
                         MouvementHorizontaux();
                         //    RetireLesItems();
                     }
+                    if (tirEnnemi.Next(1000) < 1)
+                        LancerToastFeu();
+
                     MouvementDonkey();
                     MouvementEnnemis();
                     //   Victoire();
                     break;
-
+            
                 case true:
                     //oe c'est greg
                     break;
@@ -641,7 +653,7 @@ namespace King_Colin
             Console.WriteLine(joueurX + joueurWidth);
             if (gauche && droite)
                 return;
-            if (gauche && joueurX <= 0)
+            if (gauche && joueurX <= 0&& !aMarteau)
             {
                 Canvas.SetLeft(rect_joueur1, 0);
                 return;
@@ -687,15 +699,14 @@ namespace King_Colin
             else if (donkey + rect_donkeykong.Width >= canvasMax)
             {
                 Canvas.SetRight(rect_donkeykong, canvasMax - joueurWidth);
-                Console.WriteLine("touché!");
                 return;
             }
-
-            if (tirEnnemi.Next(100) < 2)
-                LancerTonneau();
+            
+            
         }
         private void LancerTonneau()
         {
+            Console.WriteLine("touché!");
             System.Windows.Shapes.Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirsEnnemi",
@@ -720,7 +731,6 @@ namespace King_Colin
                     tempsTirBaril.Stop();
                 }
             };
-
 
             tempsTirBaril.Interval = TimeSpan.FromMilliseconds(10);
             tempsTirBaril.Start();
