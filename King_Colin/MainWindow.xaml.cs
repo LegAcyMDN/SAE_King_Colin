@@ -313,8 +313,8 @@ namespace King_Colin
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/RipeSeeds.mp3", UriKind.Relative);
-            musiqueJeux.Open(uri);
-            musiqueJeux.Play();
+          //  musiqueJeux.Open(uri);
+           // musiqueJeux.Play();
         }
 
         private void MusiqueJeu_Fin(object sender, EventArgs e)
@@ -760,10 +760,3 @@ namespace King_Colin
         }*/
     }
 }
-
-/*Niveaux de difficultés : 
- * -facile : pas d'ennemis, juste Donkey qui tire des tonneaux, plateformes droites, beaucoup d'échelles
- * -moyen : peu d'ennemis, tir de tonneaux plus rapides, plateformes droites, un peu moins d'échelles
- * -difficile : plus d'ennemis, tir plus rapides et fréquents, plateformes penchées
- * les ennemis ne se déplacent pas, donkey suit le joueur mais est moins rapide 
- */
