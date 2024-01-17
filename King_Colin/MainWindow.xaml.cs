@@ -152,8 +152,8 @@ namespace King_Colin
         {
             timeJumpEnd = timeJump;
 
-            Console.WriteLine("start :" + timeJumpStart);
-            Console.WriteLine("end :" + timeJumpEnd);
+            //Console.WriteLine("start :" + timeJumpStart);
+            //Console.WriteLine("end :" + timeJumpEnd);
             float time = timeJumpEnd - timeJumpStart;
 
             jumpBoost = Math.Min(time, 1);
@@ -557,13 +557,14 @@ namespace King_Colin
             switch (LancementNiveauBonus())
             {
                 case false:
-                    if (tirEnnemi.Next(100) < 1)
+                    if (tirEnnemi.Next(100) > 99)
                         LancerTonneau();
                     timeJump += deltaTime;
                     ActionMarteau();
                     AnimationImage();
 
-
+                    MouvementDonkey();
+                    MouvementEnnemis();
 
                     MouvementHorizontaux();
                     MovementJoueurVertical();
@@ -604,9 +605,6 @@ namespace King_Colin
                                 Canvas.SetTop(rect_joueur1, Math.Min(bottomEchelle - rect_joueur1.Height, joueur1Top + vitesseJoueur));
                             }
                         }
-
-                        MouvementDonkey();
-                        MouvementEnnemis();
 
 
                     }
@@ -714,11 +712,10 @@ namespace King_Colin
 
         private void MouvementHorizontaux()
         {
+           
             double canvasMax = cv_Jeux.ActualWidth;
             double joueurX = Canvas.GetLeft(rect_joueur1);
             double joueurWidth = rect_joueur1.Width;
-            Console.WriteLine(joueurX + " " + joueurWidth);
-            Console.WriteLine(joueurX + joueurWidth);
             if (gauche && droite)
                 return;
             if (gauche && joueurX <= 0 && !aMarteau)
@@ -747,26 +744,31 @@ namespace King_Colin
         {
             double canvasMax = cv_Jeux.ActualWidth;
             double joueurX = Canvas.GetLeft(rect_joueur1);
+            double donkeyWidth = rect_donkeykong.ActualWidth;
             double donkey = Canvas.GetLeft(rect_donkeykong);
-            double joueurWidth = rect_joueur1.Width;
-            if (donkey <= joueurX)
+            double joueurWidth = rect_joueur1.ActualWidth;
+            Console.WriteLine("joueurWidth" + joueurWidth);
+            Console.WriteLine("donkey"+ donkey);
+            Console.WriteLine(canvasMax);
+            if (droite && donkey + donkeyWidth <= canvasMax)
             {
                 Canvas.SetLeft(rect_donkeykong, donkey + vitesseDonkey);
                 return;
             }
-            else if (donkey >= joueurX)
+            else if (gauche && donkey >= 0)
             {
                 Canvas.SetLeft(rect_donkeykong, donkey - vitesseDonkey);
                 return;
             }
-            else if (donkey <= 0)
+            else if (gauche && donkey <= 0)
             {
                 Canvas.SetLeft(rect_donkeykong, 0);
                 return;
             }
-            else if (donkey + rect_donkeykong.Width >= canvasMax)
+            else if (droite&& donkey + donkeyWidth >= canvasMax)
             {
-                Canvas.SetRight(rect_donkeykong, canvasMax - joueurWidth);
+                Console.WriteLine("touché");
+                Canvas.SetRight(rect_donkeykong, canvasMax - donkeyWidth);
                 return;
             }
 
@@ -774,7 +776,6 @@ namespace King_Colin
         }
         private void LancerTonneau()
         {
-            Console.WriteLine("touché!");
             System.Windows.Shapes.Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirsEnnemi",
