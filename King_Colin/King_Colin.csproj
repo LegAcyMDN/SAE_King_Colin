@@ -47,31 +47,31 @@
     <None Update="Img\Element\salleSecrette.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-0.png">
+    <None Update="Img\Element\Vie\vieJoueur-0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-12.png">
+    <None Update="Img\Element\Vie\vieJoueur-2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-18.png">
+    <None Update="Img\Element\Vie\vieJoueur-3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-24.png">
+    <None Update="Img\Element\Vie\vieJoueur-4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-30.png">
+    <None Update="Img\Element\Vie\vieJoueur-5.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-36.png">
+    <None Update="Img\Element\Vie\vieJoueur-6.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-42.png">
+    <None Update="Img\Element\Vie\vieJoueur-7.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-48.png">
+    <None Update="Img\Element\Vie\vieJoueur-8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-6.png">
+    <None Update="Img\Element\Vie\vieJoueur-1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\Ennemi\pigeon2.png">
