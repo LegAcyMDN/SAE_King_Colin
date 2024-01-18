@@ -337,10 +337,10 @@ namespace King_Colin
 
             imageMarioSaut.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Courir/courir-5.png"));
 
-            FontFamily pixelDartFont = new FontFamily(new Uri(AppDomain.CurrentDomain.BaseDirectory +  "Police/Nimpo.ttf"), "#PixelDart");
+            /*FontFamily pixelDartFont = new FontFamily(new Uri(AppDomain.CurrentDomain.BaseDirectory +  "Police/Nimpo.ttf"), "#PixelDart");
             //FontFamily pixelDartFont = new FontFamily(new Uri("pack://application:,,,/"), "Police/PixelDart.ttf#PixelDart");
             txt_Diard.FontFamily = pixelDartFont;
-            txt_Joueur.FontFamily = pixelDartFont;
+            txt_Joueur.FontFamily = pixelDartFont;*/
         }
 
         private void AnimationImageNormal()
