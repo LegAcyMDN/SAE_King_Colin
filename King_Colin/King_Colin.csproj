@@ -8,16 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Img\Boss\barilC1.png">
+    <None Update="Img\Boss\Colin\barilC1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Boss\barilC2.png">
+    <None Update="Img\Boss\Colin\barilC2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Boss\barilD2.png">
+    <None Update="Img\Boss\Colin\colinperenoel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Boss\colinperenoel.png">
+    <None Update="Img\Boss\Diard\diardJedi-0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Boss\Diard\diardJedi-1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\colinperenoel.png">
@@ -42,6 +45,60 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\Element\salleSecrette.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieBoss\vieBoss-8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\Ennemi\pigeon2.png">
@@ -189,6 +246,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Musique\TheDying2.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Police\PixelDart.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
