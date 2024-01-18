@@ -572,7 +572,7 @@ namespace King_Colin
                     break;
 
                 case true:
-                    //oe c'est greg
+                    NiveauStreetFighter();
                     break;
 
 

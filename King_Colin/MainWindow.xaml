@@ -15,6 +15,9 @@
     <Window.Background>
         <SolidColorBrush Opacity="0" />
     </Window.Background>
+    <Window.Resources>
+        <FontFamily x:Key="Pixel">/Police/#PixelDart</FontFamily>
+    </Window.Resources>
     <Grid>
         <Canvas x:Name="cv_Global" Margin="-1,0,1,0">
             <Canvas
@@ -351,32 +354,46 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Fill="Green" />
-            <Grid
-                Canvas.Left="73"
-                Canvas.Top="58"
-                Width="600"
-                Height="50"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top" />
-            <Label
-                Canvas.Left="23"
-                Canvas.Top="59"
-                Width="45"
-                Height="49"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Content="PV"
-                FontSize="30" />
-            <Label
-                Canvas.Left="23"
-                Canvas.Top="18"
-                Width="150"
-                Height="40"
+            <TextBlock
+                x:Name="txt_Joueur"
+                Canvas.Left="1154"
+                Canvas.Top="30"
+                Width="270"
+                Height="90"
                 HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource Pixel}"
+                FontSize="100"
+                Foreground="White">
+                JOUEUR
+            </TextBlock>
+            <TextBlock
+                Canvas.Left="10"
+                Canvas.Top="30"
+                Height="90"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Top"
-                Content="Colin"
-                FontSize="25"
-                FontWeight="Bold" />
+                FontFamily="{StaticResource Pixel}"
+                FontSize="100"
+                Foreground="White">
+                DIARD
+            </TextBlock>
+            <Rectangle
+                x:Name="barreBoss"
+                Canvas.Left="10"
+                Canvas.Top="131"
+                Width="310"
+                Height="122"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center" />
+            <Rectangle
+                x:Name="barreBoss_Copy"
+                Canvas.Left="1114"
+                Canvas.Top="131"
+                Width="310"
+                Height="122"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
         </Canvas>
     </Grid>
 </Window>
