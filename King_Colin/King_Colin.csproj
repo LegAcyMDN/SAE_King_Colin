@@ -47,31 +47,58 @@
     <None Update="Img\Element\salleSecrette.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-0.png">
+    <None Update="Img\Element\VieBoss\vieBoss-0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-2.png">
+    <None Update="Img\Element\VieBoss\vieBoss-1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-3.png">
+    <None Update="Img\Element\VieBoss\vieBoss-2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-4.png">
+    <None Update="Img\Element\VieBoss\vieBoss-3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-5.png">
+    <None Update="Img\Element\VieBoss\vieBoss-4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-6.png">
+    <None Update="Img\Element\VieBoss\vieBoss-5.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-7.png">
+    <None Update="Img\Element\VieBoss\vieBoss-6.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-8.png">
+    <None Update="Img\Element\VieBoss\vieBoss-7.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\Vie\vieJoueur-1.png">
+    <None Update="Img\Element\VieBoss\vieBoss-8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\VieJoueur\vieJoueur-8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\Ennemi\pigeon2.png">
