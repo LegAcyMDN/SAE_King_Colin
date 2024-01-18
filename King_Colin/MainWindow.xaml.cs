@@ -35,6 +35,7 @@ namespace King_Colin
         private int animeMarteau = 0;
         private int animeStatique = 0;
         private int animeCourir = 0;
+        private int animeDiard = 0;
 
         //img scene
         private ImageBrush imageJeux = new ImageBrush();
@@ -46,6 +47,7 @@ namespace King_Colin
         private ImageBrush imagePrincesse = new ImageBrush();
         private ImageBrush imageDonkey = new ImageBrush();
         private ImageBrush imageEnnemi = new ImageBrush();
+        private ImageBrush imageDiard = new ImageBrush();
 
         //img mario
         private ImageBrush imageMarioMarteau = new ImageBrush();
@@ -105,7 +107,7 @@ namespace King_Colin
             temps.Start();
 
             temps.Tick += Gravite;
-            ChargeImage();
+            ChargeImageNormal();
 
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
 
@@ -273,13 +275,13 @@ namespace King_Colin
             ennemis.Add(rect_ennemi3);
             return ennemis;
         }
-        private void ChargeImage()
+        private void ChargeImageNormal()
         {
             imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/plateforme.png"));
             imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/echelle.png"));
             imageEnnemi.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Ennemi/pigeon.png"));
-            imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/barilC1.png"));
-            imageTirBoss.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/barilC2.png"));
+            imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Colin/barilC1.png"));
+            imageTirBoss.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Colin/barilC2.png"));
             imageTirEnn.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Ennemi/toastenfeu.png"));
 
 
@@ -318,7 +320,7 @@ namespace King_Colin
             imagePrincesse.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/princessejustin.png"));
             rect_princesse.Fill = imagePrincesse;
 
-            imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/colinperenoel.png"));
+            imageDonkey.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Colin/colinperenoel.png"));
             rect_donkeykong.Fill = imageDonkey;
 
             imageMarteau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/marteauNoir.png"));
@@ -327,7 +329,7 @@ namespace King_Colin
             imageMarioSaut.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Courir/courir-5.png"));
         }
 
-        private void AnimationImage()
+        private void AnimationImageNormal()
         {
             animePortail++;
             if (animePortail > 16) { animePortail = 0; }
@@ -371,7 +373,7 @@ namespace King_Colin
                 if (aMarteau)
                 { rect_joueur1.Fill = imageMarioMarteau; }
                 else
-                    MarioCourtImage();
+                    rect_joueur1.Fill = imageMarioCourir;
             }
 
             if (e.Key == Key.D)
@@ -383,7 +385,7 @@ namespace King_Colin
                 if (aMarteau)
                 { rect_joueur1.Fill = imageMarioMarteau; }
                 else
-                    MarioCourtImage();
+                    rect_joueur1.Fill = imageMarioCourir;
             }
             if (e.Key == Key.D && e.Key == Key.Q)
             {
@@ -502,13 +504,13 @@ namespace King_Colin
 
         private void AppliquerMiroirGauche(System.Windows.Shapes.Rectangle rectangle)
         {
-            double joueurX = Canvas.GetLeft(rect_joueur1);
-            double joueurWidth = rect_joueur1.Width;
+            double joueurX = Canvas.GetLeft(rectangle);
+            double joueurWidth = rectangle.Width;
             if (sensJoueur == true)
             {
                 ScaleTransform transformation = new ScaleTransform(-1, 1);
                 rectangle.RenderTransform = transformation;
-                Canvas.SetLeft(rect_joueur1, joueurX + joueurWidth);
+                Canvas.SetLeft(rectangle, joueurX + joueurWidth);
                 sensJoueur = false;
             }
 
@@ -516,24 +518,17 @@ namespace King_Colin
 
         private void AppliquerMiroirDroite(System.Windows.Shapes.Rectangle rectangle)
         {
-            double joueurX = Canvas.GetLeft(rect_joueur1);
-            double joueurWidth = rect_joueur1.Width;
+            double joueurX = Canvas.GetLeft(rectangle);
+            double joueurWidth = rectangle.Width;
             if (sensJoueur == false)
             {
                 ScaleTransform transformation = new ScaleTransform(1, 1);
                 rectangle.RenderTransform = transformation;
-                Canvas.SetLeft(rect_joueur1, joueurX - joueurWidth);
+                Canvas.SetLeft(rectangle, joueurX - joueurWidth);
                 sensJoueur = true;
             }
 
 
-        }
-
-        private void MarioCourtImage()
-        {
-            rect_joueur1.Fill = imageMarioCourir;
-            rect_joueur1.Width = 55;
-            rect_joueur1.Height = 71;
         }
 
         private List<System.Windows.Shapes.Rectangle> ListeDesEchelles()
@@ -561,7 +556,7 @@ namespace King_Colin
                         LancerTonneau();
                     timeJump += deltaTime;
                     ActionMarteau();
-                    AnimationImage();
+                    AnimationImageNormal();
 
                     MouvementDonkey();
                     MouvementEnnemis();
@@ -621,7 +616,7 @@ namespace King_Colin
                     break;
 
                 case true:
-                    //oe c'est greg
+                    NiveauStreetFighter();
                     break;
 
 
@@ -667,7 +662,8 @@ namespace King_Colin
 
                 aMarteau = false;
             }
-        }
+        }        
+
         //ADD
         private void MovementJoueurVertical()
         {
@@ -935,9 +931,35 @@ namespace King_Colin
         private bool LancementNiveauBonus()
         {
             bool lancement = false;
+
+            Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
+            Rect portail = new Rect(Canvas.GetLeft(rect_Portail), Canvas.GetTop(rect_Portail), rect_Portail.Width, rect_Portail.Height);
+
+            if(joueur.IntersectsWith(portail))
+            { lancement = true; }
+
             return lancement;
-            //jeu bonus : type street fighter (joueur se bat avec un marteau et doit esquiver les bananes que donkey lance ?)
         }
+
+        private void NiveauStreetFighter()
+        {
+            cv_Jeux.Visibility = Visibility.Hidden;
+            cv_Secrete.Visibility = Visibility.Hidden;
+
+            AnimationImageBonus();
+        }
+
+        private void AnimationImageBonus()
+        {
+            animeDiard++;
+            if (animeDiard > 1) { animeDiard = 0; }
+            imageDiard.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Diard/diardJedi-" + animeDiard + ".png"));
+            rect_Diard_Jedi.Fill = imageDiard;
+
+            AppliquerMiroirGauche(rect_joueur2);
+            rect_joueur2.Fill = imageMarioStatique;
+        }
+
         private void AfficherLesCredits()
         {
 

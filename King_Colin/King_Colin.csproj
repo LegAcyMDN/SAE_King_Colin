@@ -8,16 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Img\Boss\barilC1.png">
+    <None Update="Img\Boss\Colin\barilC1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Boss\barilC2.png">
+    <None Update="Img\Boss\Colin\barilC2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Boss\barilD2.png">
+    <None Update="Img\Boss\Colin\colinperenoel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Boss\colinperenoel.png">
+    <None Update="Img\Boss\Diard\diardJedi-0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Boss\Diard\diardJedi-1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\colinperenoel.png">
