@@ -323,9 +323,6 @@ namespace King_Colin
             imageJeux.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/fondEcran.png"));
             FondEcran.Fill = imageJeux;
 
-            imageStreetFighter.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/map3.png"));
-            FondEcran2.Fill = imageStreetFighter;
-
             imageJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Statique/statique-0.png"));
             Joueur1.Fill = imageJoueur;
 
@@ -339,6 +336,11 @@ namespace King_Colin
             Marteau.Fill = imageMarteau;
 
             imageMarioSaut.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Courir/courir-5.png"));
+
+            FontFamily pixelDartFont = new FontFamily(new Uri(AppDomain.CurrentDomain.BaseDirectory +  "Police/Nimpo.ttf"), "#PixelDart");
+            //FontFamily pixelDartFont = new FontFamily(new Uri("pack://application:,,,/"), "Police/PixelDart.ttf#PixelDart");
+            txt_Diard.FontFamily = pixelDartFont;
+            txt_Joueur.FontFamily = pixelDartFont;
         }
 
         private void AnimationImageNormal()
@@ -977,10 +979,19 @@ namespace King_Colin
             cv_Jeux.Visibility = Visibility.Hidden;
             cv_Secrete.Visibility = Visibility.Hidden;
 
-            AnimationImageBonus();
+            AnimationBonus();
         }
 
-        private void AnimationImageBonus()
+        private void ImageBonus()
+        {
+            imageStreetFighter.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/map3.png"));
+            FondEcran2.Fill = imageStreetFighter;
+
+            
+
+        }
+
+        private void AnimationBonus()
         {
             animeDiard++;
             if (animeDiard > 1) { animeDiard = 0; }
