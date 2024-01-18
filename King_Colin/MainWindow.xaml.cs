@@ -703,6 +703,8 @@ namespace King_Colin
 
                 if (Canvas.GetLeft(rect_joueur1) + rect_joueur1.Width >= Canvas.GetLeft(cv_Secrete) + cv_Secrete.Width)
                 { cv_Jeux.Visibility = Visibility.Hidden; }
+
+                aMarteau = false;
             }
         }
         //ADD
