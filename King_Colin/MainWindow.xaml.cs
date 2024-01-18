@@ -31,7 +31,7 @@ namespace King_Colin
         private List<System.Windows.Shapes.Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();
         private System.Windows.Shapes.Rectangle rectangle;
 
-        private List<Rectangle> plateformes = new List<Rectangle>(); 
+        private List<Rectangle> plateformes = new List<Rectangle>();
 
         //animation jeux
         private int animePortail = 0;
@@ -91,7 +91,7 @@ namespace King_Colin
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
         //gravié pour le joueur
-        // private double velociteY = 0;
+        //private double velociteY = 0;
         //private const double gravite = 0.1;
         //private bool enSaut = false;
         public MainWindow()
@@ -260,13 +260,11 @@ namespace King_Colin
 
         private void ListeDesPlateformes()
         {
-           
-                plateformes.Add(rect_plateforme1);
-                plateformes.Add(rect_plateforme2);
-                plateformes.Add(rect_plateforme3);
-                plateformes.Add(rect_plateforme4);
-                plateformes.Add(rect_plateforme5);
-         
+            plateformes.Add(rect_plateforme1);
+            plateformes.Add(rect_plateforme2);
+            plateformes.Add(rect_plateforme3);
+            plateformes.Add(rect_plateforme4);
+            plateformes.Add(rect_plateforme5);
         }
         private List<System.Windows.Shapes.Rectangle> ListeDesPigeons()
         {
@@ -564,11 +562,11 @@ namespace King_Colin
                     MouvementHorizontaux();
                     MovementJoueurVertical();
 
-                  
 
-                        //MouvementHorizontaux();
-                        //    RetireLesItems();
-                    
+
+                    //MouvementHorizontaux();
+                    //    RetireLesItems();
+
                     if (tirEnnemi.Next(1000) < 1)
                         LancerToastFeu();
 
@@ -594,18 +592,18 @@ namespace King_Colin
                 i++;
 
                 Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes), Canvas.GetTop(plateformes), plateformes.Width, plateformes.Height);
-               Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
+                //Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
                 //touchePlateforme = true;
                 //if (plateformeRect.IntersectsWith(joueur)) 
-               // if (touchePlateforme == true)
+                // if (touchePlateforme == true)
                 {
                     //System.Windows.Shapes.Rectangle plateformeX = plateformes.(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));    
                     // Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeX), Canvas.GetTop(plateformeX), plateformeX.Width, plateformeX.Height);
                     if (joueur.Bottom >= plateformeRect.Top)
                     {
-                        Console.WriteLine("touché");
+                        //Console.WriteLine("touché");
                         double topPlateforme = Canvas.GetTop(plateformes);
-                        Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
+                        //Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
                     }
 
                 }
@@ -623,7 +621,7 @@ namespace King_Colin
                 }*/
             }
         }
-        private void ToucheEchelle() 
+        private void ToucheEchelle()
         {
             Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
             bool devantEchelle = false;
@@ -701,7 +699,7 @@ namespace King_Colin
 
                 aMarteau = false;
             }
-        }        
+        }
 
         //ADD
         private void MovementJoueurVertical()
@@ -749,7 +747,7 @@ namespace King_Colin
 
         private void MouvementHorizontaux()
         {
-           
+
             double canvasMax = cv_Jeux.ActualWidth;
             double joueurX = Canvas.GetLeft(rect_joueur1);
             double joueurWidth = rect_joueur1.Width;
@@ -799,7 +797,7 @@ namespace King_Colin
                 Canvas.SetLeft(rect_donkeykong, 0);
                 return;
             }
-            else if (droite&& donkey + donkeyWidth >= canvasMax)
+            else if (droite && donkey + donkeyWidth >= canvasMax)
             {
                 Canvas.SetRight(rect_donkeykong, canvasMax - donkeyWidth);
                 return;
@@ -970,7 +968,7 @@ namespace King_Colin
             Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
             Rect portail = new Rect(Canvas.GetLeft(rect_Portail), Canvas.GetTop(rect_Portail), rect_Portail.Width, rect_Portail.Height);
 
-            if(joueur.IntersectsWith(portail))
+            if (joueur.IntersectsWith(portail))
             { lancement = true; }
 
             return lancement;
