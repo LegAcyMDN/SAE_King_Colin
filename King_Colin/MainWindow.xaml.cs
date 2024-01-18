@@ -28,10 +28,12 @@ namespace King_Colin
         private readonly Regex baril = new Regex("^rect_baril[0-9]$");
 
         // liste des éléments rectangles
-        private List<System.Windows.Shapes.Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();
-        private System.Windows.Shapes.Rectangle rectangle;
+        private List<Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();
+        private Rectangle rectangle;
 
         private List<Rectangle> plateformes = new List<Rectangle>();
+        private List<Rectangle> pigeons = new List<Rectangle>();
+        private List<Rectangle> echelles = new List<Rectangle>();
 
         //animation jeux
         private int animePortail = 0;
@@ -112,12 +114,14 @@ namespace King_Colin
             temps.Tick += Gravite;
             ChargeImage();
             ListeDesPlateformes();
+            ListeDesPigeons();
+            ListeDesEchelles();
 
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
 
             //ADD
-            this.cv_Jeux.KeyDown += new System.Windows.Input.KeyEventHandler(this.cv_Jeux_KeyDown);
-            this.cv_Jeux.KeyUp += new System.Windows.Input.KeyEventHandler(this.cv_Jeux_KeyUp);
+            this.cv_Jeux.KeyDown += new KeyEventHandler(this.cv_Jeux_KeyDown);
+            this.cv_Jeux.KeyUp += new KeyEventHandler(this.cv_Jeux_KeyUp);
         }
         //gravié pour le joueur ADD
 
@@ -266,17 +270,14 @@ namespace King_Colin
             plateformes.Add(Plateforme4);
             plateformes.Add(Plateforme5);
         }
-        private List<System.Windows.Shapes.Rectangle> ListeDesPigeons()
+        private void ListeDesPigeons()
         {
-            List<System.Windows.Shapes.Rectangle> ennemis = new List<System.Windows.Shapes.Rectangle>();
-            ennemis.Add(Ennemi1);
-            ennemis.Add(Ennemi2);
-            ennemis.Add(Ennemi3);
-            return ennemis;
+            pigeons.Add(Ennemi1);
+            pigeons.Add(Ennemi2);
+            pigeons.Add(Ennemi3);
         }
-        private List<System.Windows.Shapes.Rectangle> ListeDesEchelles()
+        private void ListeDesEchelles()
         {
-            List<System.Windows.Shapes.Rectangle> echelles = new List<System.Windows.Shapes.Rectangle>();
             echelles.Add(Echelle01);
             echelles.Add(Echelle02);
             echelles.Add(Echelle03);
@@ -285,7 +286,6 @@ namespace King_Colin
             echelles.Add(Echelle06);
             echelles.Add(Echelle09);
             echelles.Add(Echelle10);
-            return echelles;
         }
         private void ChargeImage()
         {
@@ -299,9 +299,9 @@ namespace King_Colin
 
             foreach (UIElement element in cv_Jeux.Children)
             {
-                if (element is System.Windows.Shapes.Rectangle)
+                if (element is Rectangle)
                 {
-                    rectangle = (System.Windows.Shapes.Rectangle)element;
+                    rectangle = (Rectangle)element;
 
                     if (plateforme.IsMatch(rectangle.Name))
                     { rectangle.Fill = imagePlateforme; }
@@ -514,7 +514,7 @@ namespace King_Colin
             }
         }
 
-        private void AppliquerMiroirGauche(System.Windows.Shapes.Rectangle rectangle)
+        private void AppliquerMiroirGauche(Rectangle rectangle)
         {
             double joueurX = Canvas.GetLeft(rectangle);
             double joueurWidth = rectangle.Width;
@@ -528,7 +528,7 @@ namespace King_Colin
 
         }
 
-        private void AppliquerMiroirDroite(System.Windows.Shapes.Rectangle rectangle)
+        private void AppliquerMiroirDroite(Rectangle rectangle)
         {
             double joueurX = Canvas.GetLeft(rectangle);
             double joueurWidth = rectangle.Width;
@@ -583,9 +583,9 @@ namespace King_Colin
         }
         private void TouchePlateforme()
         {
-            Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
+            Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
             int i = 0;
-            foreach (System.Windows.Shapes.Rectangle plateformes in plateformes)
+            foreach (Rectangle plateformes in plateformes)
             {
                 i++;
 
@@ -599,10 +599,11 @@ namespace King_Colin
                     // Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeX), Canvas.GetTop(plateformeX), plateformeX.Width, plateformeX.Height);
                     if (joueur.Bottom == plateformeRect.Top&& enSaut==false)
                     {
+                        enSaut = true;
                         isGrounded= true;
                         Console.WriteLine("touché");
                         double topPlateforme = Canvas.GetTop(plateformes);
-                        Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
+                        Canvas.SetTop(Joueur1, topPlateforme - Joueur1.ActualHeight);
 
                     }
                     
@@ -626,7 +627,7 @@ namespace King_Colin
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
             bool devantEchelle = false;
 
-            foreach (System.Windows.Shapes.Rectangle echelle in ListeDesEchelles())
+            foreach (Rectangle echelle in echelles)
             {
                 if (joueur.IntersectsWith(new Rect(Canvas.GetLeft(echelle), Canvas.GetTop(echelle), echelle.Width, echelle.Height)))
                 {
@@ -637,7 +638,7 @@ namespace King_Colin
 
             if (devantEchelle)
             {
-                System.Windows.Shapes.Rectangle echelle = ListeDesEchelles().FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
+                Rectangle echelle = echelles.FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
 
                 if (echelle != null)
                 {
@@ -807,7 +808,7 @@ namespace King_Colin
         }
         private void LancerTonneau()
         {
-            System.Windows.Shapes.Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
+           Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
             {
                 Tag = "tirsEnnemi",
                 Height = 51,
@@ -839,7 +840,7 @@ namespace King_Colin
         {
             double canvasMax = cv_Jeux.ActualWidth;
 
-            foreach (System.Windows.Shapes.Rectangle ennemis in ListeDesPigeons())
+            foreach (Rectangle ennemis in pigeons)
             {
                 int mouvements = deplacementEnnemi.Next(0, 3);
                 double ennemi = Canvas.GetLeft(ennemis);
@@ -867,9 +868,9 @@ namespace King_Colin
         {
             double joueurX = Canvas.GetLeft(Joueur1);
             double ennemi = Canvas.GetLeft(Ennemi1);
-            foreach (System.Windows.Shapes.Rectangle ennemis in ListeDesPigeons())
+            foreach (Rectangle ennemis in pigeons)
             {
-                System.Windows.Shapes.Rectangle tirsEnn = new System.Windows.Shapes.Rectangle
+                Rectangle tirsEnn = new Rectangle
                 {
                     Tag = "tirsEnnemi",
                     Height = 51,
