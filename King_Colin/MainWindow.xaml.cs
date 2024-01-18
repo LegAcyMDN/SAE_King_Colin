@@ -590,9 +590,7 @@ namespace King_Colin
         }
         private void TouchePlateforme()
         {
-            double joueur1Bottom = Canvas.GetBottom(rect_joueur1);
             Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
-            bool touchePlateforme = false;
             int i = 0;
             foreach (System.Windows.Shapes.Rectangle plateformes in plateformes)
             {
@@ -606,13 +604,15 @@ namespace King_Colin
                 {
                     //System.Windows.Shapes.Rectangle plateformeX = plateformes.(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));    
                     // Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeX), Canvas.GetTop(plateformeX), plateformeX.Width, plateformeX.Height);
-                    if (joueur.Bottom >= plateformeRect.Top)
+                    if (joueur.Bottom == plateformeRect.Top&& enSaut==false)
                     {
+                        isGrounded= true;
                         Console.WriteLine("touché");
                         double topPlateforme = Canvas.GetTop(plateformes);
                         Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
-                    }
 
+                    }
+                    
                 }
                 /* if (touchePlateforme== true)
                 {
