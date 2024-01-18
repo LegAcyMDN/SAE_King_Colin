@@ -25,18 +25,13 @@
                 Height="200"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
-                Visibility="Visible">
+                Visibility="Hidden">
                 <Rectangle
                     x:Name="rect_Salle_Secrete"
                     Width="200"
                     Height="200"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top" />
-                <Image
-                    Width="200"
-                    Height="200"
-                    Source="/Img/Element/salleSecrette.jpg"
-                    Stretch="Fill" />
                 <Rectangle
                     Canvas.Top="196"
                     Width="200"
@@ -72,7 +67,7 @@
                 Focusable="True"
                 KeyDown="cv_Jeux_KeyDown"
                 KeyUp="cv_Jeux_KeyUp"
-                Visibility="Visible">
+                Visibility="Hidden">
                 <Rectangle
                     Name="rect_FondEcran"
                     Width="640"
@@ -318,36 +313,43 @@
             </Canvas>
         </Canvas>
 
-        <Canvas x:Name="cv_Combat" Visibility="Hidden">
+        <Canvas x:Name="cv_Combat" Visibility="Visible">
             <Rectangle
                 x:Name="rect_FondEcran2"
                 Width="1434"
                 Height="806" />
+            <Image
+                Width="1434"
+                Height="802"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Source="/Img/Element/map3.png"
+                Stretch="Fill" />
             <Rectangle
                 x:Name="rect_plat_combat"
-                Canvas.Left="208"
-                Canvas.Top="888"
-                Width="1470"
+                Canvas.Left="158"
+                Canvas.Top="659"
+                Width="1090"
                 Height="20"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center" />
+                VerticalAlignment="Top" />
             <Rectangle
                 x:Name="rect_joueur2"
-                Canvas.Left="1387"
-                Canvas.Top="685"
-                Width="135"
-                Height="203"
+                Canvas.Left="1094"
+                Canvas.Top="550"
+                Width="68"
+                Height="109"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Center"
+                VerticalAlignment="Top"
                 Fill="Red" />
             <Rectangle
                 x:Name="rect_Diard_Jedi"
-                Canvas.Left="394"
-                Canvas.Top="600"
-                Width="243"
-                Height="288"
+                Canvas.Left="247"
+                Canvas.Top="437"
+                Width="170"
+                Height="222"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Center"
+                VerticalAlignment="Top"
                 Fill="Green" />
             <Grid
                 Canvas.Left="73"

@@ -481,8 +481,6 @@ namespace King_Colin
                 }
             }
 
-
-
             if (e.Key == Key.Z)
             {
                 haut = false;
@@ -592,7 +590,7 @@ namespace King_Colin
                 i++;
 
                 Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes), Canvas.GetTop(plateformes), plateformes.Width, plateformes.Height);
-                //Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
+                Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
                 //touchePlateforme = true;
                 //if (plateformeRect.IntersectsWith(joueur)) 
                 // if (touchePlateforme == true)
@@ -601,9 +599,9 @@ namespace King_Colin
                     // Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeX), Canvas.GetTop(plateformeX), plateformeX.Width, plateformeX.Height);
                     if (joueur.Bottom >= plateformeRect.Top)
                     {
-                        //Console.WriteLine("touché");
+                        Console.WriteLine("touché");
                         double topPlateforme = Canvas.GetTop(plateformes);
-                        //Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
+                        Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
                     }
 
                 }
