@@ -47,6 +47,33 @@
     <None Update="Img\Element\salleSecrette.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-18.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-30.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-36.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-42.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-48.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Img\Element\Vie\38e6e877-1954-42c6-ab75-7bd5cdcdf42a-6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Img\Ennemi\pigeon2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
