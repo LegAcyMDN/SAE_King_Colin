@@ -556,7 +556,7 @@ namespace King_Colin
                         LancerTonneau();
                     timeJump += deltaTime;
                     ActionMarteau();
-                    AnimationImage();
+                    AnimationImageNormal();
                     TouchePlateforme();
                     MouvementDonkey();
                     MouvementEnnemis();
