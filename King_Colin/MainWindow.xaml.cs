@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace King_Colin
@@ -29,6 +30,8 @@ namespace King_Colin
         // liste des éléments rectangles
         private List<System.Windows.Shapes.Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();
         private System.Windows.Shapes.Rectangle rectangle;
+
+        private List<Rectangle> plateformes = new List<Rectangle>(); 
 
         //animation jeux
         private int animePortail = 0;
@@ -107,7 +110,8 @@ namespace King_Colin
             temps.Start();
 
             temps.Tick += Gravite;
-            ChargeImageNormal();
+            ChargeImage();
+            ListeDesPlateformes();
 
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
 
@@ -134,10 +138,7 @@ namespace King_Colin
         bool isJumping;
         private void Gravite(object sender, EventArgs e)
         {
-
             velociteY = Lerp(velociteY, velocityToReachY, (jumpBoost * 5 + 10f) * deltaTime);
-
-
         }
 
         private double Lerp(double firstFloat, double secondFloat, float by)
@@ -257,15 +258,15 @@ namespace King_Colin
             }
         }*/
 
-        private List<System.Windows.Shapes.Rectangle> ListeDesPlateformes()
+        private void ListeDesPlateformes()
         {
-            List<System.Windows.Shapes.Rectangle> plateformes = new List<System.Windows.Shapes.Rectangle>();
-            plateformes.Add(rect_plateforme1);
-            plateformes.Add(rect_plateforme2);
-            plateformes.Add(rect_plateforme3);
-            plateformes.Add(rect_plateforme4);
-            plateformes.Add(rect_plateforme5);
-            return plateformes;
+           
+                plateformes.Add(rect_plateforme1);
+                plateformes.Add(rect_plateforme2);
+                plateformes.Add(rect_plateforme3);
+                plateformes.Add(rect_plateforme4);
+                plateformes.Add(rect_plateforme5);
+         
         }
         private List<System.Windows.Shapes.Rectangle> ListeDesPigeons()
         {
@@ -275,7 +276,20 @@ namespace King_Colin
             ennemis.Add(rect_ennemi3);
             return ennemis;
         }
-        private void ChargeImageNormal()
+        private List<System.Windows.Shapes.Rectangle> ListeDesEchelles()
+        {
+            List<System.Windows.Shapes.Rectangle> echelles = new List<System.Windows.Shapes.Rectangle>();
+            echelles.Add(rect_echelle01);
+            echelles.Add(rect_echelle02);
+            echelles.Add(rect_echelle03);
+            echelles.Add(rect_echelle04);
+            echelles.Add(rect_echelle05);
+            echelles.Add(rect_echelle06);
+            echelles.Add(rect_echelle09);
+            echelles.Add(rect_echelle10);
+            return echelles;
+        }
+        private void ChargeImage()
         {
             imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/plateforme.png"));
             imageEchelle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/echelle.png"));
@@ -531,20 +545,6 @@ namespace King_Colin
 
         }
 
-        private List<System.Windows.Shapes.Rectangle> ListeDesEchelles()
-        {
-            List<System.Windows.Shapes.Rectangle> echelles = new List<System.Windows.Shapes.Rectangle>();
-            echelles.Add(rect_echelle01);
-            echelles.Add(rect_echelle02);
-            echelles.Add(rect_echelle03);
-            echelles.Add(rect_echelle04);
-            echelles.Add(rect_echelle05);
-            echelles.Add(rect_echelle06);
-            echelles.Add(rect_echelle09);
-            echelles.Add(rect_echelle10);
-            return echelles;
-        }
-
         private void Jeu(object sender, EventArgs e)
         {
 
@@ -556,59 +556,19 @@ namespace King_Colin
                         LancerTonneau();
                     timeJump += deltaTime;
                     ActionMarteau();
-                    AnimationImageNormal();
-
+                    AnimationImage();
+                    TouchePlateforme();
                     MouvementDonkey();
                     MouvementEnnemis();
-
+                    ToucheEchelle();
                     MouvementHorizontaux();
                     MovementJoueurVertical();
 
-
-                    Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
-                    bool devantEchelle = false;
-
-                    foreach (System.Windows.Shapes.Rectangle echelle in ListeDesEchelles())
-                    {
-                        if (joueur.IntersectsWith(new Rect(Canvas.GetLeft(echelle), Canvas.GetTop(echelle), echelle.Width, echelle.Height)))
-                        {
-                            devantEchelle = true;
-                            break;
-                        }
-                    }
-
-                    if (devantEchelle)
-                    {
-                        System.Windows.Shapes.Rectangle echelle = ListeDesEchelles().FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
-
-                        if (echelle != null)
-                        {
-                            double topEchelle = Canvas.GetTop(echelle);
-                            double bottomEchelle = topEchelle + echelle.Height;
-                            double joueur1Top = Canvas.GetTop(rect_joueur1);
-
-                            if (haut && joueur1Top > topEchelle)
-                            {
-                                Canvas.SetTop(rect_joueur1, Math.Max(topEchelle, joueur1Top - vitesseJoueur));
-                            }
-                            else if (haut && joueur1Top <= topEchelle)
-                            {
-                                Canvas.SetTop(rect_joueur1, joueur1Top - vitesseJoueur);
-                            }
-                            else if (bas && joueur1Top + rect_joueur1.Height < bottomEchelle)
-                            {
-                                Canvas.SetTop(rect_joueur1, Math.Min(bottomEchelle - rect_joueur1.Height, joueur1Top + vitesseJoueur));
-                            }
-                        }
-
-
-                    }
-                    else
-                    {
+                  
 
                         //MouvementHorizontaux();
                         //    RetireLesItems();
-                    }
+                    
                     if (tirEnnemi.Next(1000) < 1)
                         LancerToastFeu();
 
@@ -616,12 +576,91 @@ namespace King_Colin
                     break;
 
                 case true:
-                    NiveauStreetFighter();
+                    //oe c'est greg
                     break;
 
 
             }
 
+        }
+        private void TouchePlateforme()
+        {
+            double joueur1Bottom = Canvas.GetBottom(rect_joueur1);
+            Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
+            bool touchePlateforme = false;
+            int i = 0;
+            foreach (System.Windows.Shapes.Rectangle plateformes in plateformes)
+            {
+                i++;
+
+                Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes), Canvas.GetTop(plateformes), plateformes.Width, plateformes.Height);
+               Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
+                //touchePlateforme = true;
+                //if (plateformeRect.IntersectsWith(joueur)) 
+               // if (touchePlateforme == true)
+                {
+                    //System.Windows.Shapes.Rectangle plateformeX = plateformes.(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));    
+                    // Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeX), Canvas.GetTop(plateformeX), plateformeX.Width, plateformeX.Height);
+                    if (joueur.Bottom >= plateformeRect.Top)
+                    {
+                        Console.WriteLine("touché");
+                        double topPlateforme = Canvas.GetTop(plateformes);
+                        Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
+                    }
+
+                }
+                /* if (touchePlateforme== true)
+                {
+                   //System.Windows.Shapes.Rectangle plateformeX = plateformes.(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));    
+                 Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeX), Canvas.GetTop(plateformeX), plateformeX.Width, plateformeX.Height);
+                 if (joueur.Bottom >= plateformeRect.Top)
+                    {
+                        Console.WriteLine("touché");
+                        double topPlateforme = Canvas.GetTop(plateformeX);
+                            Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
+                    }
+
+                }*/
+            }
+        }
+        private void ToucheEchelle() 
+        {
+            Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
+            bool devantEchelle = false;
+
+            foreach (System.Windows.Shapes.Rectangle echelle in ListeDesEchelles())
+            {
+                if (joueur.IntersectsWith(new Rect(Canvas.GetLeft(echelle), Canvas.GetTop(echelle), echelle.Width, echelle.Height)))
+                {
+                    devantEchelle = true;
+                    break;
+                }
+            }
+
+            if (devantEchelle)
+            {
+                System.Windows.Shapes.Rectangle echelle = ListeDesEchelles().FirstOrDefault(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));
+
+                if (echelle != null)
+                {
+                    double topEchelle = Canvas.GetTop(echelle);
+                    double bottomEchelle = topEchelle + echelle.Height;
+                    double joueur1Top = Canvas.GetTop(rect_joueur1);
+
+                    if (haut && joueur1Top > topEchelle)
+                    {
+                        Canvas.SetTop(rect_joueur1, Math.Max(topEchelle, joueur1Top - vitesseJoueur));
+                    }
+                    else if (haut && joueur1Top <= topEchelle)
+                    {
+                        Canvas.SetTop(rect_joueur1, joueur1Top - vitesseJoueur);
+                    }
+                    else if (bas && joueur1Top + rect_joueur1.Height < bottomEchelle)
+                    {
+                        Canvas.SetTop(rect_joueur1, Math.Min(bottomEchelle - rect_joueur1.Height, joueur1Top + vitesseJoueur));
+                    }
+                }
+            }
         }
 
         private void ActionMarteau()
@@ -745,9 +784,6 @@ namespace King_Colin
             double donkeyWidth = rect_donkeykong.ActualWidth;
             double donkey = Canvas.GetLeft(rect_donkeykong);
             double joueurWidth = rect_joueur1.ActualWidth;
-            Console.WriteLine("joueurWidth" + joueurWidth);
-            Console.WriteLine("donkey"+ donkey);
-            Console.WriteLine(canvasMax);
             if (droite && donkey + donkeyWidth <= canvasMax)
             {
                 Canvas.SetLeft(rect_donkeykong, donkey + vitesseDonkey);
@@ -765,7 +801,6 @@ namespace King_Colin
             }
             else if (droite&& donkey + donkeyWidth >= canvasMax)
             {
-                Console.WriteLine("touché");
                 Canvas.SetRight(rect_donkeykong, canvasMax - donkeyWidth);
                 return;
             }
