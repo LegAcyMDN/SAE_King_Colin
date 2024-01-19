@@ -23,7 +23,7 @@
             <Canvas
                 x:Name="cv_Secrete"
                 Canvas.Left="197"
-                Canvas.Top="314"
+                Canvas.Top="214"
                 Width="200"
                 Height="200"
                 HorizontalAlignment="Center"
@@ -282,12 +282,11 @@
                 <Rectangle
                     x:Name="Passage"
                     Canvas.Left="0"
-                    Canvas.Top="445"
+                    Canvas.Top="345"
                     Width="10"
                     Height="65"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Fill="Black" />
+                    VerticalAlignment="Top" />
                 <Rectangle
                     x:Name="Joueur1"
                     Canvas.Left="30"
