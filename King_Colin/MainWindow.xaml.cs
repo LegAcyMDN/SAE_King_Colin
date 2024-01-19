@@ -496,6 +496,7 @@ namespace King_Colin
         }
         private void TouchePlateforme()
         {
+            Console.WriteLine("je saute "+isJumping);
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
             int i = 0;
             foreach (Rectangle plateformes in plateformes)
@@ -503,11 +504,12 @@ namespace King_Colin
                 i++;
 
                 Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes), Canvas.GetTop(plateformes), plateformes.Width, plateformes.Height);
-                //Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
+                Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
                 //touchePlateforme = true;
                 //if (plateformeRect.IntersectsWith(joueur)) 
                 // if (touchePlateforme == true)
                 {
+                    Console.WriteLine( "test plateforme " + joueur.Bottom +" ==" + plateformeRect.Top +" &&" + isJumping+ "== false");
                     if (joueur.Bottom == plateformeRect.Top&& isJumping==false)
                     {
                         isGrounded= true;
@@ -653,6 +655,8 @@ namespace King_Colin
                 case Visibility.Visible:
                     canvasMin = -cv_Secrete.ActualWidth;
                     canvasMax = 0;
+                    Joueur1.Visibility = Visibility.Hidden;
+                    Joueur1 = Joueur2;
                     break;
                 case Visibility.Hidden:
                     break;
@@ -846,14 +850,6 @@ namespace King_Colin
                 }
             }
         }
-        private void RetireLesItems()
-        {
-            foreach (System.Windows.Shapes.Rectangle y in itemsARetirer)
-            {
-                // on les enlève du canvas
-                cv_Jeux.Children.Remove(y);
-            }
-        }
         private void Victoire()
         {
             Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
@@ -895,28 +891,6 @@ namespace King_Colin
         {
             cv_Jeux.Visibility = Visibility.Hidden;
             cv_Secrete.Visibility = Visibility.Hidden;
-
-            AnimationBonus();
-        }
-
-        private void ImageBonus()
-        {
-            imageStreetFighter.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/map3.png"));
-            FondEcran2.Fill = imageStreetFighter;
-
-            
-
-        }
-
-        private void AnimationBonus()
-        {
-            animeDiard++;
-            if (animeDiard > 1) { animeDiard = 0; }
-            imageDiard.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Diard/diardJedi-" + animeDiard + ".png"));
-            DiardJedi.Fill = imageDiard;
-
-            AppliquerMiroirGauche(Joueur2);
-            Joueur2.Fill = imageMarioStatique;
         }
 
         private void AfficherLesCredits()
@@ -931,13 +905,6 @@ namespace King_Colin
                 cv_Jeux.Children.Remove(y);
             }
         }
-        /*private void FinBonus()
-        {
-            if (/*le joueur obtient le jetpack*//*)
-            {
-                //deblocage du jeu bonus
-            }
-        }*/
     }
 
 
