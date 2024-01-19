@@ -22,10 +22,10 @@ namespace King_Colin
         private bool jeuEnPause = false;
         private bool aMarteau = false;
 
-        private readonly Regex plateforme = new Regex("^rect_plateforme[0-9]$");
-        private readonly Regex echelle = new Regex("^rect_echelle[0-9]{2}$");
-        private readonly Regex ennemi = new Regex("^rect_ennemi[0-9]$");
-        private readonly Regex baril = new Regex("^rect_baril[0-9]$");
+        private readonly Regex plateforme = new Regex("^Plateforme[0-9]$");
+        private readonly Regex echelle = new Regex("^Echelle[0-9]{2}$");
+        private readonly Regex ennemi = new Regex("^Ennemi[0-9]$");
+        private readonly Regex baril = new Regex("^Baril[0-9]$");
 
         // liste des éléments rectangles
         private List<System.Windows.Shapes.Rectangle> itemsARetirer = new List<System.Windows.Shapes.Rectangle>();

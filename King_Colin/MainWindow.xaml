@@ -8,7 +8,7 @@
     Title="King Colin"
     Width="1434"
     Height="818"
-    FocusManager.FocusedElement="{Binding ElementName=cv_Global}"
+    FocusManager.FocusedElement="{Binding ElementName=cv_Jeux}"
     Loaded="MainWindow_Loaded"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -28,7 +28,7 @@
                 Height="200"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
-                Visibility="Hidden">
+                Visibility="Visible">
                 <Rectangle
                     x:Name="SalleSecrete"
                     Width="200"
@@ -70,7 +70,7 @@
                 Focusable="True"
                 KeyDown="cv_Jeux_KeyDown"
                 KeyUp="cv_Jeux_KeyUp"
-                Visibility="Hidden">
+                Visibility="Visible">
                 <Rectangle
                     Name="FondEcran"
                     Width="640"
@@ -316,7 +316,7 @@
             </Canvas>
         </Canvas>
 
-        <Canvas x:Name="cv_Combat" Visibility="Visible">
+        <Canvas x:Name="cv_Combat" Visibility="Hidden">
             <Rectangle
                 x:Name="FondEcran2"
                 Canvas.Top="-2"
