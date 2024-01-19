@@ -263,7 +263,7 @@ namespace King_Colin
             txt_Joueur.FontFamily = pixelDartFont;*/
         }
 
-        private void AnimationImageNormal()
+        private void AnimationImage()
         {
             animePortail++;
             if (animePortail > 16) { animePortail = 0; }
@@ -459,16 +459,15 @@ namespace King_Colin
 
         private void Jeu(object sender, EventArgs e)
         {
-
-
             switch (LancementNiveauBonus())
             {
                 case false:
                     if (tirEnnemi.Next(100) < 1)
                         LancerTonneau();
+
                     timeJump += deltaTime;
                     ActionMarteau();
-                    AnimationImageNormal();
+                    AnimationImage();
                     TouchePlateforme();
                     MouvementDonkey();
                     MouvementEnnemis();
@@ -516,10 +515,8 @@ namespace King_Colin
                         double topPlateforme = Canvas.GetTop(plateformes);
                         Canvas.SetTop(Joueur1, topPlateforme - Joueur1.ActualHeight);
 
-                    }
-                    
-                }
-             
+                    }                    
+                }             
             }
         }
         private void ToucheEchelle()
@@ -605,7 +602,6 @@ namespace King_Colin
         //ADD
         private void MouvementJoueurVertical()
         {
-
             //Canvas sizes
             double canvasMaxWidth = cv_Jeux.ActualWidth;
             double canvasMaxHeight = cv_Jeux.ActualHeight;
@@ -617,7 +613,6 @@ namespace King_Colin
             //Rect colliders
             Rect joueurBornes = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), playerWidth, playerHeight);
             Rect canvasBornes = new Rect(0, canvasMaxHeight, canvasMaxWidth + 1, canvasMaxHeight);
-
 
             Canvas.SetTop(Joueur1, joueurBornes.Top + velociteY);
 
@@ -637,13 +632,11 @@ namespace King_Colin
                 return;
             }
 
-
             if (isGrounded == false && isJumping == false)
             {
                 velocityToReachY = gravite;
                 return;
             }
-
         }
 
         private void MouvementHorizontaux()
@@ -666,6 +659,7 @@ namespace King_Colin
                 Canvas.SetLeft(Joueur1, canvasMin);
                 return;
             }
+
             if (gauche && joueurX <= canvasMin && aMarteau == true && passage.IntersectsWith(joueur))
             {
                 
@@ -673,16 +667,19 @@ namespace King_Colin
                 ActionMarteau();
                 return;
             }
+
             if (droite && joueurX >= canvasMax)
             {
                 Canvas.SetLeft(Joueur1, canvasMax);
                 return;
             }
+
             if (droite)
             {
                 Canvas.SetLeft(Joueur1, joueurX + vitesseJoueur);
                 return;
             }
+
             if (gauche)
             {
                 Canvas.SetLeft(Joueur1, joueurX - vitesseJoueur);
@@ -717,23 +714,20 @@ namespace King_Colin
                 Canvas.SetRight(DonkeyKong, canvasMax - donkeyWidth);
                 return;
             }
-
-
         }
         private void LancerTonneau()
         {
            Rectangle tirsBoss = new System.Windows.Shapes.Rectangle
-            {
+           {
                 Tag = "tirsEnnemi",
                 Height = 51,
                 Width = 66,
                 Fill = imageTirBoss
-            };
+           };
 
             Canvas.SetTop(tirsBoss, Canvas.GetTop(DonkeyKong) + DonkeyKong.Height);
             Canvas.SetLeft(tirsBoss, Canvas.GetLeft(DonkeyKong) + DonkeyKong.Width / 2);
             cv_Jeux.Children.Add(tirsBoss);
-
 
             tempsTirBaril.Tick += (sender, e) =>
             {
@@ -762,18 +756,22 @@ namespace King_Colin
                 {
                     Canvas.SetRight(ennemis, canvasMax + ennemis.Width);
                 }
+
                 else if (Canvas.GetLeft(ennemis) <= 0)
                 {
                     Canvas.SetLeft(ennemis, 0 + vitesseEnnemi);
                 }
+
                 else if (mouvements == 2)
                 {
                     Canvas.SetLeft(ennemis, ennemi + vitesseEnnemi);
                 }
+
                 else if (mouvements == 1)
                 {
                     Canvas.SetLeft(ennemis, ennemi - vitesseEnnemi);
                 }
+
                 if (tirEnnemi.Next(1000) < 1)
                     LancerToastFeu();
             }
@@ -796,6 +794,7 @@ namespace King_Colin
                 Canvas.SetTop(tirsEnn, Canvas.GetTop(ennemis));
                 Canvas.SetLeft(tirsEnn, Canvas.GetLeft(ennemis) + ennemis.Height);
                 tempstirEnnemi.Start();
+
                 if (joueurX <= ennemi)
                 {
                     tempstirEnnemi.Tick += (sender, e) =>
@@ -804,6 +803,7 @@ namespace King_Colin
                         // CollisionTirs(tirsEnn);
                     };
                 }
+
                 else
                 {
                     tempstirEnnemi.Tick += (sender, e) =>
