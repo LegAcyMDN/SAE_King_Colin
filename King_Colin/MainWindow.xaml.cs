@@ -511,7 +511,7 @@ namespace King_Colin
                     if (joueur.Bottom == plateformeRect.Top&& isJumping==false)
                     {
                         isGrounded= true;
-                        Console.WriteLine("touché");
+                        //Console.WriteLine("touché");
                         double topPlateforme = Canvas.GetTop(plateformes);
                         Canvas.SetTop(Joueur1, topPlateforme - Joueur1.ActualHeight);
 
@@ -638,7 +638,7 @@ namespace King_Colin
                 return;
             }
         }
-
+        
         private void MouvementHorizontaux()
         {
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
@@ -794,33 +794,43 @@ namespace King_Colin
                 Canvas.SetTop(tirsEnn, Canvas.GetTop(ennemis));
                 Canvas.SetLeft(tirsEnn, Canvas.GetLeft(ennemis) + ennemis.Height);
                 tempstirEnnemi.Start();
-
+         
                 if (joueurX <= ennemi)
                 {
+                    
                     tempstirEnnemi.Tick += (sender, e) =>
                     {
                         Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) - vitesseTirEnnemi);
                         // CollisionTirs(tirsEnn);
+                        if (Canvas.GetLeft(tirsEnn) <= 0)
+                        {
+                            itemsARetirer.Add(tirsEnn);
+                            RetireLesItems();
+                        }// remove toast a revoir 
                     };
                 }
 
                 else
                 {
+                    
                     tempstirEnnemi.Tick += (sender, e) =>
                     {
                         Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) + vitesseTirEnnemi);
                         // CollisionTirs(tirsEnn);
+                        if (Canvas.GetLeft(tirsEnn) >= cv_Jeux.ActualWidth - tirsEnn.Width)
+                        {
+                            itemsARetirer.Add(tirsEnn);
+                            RetireLesItems();
+                        }// remove toast a revoir 
                     };
                 }
                 tempstirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
                 tempstirEnnemi.Start();
-                if (Canvas.GetRight(tirsEnn) < 0|| Canvas.GetLeft(tirsEnn) > cv_Jeux.ActualWidth)
-                {
-                    Console.WriteLine("oe");
-                    itemsARetirer.Add(tirsEnn);
-                    RetireLesItems();
-                    tempstirEnnemi.Stop();
-                }// remove toast a revoir 
+                Console.WriteLine(Canvas.GetLeft(tirsEnn));
+                Console.WriteLine("canvas" + cv_Jeux.ActualWidth);
+                Console.WriteLine("vitesseEnnemi"+ vitesseEnnemi);
+                Console.WriteLine("larg enn" + tirsEnn.Width);
+              
             }
         }
         /*private void CollisionTirs(System.Windows.Shapes.Rectangle rectangle)
