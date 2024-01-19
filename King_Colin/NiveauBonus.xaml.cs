@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace King_Colin
 {
@@ -28,14 +29,21 @@ namespace King_Colin
         private ImageBrush imageStreetFighter = new ImageBrush();
         private ImageBrush imageMarioStatique = new ImageBrush();
 
+        private DispatcherTimer temps = new DispatcherTimer();
+
         public NiveauBonus()
         {
             InitializeComponent();
 
-
+            temps.Tick += StreetFighter();
 
             ChargeImage();
             AnimationImage();
+        }
+
+        private void StreetFighter()
+        {
+
         }
 
         private void ChargeImage()
