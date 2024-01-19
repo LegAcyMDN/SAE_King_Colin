@@ -513,7 +513,7 @@ namespace King_Colin
                     if (joueur.Bottom == plateformeRect.Top&& isJumping==false)
                     {
                         isGrounded= true;
-                        Console.WriteLine("touché");
+                        //Console.WriteLine("touché");
                         double topPlateforme = Canvas.GetTop(plateformes);
                         Canvas.SetTop(Joueur1, topPlateforme - Joueur1.ActualHeight);
 
@@ -640,33 +640,29 @@ namespace King_Colin
                 return;
             }
         }
-
+        
         private void MouvementHorizontaux()
         {
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
             Rect passage = new Rect(Canvas.GetLeft(Passage), Canvas.GetTop(Passage), Passage.Width, Passage.Height);
             double canvasMax = cv_Jeux.ActualWidth;
             double canvasMin = 0;
-            if (passage.IntersectsWith(joueur))
-            {
-                canvasMin = 0- cv_Secrete.ActualWidth;
-                canvasMax = cv_Secrete.ActualWidth;
-            }
-            
+
             double joueurX = Canvas.GetLeft(Joueur1);
             double joueurWidth = Joueur1.Width;
+            switch (cv_Secrete.Visibility)
+            {
+                case Visibility.Visible:
+                    canvasMin = -cv_Secrete.ActualWidth;
+                    canvasMax = 0;
+                    break;
+                case Visibility.Hidden:
+                    break;
+            }
 
             if (gauche && joueurX <= canvasMin && !aMarteau)
             {
                 Canvas.SetLeft(Joueur1, canvasMin);
-                return;
-            }
-
-            if (gauche && joueurX <= canvasMin && aMarteau == true && passage.IntersectsWith(joueur))
-            {
-                
-                Canvas.SetLeft(Joueur1, joueurX - vitesseJoueur);
-                ActionMarteau();
                 return;
             }
 
@@ -796,40 +792,38 @@ namespace King_Colin
                 Canvas.SetTop(tirsEnn, Canvas.GetTop(ennemis));
                 Canvas.SetLeft(tirsEnn, Canvas.GetLeft(ennemis) + ennemis.Height);
                 tempstirEnnemi.Start();
-
+         
                 if (joueurX <= ennemi)
                 {
+                    
                     tempstirEnnemi.Tick += (sender, e) =>
                     {
                         Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) - vitesseTirEnnemi);
                         // CollisionTirs(tirsEnn);
+                        if (Canvas.GetLeft(tirsEnn) <= 0)
+                        {
+                            itemsARetirer.Add(tirsEnn);
+                            RetireLesItems();
+                        }// remove toast a revoir 
                     };
                 }
 
                 else
                 {
+                    
                     tempstirEnnemi.Tick += (sender, e) =>
                     {
                         Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) + vitesseTirEnnemi);
                         // CollisionTirs(tirsEnn);
-                        if (Canvas.GetRight(tirsEnn) < 0 || Canvas.GetLeft(tirsEnn) > cv_Jeux.ActualWidth)
+                        if (Canvas.GetLeft(tirsEnn) >= cv_Jeux.ActualWidth - tirsEnn.Width)
                         {
-                            Console.WriteLine("oe");
                             itemsARetirer.Add(tirsEnn);
                             RetireLesItems();
-                            tempstirEnnemi.Stop();
-                        }
+                        }// remove toast a revoir 
                     };
                 }
                 tempstirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
                 tempstirEnnemi.Start();
-                if (Canvas.GetRight(tirsEnn) < 0|| Canvas.GetLeft(tirsEnn) > cv_Jeux.ActualWidth)
-                {
-                    Console.WriteLine("oe");
-                    itemsARetirer.Add(tirsEnn);
-                    RetireLesItems();
-                    tempstirEnnemi.Stop();
-                }// remove toast a revoir 
             }
         }
         /*private void CollisionTirs(System.Windows.Shapes.Rectangle rectangle)
