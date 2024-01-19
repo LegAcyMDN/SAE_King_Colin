@@ -673,7 +673,7 @@ namespace King_Colin
                 Joueur1.Fill = imageMarioMarteau;
                 Joueur1.Height = 60;
                 Joueur1.Width = 60;
-                Joueur1.Visibility = Visibility.Hidden;
+                Marteau.Visibility = Visibility.Hidden;
                 aMarteau = true;
             }
 
