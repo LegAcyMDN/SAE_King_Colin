@@ -810,13 +810,6 @@ namespace King_Colin
                     {
                         Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) + vitesseTirEnnemi);
                         // CollisionTirs(tirsEnn);
-                        if (Canvas.GetRight(tirsEnn) < 0 || Canvas.GetLeft(tirsEnn) > cv_Jeux.ActualWidth)
-                        {
-                            Console.WriteLine("oe");
-                            itemsARetirer.Add(tirsEnn);
-                            RetireLesItems();
-                            tempstirEnnemi.Stop();
-                        }
                     };
                 }
                 tempstirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
