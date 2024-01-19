@@ -18,6 +18,8 @@ namespace King_Colin
     /// </summary>
     public partial class MainWindow : Window
     {
+        NiveauBonus niveauBonusFenetre = new NiveauBonus();
+
         private bool sensJoueur = true;
         private bool gauche, droite, haut, bas = false;
         private bool jeuEnPause = false;
@@ -45,7 +47,6 @@ namespace King_Colin
 
         //img scene
         private ImageBrush imageJeux = new ImageBrush();
-        private ImageBrush imageStreetFighter = new ImageBrush();
         private ImageBrush imageSecrette = new ImageBrush();
 
         //img personnage et ennemi
@@ -53,7 +54,6 @@ namespace King_Colin
         private ImageBrush imagePrincesse = new ImageBrush();
         private ImageBrush imageDonkey = new ImageBrush();
         private ImageBrush imageEnnemi = new ImageBrush();
-        private ImageBrush imageDiard = new ImageBrush();
 
         //img mario
         private ImageBrush imageMarioMarteau = new ImageBrush();
@@ -105,6 +105,9 @@ namespace King_Colin
             {
                 Application.Current.Shutdown();
             }*/
+
+            NiveauBonus niveauBonusWindow = new NiveauBonus();
+            niveauBonusWindow.ShowDialog();
 
             temps.Tick += Jeu;
             temps.Interval = TimeSpan.FromMilliseconds(10);
@@ -215,7 +218,6 @@ namespace King_Colin
             imageTonneau.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Colin/barilC1.png"));
             imageTirBoss.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Colin/barilC2.png"));
             imageTirEnn.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Ennemi/toastenfeu.png"));
-
 
             foreach (UIElement element in cv_Jeux.Children)
             {
@@ -899,31 +901,11 @@ namespace King_Colin
 
         private void NiveauStreetFighter()
         {
-            cv_Jeux.Visibility = Visibility.Hidden;
-            cv_Secrete.Visibility = Visibility.Hidden;
-
-            AnimationBonus();
+            niveauBonusFenetre.Owner = this;
+            niveauBonusFenetre.ShowDialog();
+            temps.Stop();
         }
-
-        private void ImageBonus()
-        {
-            imageStreetFighter.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/map3.png"));
-            FondEcran2.Fill = imageStreetFighter;
-
-            
-
-        }
-
-        private void AnimationBonus()
-        {
-            animeDiard++;
-            if (animeDiard > 1) { animeDiard = 0; }
-            imageDiard.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Diard/diardJedi-" + animeDiard + ".png"));
-            DiardJedi.Fill = imageDiard;
-
-            AppliquerMiroirGauche(Joueur2);
-            Joueur2.Fill = imageMarioStatique;
-        }
+        
 
         private void AfficherLesCredits()
         {
