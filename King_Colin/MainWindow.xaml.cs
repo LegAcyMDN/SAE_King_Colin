@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -93,9 +94,7 @@ namespace King_Colin
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
         //gravié pour le joueur
-        //private double velociteY = 0;
-        //private const double gravite = 0.1;
-        //private bool enSaut = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -125,10 +124,9 @@ namespace King_Colin
         }
         //gravié pour le joueur ADD
 
-        bool enSaut;
         const float gravite = 9.8f;
         const float deltaTime = 0.016f;
-        const float jumpForce = 10;
+        const float forceSaut = 10;
         const float jumpMaxOffset = 1f;
 
         float timeJump = 0;
@@ -158,11 +156,9 @@ namespace King_Colin
         private void JumpEnd()
         {
             timeJumpEnd = timeJump;
-
             //Console.WriteLine("start :" + timeJumpStart);
             //Console.WriteLine("end :" + timeJumpEnd);
             float time = timeJumpEnd - timeJumpStart;
-
             jumpBoost = Math.Min(time, 1);
             Jump();
         }
@@ -175,7 +171,7 @@ namespace King_Colin
                 //TODO JUMP
                 isGrounded = false;
                 isJumping = true;
-                velocityToReachY = jumpForce * -1;
+                velocityToReachY = forceSaut * -1;
                 //Player sizes
                 //double playerHeight = joueur1.ActualHeight;
                 //double playerWidth = joueur1.ActualWidth;
@@ -186,82 +182,6 @@ namespace King_Colin
             }
 
         }
-
-        /*private void Gravite(object sender, EventArgs e)
-        {
-            /* double maxY = cv_Jeux.Height - joueur1.Height;
-             double actuelY = Canvas.GetTop(joueur1);
-
-             bool touchePlateforme = false;
-
-             if (enSaut)
-             {
-                 velociteY += gravite;
-                 double nouvelY = Canvas.GetTop(joueur1) + velociteY;
-
-                 Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
-
-                 foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
-                 {
-                     Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
-                     Console.WriteLine(velociteY);
-
-                     if (joueurBornes.IntersectsWith(plateformeBornes) && velociteY >= 0)
-                     {
-                         touchePlateforme = true;
-                         nouvelY = Canvas.GetTop(plateforme) - joueur1.Height;
-                         velociteY = 0;                  
-                         enSaut = false;
-                     }
-                 }
-
-                 Canvas.SetTop(joueur1, nouvelY);
-
-                 if (!touchePlateforme)
-                 {
-                     if (actuelY > maxY)
-                     {
-                         Canvas.SetTop(joueur1, maxY);
-                         velociteY = 0;
-                         enSaut = false;
-                     }
-                 }
-             }
-            double maxY = cv_Jeux.Height - rect_joueur1.Height;
-            double actuelY = Canvas.GetTop(rect_joueur1);
-
-            bool touchePlateforme = false;
-            if (enSaut)
-            {
-                velociteY += gravite;
-                Canvas.SetTop(rect_joueur1, Canvas.GetTop(rect_joueur1) + velociteY);
-                foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
-                {
-                    Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
-                    Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
-
-                    if (joueur.IntersectsWith(plateformeBornes))
-                    {
-                        Console.WriteLine("touché!");
-                        touchePlateforme = true;
-                        velociteY = 0;
-                        enSaut = false;
-                        Canvas.SetBottom(rect_joueur1, Canvas.GetTop(plateforme));
-
-                        // Ajuster la position du joueur au sommet de la plateforme
-                        Canvas.SetTop(rect_joueur1, plateformeBornes.Top - rect_joueur1.Height);
-                    }
-                }
-
-                if (!touchePlateforme && actuelY > maxY)
-                {
-                    Canvas.SetTop(rect_joueur1, maxY);
-                    velociteY = 0;
-                    enSaut = false;
-                }
-            }
-        }*/
-
         private void ListeDesPlateformes()
         {
             plateformes.Add(Plateforme1);
@@ -414,7 +334,6 @@ namespace King_Colin
 
             if (e.Key == Key.Space)
             {
-                enSaut = false;
                 if (aMarteau)
                 { Joueur1.Fill = imageMarioMarteau; }
                 else
@@ -505,11 +424,6 @@ namespace King_Colin
 
             if (e.Key == Key.Space)
             {
-                if (!enSaut)
-                {
-                    enSaut = true;
-                    velociteY = -3.25;
-                }
                 JumpEnd();
             }
         }
@@ -550,7 +464,7 @@ namespace King_Colin
             switch (LancementNiveauBonus())
             {
                 case false:
-                    if (tirEnnemi.Next(100) > 99)
+                    if (tirEnnemi.Next(100) < 1)
                         LancerTonneau();
                     timeJump += deltaTime;
                     ActionMarteau();
@@ -560,12 +474,12 @@ namespace King_Colin
                     MouvementEnnemis();
                     ToucheEchelle();
                     MouvementHorizontaux();
-                    MovementJoueurVertical();
+                    MouvementJoueurVertical();
 
 
 
                     //MouvementHorizontaux();
-                    //    RetireLesItems();
+                    RetireLesItems();
 
                     if (tirEnnemi.Next(1000) < 1)
                         LancerToastFeu();
@@ -590,16 +504,13 @@ namespace King_Colin
                 i++;
 
                 Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes), Canvas.GetTop(plateformes), plateformes.Width, plateformes.Height);
-                Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
+                //Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
                 //touchePlateforme = true;
                 //if (plateformeRect.IntersectsWith(joueur)) 
                 // if (touchePlateforme == true)
                 {
-                    //System.Windows.Shapes.Rectangle plateformeX = plateformes.(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));    
-                    // Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeX), Canvas.GetTop(plateformeX), plateformeX.Width, plateformeX.Height);
-                    if (joueur.Bottom == plateformeRect.Top&& enSaut==false)
+                    if (joueur.Bottom == plateformeRect.Top&& isJumping==false)
                     {
-                        enSaut = true;
                         isGrounded= true;
                         Console.WriteLine("touché");
                         double topPlateforme = Canvas.GetTop(plateformes);
@@ -608,18 +519,7 @@ namespace King_Colin
                     }
                     
                 }
-                /* if (touchePlateforme== true)
-                {
-                   //System.Windows.Shapes.Rectangle plateformeX = plateformes.(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)));    
-                 Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeX), Canvas.GetTop(plateformeX), plateformeX.Width, plateformeX.Height);
-                 if (joueur.Bottom >= plateformeRect.Top)
-                    {
-                        Console.WriteLine("touché");
-                        double topPlateforme = Canvas.GetTop(plateformeX);
-                            Canvas.SetTop(rect_joueur1, topPlateforme - rect_joueur1.ActualHeight);
-                    }
-
-                }*/
+             
             }
         }
         private void ToucheEchelle()
@@ -695,19 +595,19 @@ namespace King_Colin
             {
                 cv_Secrete.Visibility = Visibility.Visible;
 
-                if (Canvas.GetLeft(Joueur1) + Joueur1.Width >= Canvas.GetLeft(cv_Secrete) + cv_Secrete.Width)
-                { cv_Jeux.Visibility = Visibility.Hidden; }
+                //if (Canvas.GetLeft(Joueur1) + Joueur1.Width >= Canvas.GetLeft(cv_Secrete) + cv_Secrete.Width)
+                //{ cv_Jeux.Visibility = Visibility.Hidden; }
 
                 aMarteau = false;
             }
         }
 
         //ADD
-        private void MovementJoueurVertical()
+        private void MouvementJoueurVertical()
         {
 
             //Canvas sizes
-            double canvasMaxWidth = cv_Jeux.ActualHeight;
+            double canvasMaxWidth = cv_Jeux.ActualWidth;
             double canvasMaxHeight = cv_Jeux.ActualHeight;
 
             //Player sizes
@@ -722,7 +622,7 @@ namespace King_Colin
             Canvas.SetTop(Joueur1, joueurBornes.Top + velociteY);
 
 
-            if (joueurBornes.IntersectsWith(canvasBornes) && !isJumping)
+            /*if (joueurBornes.IntersectsWith(canvasBornes) && !isJumping)
             {
                 isGrounded = true;
                 velocityToReachY = 0;
@@ -730,8 +630,8 @@ namespace King_Colin
                 Canvas.SetTop(Joueur1, canvasBornes.Height - joueurBornes.Height);
                 return;
             }
-
-            if (-velociteY >= (jumpForce - jumpMaxOffset) && isJumping)
+            */
+            if (-velociteY >= (forceSaut - jumpMaxOffset) && isJumping)
             {
                 isJumping = false;
                 return;
@@ -748,15 +648,29 @@ namespace King_Colin
 
         private void MouvementHorizontaux()
         {
-
+            Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
+            Rect passage = new Rect(Canvas.GetLeft(Passage), Canvas.GetTop(Passage), Passage.Width, Passage.Height);
             double canvasMax = cv_Jeux.ActualWidth;
+            double canvasMin = 0;
+            if (passage.IntersectsWith(joueur))
+            {
+                canvasMin = 0- cv_Secrete.ActualWidth;
+                canvasMax = cv_Secrete.ActualWidth;
+            }
+            
             double joueurX = Canvas.GetLeft(Joueur1);
             double joueurWidth = Joueur1.Width;
-            if (gauche && droite)
-                return;
-            if (gauche && joueurX <= 0 && !aMarteau)
+
+            if (gauche && joueurX <= canvasMin && !aMarteau)
             {
-                Canvas.SetLeft(Joueur1, 0);
+                Canvas.SetLeft(Joueur1, canvasMin);
+                return;
+            }
+            if (gauche && joueurX <= canvasMin && aMarteau == true && passage.IntersectsWith(joueur))
+            {
+                
+                Canvas.SetLeft(Joueur1, joueurX - vitesseJoueur);
+                ActionMarteau();
                 return;
             }
             if (droite && joueurX >= canvasMax)
@@ -828,7 +742,7 @@ namespace King_Colin
                 //  CollisionTirs(tirsBoss);
                 if (Canvas.GetTop(tirsBoss) > cv_Jeux.ActualHeight)
                 {
-                    cv_Jeux.Children.Remove(tirsBoss);
+                    itemsARetirer.Add(tirsBoss);
                     tempsTirBaril.Stop();
                 }
             };
@@ -850,7 +764,7 @@ namespace King_Colin
                 }
                 else if (Canvas.GetLeft(ennemis) <= 0)
                 {
-                    Canvas.SetLeft(ennemis, 0 + vitesseEnnemi); //prblm avec les limites canvas + pigeon limite gauche reste au meme endroit + droite sort du champs
+                    Canvas.SetLeft(ennemis, 0 + vitesseEnnemi);
                 }
                 else if (mouvements == 2)
                 {
@@ -896,14 +810,22 @@ namespace King_Colin
                     {
                         Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) + vitesseTirEnnemi);
                         // CollisionTirs(tirsEnn);
+                        if (Canvas.GetRight(tirsEnn) < 0 || Canvas.GetLeft(tirsEnn) > cv_Jeux.ActualWidth)
+                        {
+                            Console.WriteLine("oe");
+                            itemsARetirer.Add(tirsEnn);
+                            RetireLesItems();
+                            tempstirEnnemi.Stop();
+                        }
                     };
                 }
                 tempstirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
                 tempstirEnnemi.Start();
-                if (Canvas.GetLeft(tirsEnn) < 0)
+                if (Canvas.GetRight(tirsEnn) < 0|| Canvas.GetLeft(tirsEnn) > cv_Jeux.ActualWidth)
                 {
+                    Console.WriteLine("oe");
                     itemsARetirer.Add(tirsEnn);
-                    // RetireLesItems();
+                    RetireLesItems();
                     tempstirEnnemi.Stop();
                 }// remove toast a revoir 
             }
@@ -1006,6 +928,14 @@ namespace King_Colin
         private void AfficherLesCredits()
         {
 
+        }
+        private void RetireLesItems()
+        {
+            foreach (Rectangle y in itemsARetirer)
+            {
+                // on les enlève du canvas
+                cv_Jeux.Children.Remove(y);
+            }
         }
         /*private void FinBonus()
         {
