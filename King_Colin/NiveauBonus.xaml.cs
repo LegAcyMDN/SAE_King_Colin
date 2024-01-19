@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -35,15 +28,16 @@ namespace King_Colin
         {
             InitializeComponent();
 
-            temps.Tick += StreetFighter();
+            temps.Tick += StreetFighter;
+            temps.Interval = TimeSpan.FromMilliseconds(10);
+            temps.Start();
 
-            ChargeImage();
-            AnimationImage();
         }
 
-        private void StreetFighter()
+        private void StreetFighter(object sender, EventArgs e)
         {
-
+            ChargeImage();
+            AnimationImage();
         }
 
         private void ChargeImage()
@@ -55,14 +49,14 @@ namespace King_Colin
         private void AnimationImage()
         {
             animeDiard++;
-            if (animeDiard > 1) { animeDiard = 0; }
-            imageDiard.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Diard/diardJedi-" + animeDiard + ".png"));
+            if (animeDiard > 32) { animeDiard = 0; }
+            imageDiard.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Boss/Diard/diardJedi-" + animeDiard / 32 + ".png"));
             DiardJedi.Fill = imageDiard;
 
             AppliquerMiroirGauche(Joueur2);
             animeStatique++;
-            if (animeStatique > 12) { animeStatique = 0; }
-            imageMarioStatique.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Statique/statique-" + animeStatique / 2 + ".png"));
+            if (animeStatique > 48) { animeStatique = 0; }
+            imageMarioStatique.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Statique/statique-" + animeStatique / 8 + ".png"));
             Joueur2.Fill = imageMarioStatique;
         }
 
