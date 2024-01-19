@@ -645,26 +645,22 @@ namespace King_Colin
             Rect passage = new Rect(Canvas.GetLeft(Passage), Canvas.GetTop(Passage), Passage.Width, Passage.Height);
             double canvasMax = cv_Jeux.ActualWidth;
             double canvasMin = 0;
-            if (passage.IntersectsWith(joueur))
-            {
-                canvasMin = 0- cv_Secrete.ActualWidth;
-                canvasMax = cv_Secrete.ActualWidth;
-            }
-            
+
             double joueurX = Canvas.GetLeft(Joueur1);
             double joueurWidth = Joueur1.Width;
+            switch (cv_Secrete.Visibility)
+            {
+                case Visibility.Visible:
+                    canvasMin = -cv_Secrete.ActualWidth;
+                    canvasMax = 0;
+                    break;
+                case Visibility.Hidden:
+                    break;
+            }
 
             if (gauche && joueurX <= canvasMin && !aMarteau)
             {
                 Canvas.SetLeft(Joueur1, canvasMin);
-                return;
-            }
-
-            if (gauche && joueurX <= canvasMin && aMarteau == true && passage.IntersectsWith(joueur))
-            {
-                
-                Canvas.SetLeft(Joueur1, joueurX - vitesseJoueur);
-                ActionMarteau();
                 return;
             }
 
@@ -826,11 +822,6 @@ namespace King_Colin
                 }
                 tempstirEnnemi.Interval = TimeSpan.FromMilliseconds(10);
                 tempstirEnnemi.Start();
-                Console.WriteLine(Canvas.GetLeft(tirsEnn));
-                Console.WriteLine("canvas" + cv_Jeux.ActualWidth);
-                Console.WriteLine("vitesseEnnemi"+ vitesseEnnemi);
-                Console.WriteLine("larg enn" + tirsEnn.Width);
-              
             }
         }
         /*private void CollisionTirs(System.Windows.Shapes.Rectangle rectangle)
