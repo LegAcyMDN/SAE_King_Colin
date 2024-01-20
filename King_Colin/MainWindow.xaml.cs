@@ -891,14 +891,13 @@ namespace King_Colin
 
         private void NiveauStreetFighter()
         {
-<<<<<<< HEAD
             cv_Jeux.Visibility = Visibility.Hidden;
             cv_Secrete.Visibility = Visibility.Hidden;
-=======
-            niveauBonusFenetre.Owner = this;
+
+            /*niveauBonusFenetre.Owner = this;
             niveauBonusFenetre.ShowDialog();
-            temps.Stop();
->>>>>>> de6005249cd894526fc6b89527e84d42dbb78fa9
+            musiqueJeux.Stop();
+            temps.Stop();*/
         }
         
 

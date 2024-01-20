@@ -56,6 +56,15 @@
                         </TransformGroup>
                     </Rectangle.RenderTransform>
                 </Rectangle>
+                <Rectangle 
+                    x:Name="Joueur2" 
+                    Width="31" 
+                    Height="39" 
+                    Fill="Red" 
+                    Canvas.Left="169" 
+                    Canvas.Top="157" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" />
             </Canvas>
             <Canvas
                 Name="cv_Jeux"

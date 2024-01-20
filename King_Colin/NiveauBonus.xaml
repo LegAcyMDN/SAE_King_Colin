@@ -8,6 +8,8 @@
     Title="NiveauBonus"
     Width="1434"
     Height="806"
+    FocusManager.FocusedElement="{Binding ElementName=cv_Combat}"
+    Loaded="NiveauBonus_Loaded"
     mc:Ignorable="d">
     <Window.Background>
         <SolidColorBrush Opacity="0" />
@@ -15,7 +17,10 @@
     <Window.Resources>
         <FontFamily x:Key="PixelDartFont">/Police/PixelDart.ttf#PixelDart</FontFamily>
     </Window.Resources>
-    <Canvas x:Name="cv_Combat">
+    <Canvas 
+        x:Name="cv_Combat"
+        Focusable="True" 
+        KeyDown="cv_Combat_KeyDown">
         <Rectangle
             x:Name="FondEcran2"
             Canvas.Top="-2"
@@ -88,5 +93,25 @@
             Height="122"
             HorizontalAlignment="Center"
             VerticalAlignment="Center" />
+        <TextBlock 
+            x:Name="txt_Victoire" 
+            Text="VICTOIRE" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center" 
+            Canvas.Left="496" Canvas.Top="329" 
+            FontSize="100" FontWeight="Bold" 
+            Visibility="Hidden"/>
+        <Button 
+            x:Name="but_Quitter" 
+            Content="QUITTER" 
+            Height="29" 
+            Canvas.Left="649" 
+            Canvas.Top="462" 
+            Width="135" 
+            FontSize="20" 
+            FontWeight="Bold" 
+            BorderBrush="#FF707070" 
+            Background="#00DDDDDD"
+            Visibility="Hidden" Click="but_Quitter_Click"/>
     </Canvas>
 </Window>
