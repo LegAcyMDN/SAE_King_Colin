@@ -34,7 +34,6 @@ namespace King_Colin
         private ImageBrush imageMortBoss = new ImageBrush();
 
         private ImageBrush imageVieJoueur = new ImageBrush();
-        private ImageBrush imageDerniereVieJoueur = new ImageBrush();
         private ImageBrush imageTirJoueur = new ImageBrush();
 
         private DispatcherTimer temps = new DispatcherTimer();
@@ -83,9 +82,6 @@ namespace King_Colin
             BarreBoss.Fill = imageVieBoss;
 
             imageVieJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/VieJoueur/vieJoueur-0.png"));
-            BarreJoueur.Fill = imageVieJoueur;
-
-            imageDerniereVieJoueur.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/VieJoueur/vieJoueur-1.png"));
 
             imageMortBoss.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/VieBoss/vieBoss-1.png"));
         }
