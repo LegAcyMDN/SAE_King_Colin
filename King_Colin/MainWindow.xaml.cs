@@ -93,9 +93,22 @@ namespace King_Colin
         private MediaPlayer musiqueJeux = new MediaPlayer();
 
         //gravié pour le joueur
-        //private double velociteY = 0;
-        //private const double gravite = 0.1;
-        //private bool enSaut = false;
+        private bool enSaut;
+        private const float gravite = 9.8f;
+        private const float deltaTime = 0.016f;
+        private const float jumpForce = 10;
+        private const float jumpMaxOffset = 1f;
+
+        private float timeJump = 0;
+        private float timeJumpStart = 0;
+        private float timeJumpEnd = 0;
+        private float jumpBoost = 0;
+        private double velociteY = 0;
+        private double velocityToReachY = 0;
+
+        private bool isGrounded;
+        private bool isJumping;
+ 
         public MainWindow()
         {
             InitializeComponent();
@@ -119,148 +132,9 @@ namespace King_Colin
 
             musiqueJeux.MediaEnded += MusiqueJeu_Fin;
 
-            //ADD
             this.cv_Jeux.KeyDown += new KeyEventHandler(this.cv_Jeux_KeyDown);
             this.cv_Jeux.KeyUp += new KeyEventHandler(this.cv_Jeux_KeyUp);
         }
-        //gravié pour le joueur ADD
-
-        bool enSaut;
-        const float gravite = 9.8f;
-        const float deltaTime = 0.016f;
-        const float jumpForce = 10;
-        const float jumpMaxOffset = 1f;
-
-        float timeJump = 0;
-        float timeJumpStart = 0;
-        float timeJumpEnd = 0;
-        float jumpBoost = 0;
-        double velociteY = 0;
-        double velocityToReachY = 0;
-
-        bool isGrounded;
-        bool isJumping;
-        private void Gravite(object sender, EventArgs e)
-        {
-            velociteY = Lerp(velociteY, velocityToReachY, (jumpBoost * 5 + 10f) * deltaTime);
-        }
-
-        private double Lerp(double firstFloat, double secondFloat, float by)
-        {
-            return firstFloat + (secondFloat - firstFloat) * by;
-        }
-
-        private void JumpStart()
-        {
-            timeJumpStart = timeJump;
-        }
-
-        private void JumpEnd()
-        {
-            timeJumpEnd = timeJump;
-
-            //Console.WriteLine("start :" + timeJumpStart);
-            //Console.WriteLine("end :" + timeJumpEnd);
-            float time = timeJumpEnd - timeJumpStart;
-
-            jumpBoost = Math.Min(time, 1);
-            Jump();
-        }
-
-        private void Jump()
-        {
-
-            if (isGrounded == true && isJumping == false)
-            {
-                //TODO JUMP
-                isGrounded = false;
-                isJumping = true;
-                velocityToReachY = jumpForce * -1;
-                //Player sizes
-                //double playerHeight = joueur1.ActualHeight;
-                //double playerWidth = joueur1.ActualWidth;
-
-                ////Rect colliders
-                //Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), playerWidth, playerHeight);
-                //Canvas.SetTop(joueur1, joueurBornes.Top -50);
-            }
-
-        }
-
-        /*private void Gravite(object sender, EventArgs e)
-        {
-            /* double maxY = cv_Jeux.Height - joueur1.Height;
-             double actuelY = Canvas.GetTop(joueur1);
-
-             bool touchePlateforme = false;
-
-             if (enSaut)
-             {
-                 velociteY += gravite;
-                 double nouvelY = Canvas.GetTop(joueur1) + velociteY;
-
-                 Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
-
-                 foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
-                 {
-                     Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
-                     Console.WriteLine(velociteY);
-
-                     if (joueurBornes.IntersectsWith(plateformeBornes) && velociteY >= 0)
-                     {
-                         touchePlateforme = true;
-                         nouvelY = Canvas.GetTop(plateforme) - joueur1.Height;
-                         velociteY = 0;                  
-                         enSaut = false;
-                     }
-                 }
-
-                 Canvas.SetTop(joueur1, nouvelY);
-
-                 if (!touchePlateforme)
-                 {
-                     if (actuelY > maxY)
-                     {
-                         Canvas.SetTop(joueur1, maxY);
-                         velociteY = 0;
-                         enSaut = false;
-                     }
-                 }
-             }
-            double maxY = cv_Jeux.Height - rect_joueur1.Height;
-            double actuelY = Canvas.GetTop(rect_joueur1);
-
-            bool touchePlateforme = false;
-            if (enSaut)
-            {
-                velociteY += gravite;
-                Canvas.SetTop(rect_joueur1, Canvas.GetTop(rect_joueur1) + velociteY);
-                foreach (System.Windows.Shapes.Rectangle plateforme in ListeDesPlateformes())
-                {
-                    Rect joueur = new Rect(Canvas.GetLeft(rect_joueur1), Canvas.GetTop(rect_joueur1), rect_joueur1.Width, rect_joueur1.Height);
-                    Rect plateformeBornes = new Rect(Canvas.GetLeft(plateforme), Canvas.GetTop(plateforme), plateforme.Width, plateforme.Height);
-
-                    if (joueur.IntersectsWith(plateformeBornes))
-                    {
-                        Console.WriteLine("touché!");
-                        touchePlateforme = true;
-                        velociteY = 0;
-                        enSaut = false;
-                        Canvas.SetBottom(rect_joueur1, Canvas.GetTop(plateforme));
-
-                        // Ajuster la position du joueur au sommet de la plateforme
-                        Canvas.SetTop(rect_joueur1, plateformeBornes.Top - rect_joueur1.Height);
-                    }
-                }
-
-                if (!touchePlateforme && actuelY > maxY)
-                {
-                    Canvas.SetTop(rect_joueur1, maxY);
-                    velociteY = 0;
-                    enSaut = false;
-                }
-            }
-        }*/
 
         private void ListeDesPlateformes()
         {
@@ -342,7 +216,52 @@ namespace King_Colin
             txt_Diard.FontFamily = pixelDartFont;
             txt_Joueur.FontFamily = pixelDartFont;*/
         }
+        private void Gravite(object sender, EventArgs e)
+        {
+            velociteY = Lerp(velociteY, velocityToReachY, (jumpBoost * 5 + 10f) * deltaTime);
+        }
 
+        private double Lerp(double premFloat, double deuxFloat, float by)
+        {
+            return premFloat + (deuxFloat - premFloat) * by;
+        }
+
+        private void JumpStart()
+        {
+            timeJumpStart = timeJump;
+        }
+
+        private void JumpEnd()
+        {
+            timeJumpEnd = timeJump;
+
+            //Console.WriteLine("start :" + timeJumpStart);
+            //Console.WriteLine("end :" + timeJumpEnd);
+            float time = timeJumpEnd - timeJumpStart;
+
+            jumpBoost = Math.Min(time, 1);
+            Jump();
+        }
+
+        private void Jump()
+        {
+
+            if (isGrounded == true && isJumping == false)
+            {
+                //TODO JUMP
+                isGrounded = false;
+                isJumping = true;
+                velocityToReachY = jumpForce * -1;
+                //Player sizes
+                //double playerHeight = joueur1.ActualHeight;
+                //double playerWidth = joueur1.ActualWidth;
+
+                ////Rect colliders
+                //Rect joueurBornes = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), playerWidth, playerHeight);
+                //Canvas.SetTop(joueur1, joueurBornes.Top -50);
+            }
+
+        }
         private void AnimationImageNormal()
         {
             animePortail++;

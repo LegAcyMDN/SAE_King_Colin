@@ -70,7 +70,7 @@
                 Focusable="True"
                 KeyDown="cv_Jeux_KeyDown"
                 KeyUp="cv_Jeux_KeyUp"
-                Visibility="Hidden">
+                Visibility="Visible">
                 <Rectangle
                     Name="FondEcran"
                     Width="640"
@@ -316,7 +316,7 @@
             </Canvas>
         </Canvas>
 
-        <Canvas x:Name="cv_Combat" Visibility="Visible">
+        <Canvas x:Name="cv_Combat" Visibility="Hidden">
             <Rectangle
                 x:Name="FondEcran2"
                 Canvas.Top="-2"
