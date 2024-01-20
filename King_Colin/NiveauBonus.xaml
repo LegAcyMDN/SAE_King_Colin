@@ -1,0 +1,92 @@
+﻿<Window
+    x:Class="King_Colin.NiveauBonus"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:King_Colin"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="NiveauBonus"
+    Width="1434"
+    Height="806"
+    mc:Ignorable="d">
+    <Window.Background>
+        <SolidColorBrush Opacity="0" />
+    </Window.Background>
+    <Window.Resources>
+        <FontFamily x:Key="PixelDartFont">/Police/PixelDart.ttf#PixelDart</FontFamily>
+    </Window.Resources>
+    <Canvas x:Name="cv_Combat">
+        <Rectangle
+            x:Name="FondEcran2"
+            Canvas.Top="-2"
+            Width="1434"
+            Height="806"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <Rectangle
+            x:Name="PlateformeCombat"
+            Canvas.Left="158"
+            Canvas.Top="659"
+            Width="1090"
+            Height="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top" />
+        <Rectangle
+            x:Name="Joueur2"
+            Canvas.Left="1094"
+            Canvas.Top="550"
+            Width="68"
+            Height="109"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Fill="Red" />
+        <Rectangle
+            x:Name="DiardJedi"
+            Canvas.Left="247"
+            Canvas.Top="437"
+            Width="170"
+            Height="222"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Fill="Green" />
+        <TextBlock
+            x:Name="txt_Joueur"
+            Canvas.Left="1154"
+            Canvas.Top="30"
+            Width="270"
+            Height="90"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            FontFamily="{StaticResource PixelDartFont}"
+            FontSize="100"
+            Foreground="White"
+            Text="JOUEUR" />
+        <TextBlock
+            x:Name="txt_Diard"
+            Canvas.Left="10"
+            Canvas.Top="30"
+            Height="90"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            FontFamily="{StaticResource PixelDartFont}"
+            FontSize="100"
+            Foreground="White"
+            Text="DIARD" />
+        <Rectangle
+            x:Name="BarreBoss"
+            Canvas.Left="10"
+            Canvas.Top="131"
+            Width="310"
+            Height="122"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center" />
+        <Rectangle
+            x:Name="BarreJoueur"
+            Canvas.Left="1114"
+            Canvas.Top="131"
+            Width="310"
+            Height="122"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" />
+    </Canvas>
+</Window>
