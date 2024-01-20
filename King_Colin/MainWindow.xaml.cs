@@ -113,7 +113,7 @@ namespace King_Colin
             temps.Interval = TimeSpan.FromMilliseconds(10);
             temps.Start();
 
-            temps.Tick += Gravite;
+            temps.Tick += VelociteJoueur;
             ChargeImage();
             ListeDesPlateformes();
             ListeDesPigeons();
@@ -126,43 +126,16 @@ namespace King_Colin
         }
         //gravié pour le joueur ADD
 
-        const float gravite = 9.8f;
         const float deltaTime = 0.016f;
-        const float forceSaut = 10;
+        const float forceSaut = 20;
         const float jumpMaxOffset = 1f;
 
         double velociteY = 0;
         double velocityToReachY = 0;
 
-        bool isGrounded;
-        bool isJumping;
-        private void Gravite(object sender, EventArgs e)
-        {
-            velociteY = Adoucissement(velociteY, velocityToReachY, 15 * deltaTime);
-        }
+        int plateformeActuelle = 0;
+        bool isGrounded = true;
 
-        private double Adoucissement(double firstFloat, double secondFloat, float by)
-        {
-            return firstFloat + (secondFloat - firstFloat) * by;
-        }
-
-        private void JumpStart()
-        {
-            Jump();
-        }
-
-        private void Jump()
-        {
-
-            if (isGrounded == true && isJumping == false)
-            {
-               
-                isGrounded = false;
-                isJumping = true;
-                velocityToReachY = forceSaut * -1;
-            }
-
-        }
         private void ListeDesPlateformes()
         {
             plateformes.Add(Plateforme1);
@@ -242,7 +215,7 @@ namespace King_Colin
             txt_Diard.FontFamily = pixelDartFont;
             txt_Joueur.FontFamily = pixelDartFont;*/
         }
-       
+
 
         private void AnimationImage()
         {
@@ -319,7 +292,7 @@ namespace King_Colin
                 { Joueur1.Fill = imageMarioMarteau; }
                 else
                     Joueur1.Fill = imageMarioStatique;
-                JumpStart();
+                SautStart();
             }
 
             if (e.Key == Key.P)
@@ -403,7 +376,7 @@ namespace King_Colin
                     Joueur1.Fill = imageMarioStatique;
             }
 
-      
+
         }
 
         private void AppliquerMiroirGauche(Rectangle rectangle)
@@ -440,12 +413,12 @@ namespace King_Colin
             switch (LancementNiveauBonus())
             {
                 case false:
-                    if (tirEnnemi.Next(100) < 1)
-                        LancerTonneau();
+                    //if (tirEnnemi.Next(100) < 1)
+                    //    LancerTonneau();
 
                     ActionMarteau();
                     AnimationImage();
-                    TouchePlateforme();
+                    // TouchePlateforme();
                     MouvementDonkey();
                     MouvementEnnemis();
                     ToucheEchelle();
@@ -457,8 +430,8 @@ namespace King_Colin
                     //MouvementHorizontaux();
                     RetireLesItems();
 
-                    if (tirEnnemi.Next(1000) < 1)
-                        LancerToastFeu();
+                    //if (tirEnnemi.Next(1000) < 1)
+                    //    LancerToastFeu();
 
                     //   Victoire();
                     break;
@@ -471,33 +444,33 @@ namespace King_Colin
             }
 
         }
-        private void TouchePlateforme()
-        {
-            Console.WriteLine("je saute " + isJumping);
-            Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
-            int i = 0;
-            foreach (Rectangle plateformes in plateformes)
-            {
-                i++;
+        //private void TouchePlateforme()
+        //{
+        //    //Console.WriteLine("je saute " + isJumping);
+        //    Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
+        //    int i = 0;
+        //    foreach (Rectangle plateformes in plateformes)
+        //    {
+        //        i++;
 
-                Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes), Canvas.GetTop(plateformes), plateformes.Width, plateformes.Height);
-                Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
-                //touchePlateforme = true;
-                //if (plateformeRect.IntersectsWith(joueur)) 
-                // if (touchePlateforme == true)
-                {
-                    Console.WriteLine("test plateforme " + joueur.Bottom + " ==" + plateformeRect.Top + " &&" + isJumping + "== false");
-                    if (joueur.Bottom == plateformeRect.Top && isJumping == false)
-                    {
-                        isGrounded = true;
-                        //Console.WriteLine("touché");
-                        double topPlateforme = Canvas.GetTop(plateformes);
-                        Canvas.SetTop(Joueur1, topPlateforme - Joueur1.ActualHeight);
+        //        Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes), Canvas.GetTop(plateformes), plateformes.Width, plateformes.Height);
+        //        //Console.WriteLine(joueur + " touche  platerfome" + i + plateformeRect);
+        //        //touchePlateforme = true;
+        //        //if (plateformeRect.IntersectsWith(joueur)) 
+        //        // if (touchePlateforme == true)
+        //        {
+        //           // Console.WriteLine("test plateforme " + joueur.Bottom + " ==" + plateformeRect.Top + " &&" + isJumping + "== false");
+        //            if (joueur.Bottom == plateformeRect.Top && isJumping == false)
+        //            {
+        //                isGrounded = true;
+        //                //Console.WriteLine("touché");
+        //                double topPlateforme = Canvas.GetTop(plateformes);
+        //                Canvas.SetTop(Joueur1, topPlateforme - Joueur1.ActualHeight);
 
-                    }
-                }
-            }
-        }
+        //            }
+        //        }
+        //    }
+        //}
         private void ToucheEchelle()
         {
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
@@ -534,6 +507,18 @@ namespace King_Colin
                     {
                         Canvas.SetTop(Joueur1, Math.Min(bottomEchelle - Joueur1.Height, joueur1Top + vitesseJoueur));
                     }
+
+                    for (int i = 0; i < plateformes.Count; i++)
+                    {
+                        Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes[i]), Canvas.GetTop(plateformes[i]), plateformes[i].Width, plateformes[i].Height);
+
+                        if (joueur1Top + Joueur1.ActualHeight <= plateformeRect.Top + 10)
+                        {
+                            plateformeActuelle = i;
+                        }
+
+                    }
+
                 }
             }
         }
@@ -578,12 +563,36 @@ namespace King_Colin
             }
         }
 
+        private void VelociteJoueur(object sender, EventArgs e)
+        {
+            velociteY = Adoucissement(velociteY, velocityToReachY, 15 * deltaTime);
+        }
+
+        private double Adoucissement(double firstFloat, double secondFloat, float by)
+        {
+            return firstFloat + (secondFloat - firstFloat) * by;
+        }
+
+        private void SautStart()
+        {
+            Saut();
+        }
+
+        private void Saut()
+        {
+
+            if (isGrounded == true)//&& isJumping == false
+            {
+
+                isGrounded = false;
+                //isJumping = true;
+                velocityToReachY = forceSaut * -1;
+            }
+
+        }
         //ADD
         private void MouvementJoueurVertical()
         {
-            //Canvas sizes
-            double canvasMaxWidth = cv_Jeux.ActualWidth;
-            double canvasMaxHeight = cv_Jeux.ActualHeight;
 
             //Player sizes
             double playerHeight = Joueur1.ActualHeight;
@@ -591,29 +600,39 @@ namespace King_Colin
 
             //Rect colliders
             Rect joueurBornes = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), playerWidth, playerHeight);
-            Rect canvasBornes = new Rect(0, canvasMaxHeight, canvasMaxWidth + 1, canvasMaxHeight);
 
+            //Effet de la gravité
             Canvas.SetTop(Joueur1, joueurBornes.Top + velociteY);
 
-
-            /*if (joueurBornes.IntersectsWith(canvasBornes) && !isJumping)
+            for (int i = 0; i <= plateformeActuelle; i++)
             {
-                isGrounded = true;
-                velocityToReachY = 0;
-                velociteY = 0;
-                Canvas.SetTop(Joueur1, canvasBornes.Height - joueurBornes.Height);
+
+
+                Rectangle plateformeEnCours = plateformes[i];
+                Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeEnCours), Canvas.GetTop(plateformeEnCours), plateformeEnCours.Width, plateformeEnCours.Height);
+
+                if (joueurBornes.IntersectsWith(plateformeRect) && velocityToReachY > 0)// && !isJumping
+                {
+                    isGrounded = true;
+                    velocityToReachY = 0;
+                    velociteY = 0;
+                    Canvas.SetTop(Joueur1, plateformeRect.Top - Joueur1.Height);
+                    return;
+                }
+
+            }
+
+
+
+            if (-velociteY >= (forceSaut - jumpMaxOffset))//&& isJumping
+            {
+                //isJumping = false;
                 return;
             }
-            */
-            if (-velociteY >= (forceSaut - jumpMaxOffset) && isJumping)
-            {
-                isJumping = false;
-                return;
-            }
 
-            if (isGrounded == false && isJumping == false)
+            if (isGrounded == false) // && isJumping == false
             {
-                velocityToReachY = gravite;
+                velocityToReachY = velocityToReachY + forceSaut / 10;
                 return;
             }
         }
@@ -749,8 +768,8 @@ namespace King_Colin
                     Canvas.SetLeft(ennemis, ennemi - vitesseEnnemi);
                 }
 
-                if (tirEnnemi.Next(1000) < 1)
-                    LancerToastFeu();
+                //if (tirEnnemi.Next(1000) < 1)
+                //    LancerToastFeu();
             }
         }
         private void LancerToastFeu()
@@ -866,13 +885,12 @@ namespace King_Colin
 
         private void NiveauStreetFighter()
         {
+
             cv_Jeux.Visibility = Visibility.Hidden;
             cv_Secrete.Visibility = Visibility.Hidden;
-
-            /*niveauBonusFenetre.Owner = this;
+            niveauBonusFenetre.Owner = this;
             niveauBonusFenetre.ShowDialog();
-            musiqueJeux.Stop();
-            temps.Stop();*/
+            temps.Stop();
         }
 
 
