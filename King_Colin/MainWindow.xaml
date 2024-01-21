@@ -40,28 +40,18 @@
                     VerticalAlignment="Top" />
                 <Rectangle
                     x:Name="Portail"
-                    Canvas.Left="8"
+                    Canvas.Left="140"
                     Canvas.Top="145"
                     Width="50"
                     Height="50"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    RenderTransformOrigin="0.5,0.5">
-                    <Rectangle.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform />
-                            <SkewTransform />
-                            <RotateTransform Angle="180" />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </Rectangle.RenderTransform>
-                </Rectangle>
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"/>
                 <Rectangle 
                     x:Name="Joueur2" 
                     Width="31" 
                     Height="39" 
                     Fill="Red" 
-                    Canvas.Left="169" 
+                    Canvas.Left="10" 
                     Canvas.Top="157" 
                     HorizontalAlignment="Left" 
                     VerticalAlignment="Center" />
