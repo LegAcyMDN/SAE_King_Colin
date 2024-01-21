@@ -62,12 +62,6 @@
     <None Update="Img\Element\fondEcran.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\jetpack.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Img\Element\Jeux.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Img\Element\map3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -84,12 +78,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\Element\VieJoueur\vieJoueur-0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Img\Ennemi\pigeon2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Img\Ennemi\toastenfeu2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\Mario\Courir\courir-0.png">
@@ -122,19 +110,10 @@
     <None Update="Img\Mario\Courir\courir-9.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Mario\loumariojetpack.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Img\loumariosaut.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\marioLou.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Img\Mario\loumariosaut.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Img\Mario\marioLou.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Img\Mario\Marteau\marteau-0.png">
@@ -185,9 +164,6 @@
     <None Update="Img\Element\plateforme.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Img\Element\plateformelongue.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Img\Portail\portail-0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -225,9 +201,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Musique\RipeSeeds.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Musique\TheDying.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Musique\TheDying2.mp3">
