@@ -63,7 +63,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             FontFamily="{StaticResource PixelDartFont}"
-            FontSize="100"
+            FontSize="50"
             Foreground="White"
             Text="JOUEUR" />
         <TextBlock
@@ -74,7 +74,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             FontFamily="{StaticResource PixelDartFont}"
-            FontSize="100"
+            FontSize="50"
             Foreground="White"
             Text="DIARD" />
         <Rectangle

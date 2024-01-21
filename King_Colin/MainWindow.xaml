@@ -315,6 +315,26 @@
                     Width="58"
                     Height="69"
                     Fill="Green" />
+                <TextBlock 
+                    x:Name="txt_Fin" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="240" 
+                    Canvas.Left="200" 
+                    Canvas.Top="365" 
+                    Height="70" 
+                    FontWeight="Bold"
+                    Visibility="Hidden"/>
+                <Button 
+                    x:Name="but_Fin" 
+                    Content="QUITTER"
+                    Height="25" 
+                    Width="90" 
+                    Canvas.Left="275" 
+                    Canvas.Top="435" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Visibility="Hidden" Click="but_Fin_Click"/>
             </Canvas>
         </Canvas>
     </Grid>
