@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Packaging;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -115,7 +114,7 @@ namespace King_Colin
         double velocityAAtteindre = 0;
 
         int plateformeActuelle = 0;
-        bool isGrounded = true;      
+        bool isGrounded = true;
 
         public MainWindow()
         {
@@ -132,7 +131,7 @@ namespace King_Colin
             {
                 int selectedDifficultyIndex = fenetreMenu.SelectedDifficultyIndex;
 
-                switch(selectedDifficultyIndex)
+                switch (selectedDifficultyIndex)
                 {
                     case (0):
                         VitesseTirEnnemi = 3;
@@ -169,7 +168,7 @@ namespace King_Colin
             this.cv_Jeux.KeyDown += new KeyEventHandler(this.cv_Jeux_KeyDown);
             this.cv_Jeux.KeyUp += new KeyEventHandler(this.cv_Jeux_KeyUp);
         }
-        
+
         //Listes 
         private void ListeDesPlateformes()
         {
@@ -196,7 +195,7 @@ namespace King_Colin
             echelles.Add(Echelle09);
             echelles.Add(Echelle10);
         }
-        
+
         //images, animations et musiques 
         private void ChargeImage()
         {
@@ -274,7 +273,7 @@ namespace King_Colin
         }
         private void MusiqueJeu_Fin(object sender, EventArgs e)
         {
-           // musiqueJeux.Stop();
+            // musiqueJeux.Stop();
             //musiqueJeux.Play();
         }
         private void AppliquerMiroirGauche(Rectangle rectangle)
@@ -316,27 +315,9 @@ namespace King_Colin
                 aMarteau = true;
             }
 
-            /*foreach (var tirEnnemi in cv_Jeux.Children.OfType<System.Windows.Shapes.Rectangle>().Where(r => r.Tag.Equals("tirsEnnemi")))
-            {
-                Rect tirRect = new Rect(Canvas.GetLeft(tirEnnemi), Canvas.GetTop(tirEnnemi), tirEnnemi.Width, tirEnnemi.Height);
-
-                if (joueur.IntersectsWith(tirRect) && aMarteau)
-                { itemsARetirer.Add(tirEnnemi); }
-            }
-
-            foreach (var ennemiRect in ListeDesPigeons().Select(e => new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))
-            {
-                if (aMarteau && joueur.IntersectsWith(ennemiRect))
-                { itemsARetirer.Add(ListeDesPigeons().First(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))); }
-            }*/
-
             if (aMarteau && passage.IntersectsWith(joueur))
             {
                 cv_Secrete.Visibility = Visibility.Visible;
-
-                //if (Canvas.GetLeft(Joueur1) + Joueur1.Width >= Canvas.GetLeft(cv_Secrete) + cv_Secrete.Width)
-                //{ cv_Jeux.Visibility = Visibility.Hidden; }
-
                 aMarteau = false;
             }
         }
@@ -475,7 +456,7 @@ namespace King_Colin
             {
                 case false:
                     if (tirEnnemi.Next(1000) < 1)
-                      LancerTonneau();
+                        LancerTonneau();
 
                     ActionMarteau();
                     AnimationImage();
@@ -610,7 +591,7 @@ namespace King_Colin
                 return;
             }
 
-            if (isGrounded == false) 
+            if (isGrounded == false)
             {
                 velocityAAtteindre = velocityAAtteindre + forceSaut / 10;
                 return;
@@ -708,7 +689,7 @@ namespace King_Colin
             {
                 tempsTirBaril.Start();
                 Canvas.SetTop(tirsBoss, Canvas.GetTop(tirsBoss) + vitesseTirTonneau);
-               CollisionTirs(tirsBoss);
+                CollisionTirs(tirsBoss);
                 if (Canvas.GetTop(tirsBoss) > cv_Jeux.ActualHeight)
                 {
                     itemsARetirer.Add(tirsBoss);
@@ -754,7 +735,7 @@ namespace King_Colin
         private void LancerToastFeu()
         {
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
-          
+
             double joueurX = Canvas.GetLeft(Joueur1);
             double ennemi = Canvas.GetLeft(Ennemi1);
             foreach (Rectangle ennemis in pigeons)
@@ -800,7 +781,7 @@ namespace King_Colin
                             itemsARetirer.Add(tirsEnn);
                             RetireLesItems();
                         }
-                        
+
                     };
                 }
 
@@ -838,8 +819,12 @@ namespace King_Colin
             if (joueur.IntersectsWith(peach))
             {
                 temps.Stop();
-                MessageBox.Show("Gagné !!", "Fin de partie", MessageBoxButton.OK,
-                MessageBoxImage.Exclamation);
+                tempsTirBaril.Stop();
+                tempstirEnnemi.Stop();
+                txt_Fin.Visibility = Visibility.Visible;
+                but_Fin.Visibility = Visibility.Visible;
+                txt_Fin.Text = "VICTOIRE";
+                txt_Fin.FontSize = 50;
                 return;
             }
         }
@@ -848,9 +833,16 @@ namespace King_Colin
             temps.Stop();
             tempsTirBaril.Stop();
             tempstirEnnemi.Stop();
-            MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK,
-            MessageBoxImage.Stop);
+            txt_Fin.Visibility = Visibility.Visible;
+            but_Fin.Visibility = Visibility.Visible;
+            txt_Fin.Text = "DEFAITE";
+            txt_Fin.FontSize = 50;
             return;
+        }
+
+        private void but_Fin_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
 
         //Niveau bonus
@@ -861,8 +853,8 @@ namespace King_Colin
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
             Rect portail = new Rect(Canvas.GetLeft(Portail), Canvas.GetTop(Portail), Portail.Width, Portail.Height);
 
-            //if (joueur.IntersectsWith(portail))
-            //{ lancement = true; }
+            if (joueur.IntersectsWith(portail))
+            { lancement = true; }
 
             return lancement;
         }
@@ -875,6 +867,8 @@ namespace King_Colin
             niveauBonusFenetre.Owner = this;
             niveauBonusFenetre.ShowDialog();
             temps.Stop();
+            tempsTirBaril.Stop();
+            tempstirEnnemi.Stop();
         }
 
         //retrait des tirs qui sortent du canvas 
