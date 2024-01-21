@@ -840,7 +840,6 @@ namespace King_Colin
                 temps.Stop();
                 MessageBox.Show("Gagné !!", "Fin de partie", MessageBoxButton.OK,
                 MessageBoxImage.Exclamation);
-                //AfficherLesCredits();
                 return;
             }
         }
@@ -851,7 +850,6 @@ namespace King_Colin
             tempstirEnnemi.Stop();
             MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK,
             MessageBoxImage.Stop);
-            //AfficherLesCredits();
             return;
         }
 
