@@ -175,15 +175,15 @@
               VerticalAlignment="Center"
               Fill="blue" />
                 <Rectangle
-x:Name="Echelle05"
+            x:Name="Echelle05"
 
-Canvas.Left="323"
-Canvas.Top="80"
-Width="12"
-Height="130             "
-HorizontalAlignment="Center"
-VerticalAlignment="Top"
-Fill="blue" />
+            Canvas.Left="323"
+            Canvas.Top="80"
+            Width="12"
+            Height="130 "
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Fill="blue" />
                 <Rectangle
               x:Name="Echelle06"
               Canvas.Left="289"

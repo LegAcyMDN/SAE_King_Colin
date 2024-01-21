@@ -599,8 +599,7 @@ namespace King_Colin
             switch (cv_Secrete.Visibility)
             {
                 case Visibility.Visible:
-                    canvasMin = cv_Secrete.ActualWidth;
-                    canvasMax = 0;
+                    canvasMax = cv_Secrete.ActualWidth;
                     Joueur1.Visibility = Visibility.Hidden;
                     Joueur2.Visibility = Visibility.Visible;
                     Joueur1 = Joueur2;
@@ -831,8 +830,8 @@ namespace King_Colin
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
             Rect portail = new Rect(Canvas.GetLeft(Portail), Canvas.GetTop(Portail), Portail.Width, Portail.Height);
 
-           //if (joueur.IntersectsWith(portail))
-          //  { lancement = true; }
+          // if (joueur.IntersectsWith(portail))
+           // { lancement = true; }
 
             return lancement;
         }
