@@ -63,14 +63,14 @@ namespace King_Colin
         private void NiveauBonus_Loaded(object sender, RoutedEventArgs e)
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/LadyOfThe80.mp3", UriKind.Relative);
-         //   musiqueCombat.Open(uri);
-          //  musiqueCombat.Play();
+            musiqueCombat.Open(uri);
+            musiqueCombat.Play();
         }
 
         private void MusiqueCombat_Fin(object sender, EventArgs e)
         {
-          //  musiqueCombat.Stop();
-           // musiqueCombat.Play();
+            musiqueCombat.Stop();
+            musiqueCombat.Play();
         }
 
         private void ChargeImage()

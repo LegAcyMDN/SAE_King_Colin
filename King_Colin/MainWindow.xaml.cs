@@ -163,7 +163,7 @@ namespace King_Colin
             ListeDesPigeons();
             ListeDesEchelles();
 
-            //musiqueJeux.MediaEnded += MusiqueJeu_Fin;
+            musiqueJeux.MediaEnded += MusiqueJeu_Fin;
 
             this.cv_Jeux.KeyDown += new KeyEventHandler(this.cv_Jeux_KeyDown);
             this.cv_Jeux.KeyUp += new KeyEventHandler(this.cv_Jeux_KeyUp);
@@ -268,13 +268,13 @@ namespace King_Colin
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/RipeSeeds.mp3", UriKind.Relative);
-            //  musiqueJeux.Open(uri);
-            // musiqueJeux.Play();
+            musiqueJeux.Open(uri);
+            musiqueJeux.Play();
         }
         private void MusiqueJeu_Fin(object sender, EventArgs e)
         {
-            // musiqueJeux.Stop();
-            //musiqueJeux.Play();
+            musiqueJeux.Stop();
+            musiqueJeux.Play();
         }
         private void AppliquerMiroirGauche(Rectangle rectangle)
         {
