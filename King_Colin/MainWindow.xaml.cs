@@ -164,9 +164,6 @@ namespace King_Colin
             ListeDesEchelles();
 
             //musiqueJeux.MediaEnded += MusiqueJeu_Fin;
-
-            this.cv_Jeux.KeyDown += new KeyEventHandler(this.cv_Jeux_KeyDown);
-            this.cv_Jeux.KeyUp += new KeyEventHandler(this.cv_Jeux_KeyUp);
         }
 
         //Listes 
@@ -268,8 +265,8 @@ namespace King_Colin
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/RipeSeeds.mp3", UriKind.Relative);
-            //  musiqueJeux.Open(uri);
-            // musiqueJeux.Play();
+            //musiqueJeux.Open(uri);
+            //musiqueJeux.Play();
         }
         private void MusiqueJeu_Fin(object sender, EventArgs e)
         {
@@ -365,7 +362,7 @@ namespace King_Colin
                 { Joueur1.Fill = imageMarioMarteau; }
                 else
                     Joueur1.Fill = imageMarioStatique;
-                SautStart();
+                Saut();
             }
 
             if (e.Key == Key.P)
@@ -538,10 +535,6 @@ namespace King_Colin
         private double Adoucissement(double premierFloat, double deuxiemeFloat, float by)
         {
             return premierFloat + (deuxiemeFloat - premierFloat) * by;
-        }
-        private void SautStart()
-        {
-            Saut();
         }
         private void Saut()
         {
