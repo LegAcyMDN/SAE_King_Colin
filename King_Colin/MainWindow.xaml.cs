@@ -119,7 +119,7 @@ namespace King_Colin
             ListeDesPigeons();
             ListeDesEchelles();
 
-            musiqueJeux.MediaEnded += MusiqueJeu_Fin;
+            //musiqueJeux.MediaEnded += MusiqueJeu_Fin;
 
             this.cv_Jeux.KeyDown += new KeyEventHandler(this.cv_Jeux_KeyDown);
             this.cv_Jeux.KeyUp += new KeyEventHandler(this.cv_Jeux_KeyUp);
@@ -241,8 +241,8 @@ namespace King_Colin
 
         private void MusiqueJeu_Fin(object sender, EventArgs e)
         {
-            musiqueJeux.Stop();
-            musiqueJeux.Play();
+           // musiqueJeux.Stop();
+            //musiqueJeux.Play();
         }
 
         private void cv_Jeux_KeyDown(object sender, KeyEventArgs e)
@@ -408,8 +408,8 @@ namespace King_Colin
             switch (LancementNiveauBonus())
             {
                 case false:
-                    //if (tirEnnemi.Next(100) < 1)
-                    //    LancerTonneau();
+                    if (tirEnnemi.Next(100) < 1)
+                      LancerTonneau();
 
                     ActionMarteau();
                     AnimationImage();
@@ -425,8 +425,8 @@ namespace King_Colin
                     //MouvementHorizontaux();
                     RetireLesItems();
 
-                    //if (tirEnnemi.Next(1000) < 1)
-                    //    LancerToastFeu();
+                    if (tirEnnemi.Next(1000) < 1)
+                        LancerToastFeu();
 
                     //   Victoire();
                     break;
@@ -797,7 +797,7 @@ namespace King_Colin
                         {
                             itemsARetirer.Add(tirsEnn);
                             RetireLesItems();
-                        }// remove toast a revoir 
+                        }
                     };
                 }
 

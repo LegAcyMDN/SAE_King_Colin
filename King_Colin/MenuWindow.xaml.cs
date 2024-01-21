@@ -28,20 +28,20 @@ namespace King_Colin
             InitializeComponent();
             imageMenu.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Menu.jpg"));
             FondMenu.Fill = imageMenu;
-            musiqueMenu.MediaEnded += MusiqueMenu_Fin;
+           // musiqueMenu.MediaEnded += MusiqueMenu_Fin;
         }
 
         private void MenuWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/TheDying2.mp3", UriKind.Relative);
-            musiqueMenu.Open(uri);
-            musiqueMenu.Play();
+           // musiqueMenu.Open(uri);
+            //musiqueMenu.Play();
         }
 
         private void MusiqueMenu_Fin(object sender, EventArgs e)
         {
-            musiqueMenu.Stop();
-            musiqueMenu.Play();
+            //musiqueMenu.Stop();
+           // musiqueMenu.Play();
         }
 
         private void bt_Jouer_Click(object sender, RoutedEventArgs e)
