@@ -77,8 +77,8 @@ namespace King_Colin
         private int vitesseDonkey = 3;
         private int vitesseJoueur = 5;
         private int vitesseEnnemi = 3;
-        private int vitesseTirEnnemi = 7;
-        private int vitesseTirTonneau = 7;
+        private int vitesseTirEnnemi = 5;
+        private int vitesseTirTonneau = 5;
 
         //Différent DispatcherTimer pour gérer différent éléments
         private DispatcherTimer temps = new DispatcherTimer();
@@ -116,9 +116,6 @@ namespace King_Colin
             {
                 Application.Current.Shutdown();
             }*/
-
-            //NiveauBonus niveauBonusWindow = new NiveauBonus();
-            //niveauBonusWindow.ShowDialog();
 
             temps.Tick += Jeu;
             temps.Interval = TimeSpan.FromMilliseconds(10);
@@ -401,7 +398,7 @@ namespace King_Colin
             switch (LancementNiveauBonus())
             {
                 case false:
-                    if (tirEnnemi.Next(100) < 1)
+                    if (tirEnnemi.Next(1000) < 1)
                       LancerTonneau();
 
                     ActionMarteau();
@@ -830,8 +827,8 @@ namespace King_Colin
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
             Rect portail = new Rect(Canvas.GetLeft(Portail), Canvas.GetTop(Portail), Portail.Width, Portail.Height);
 
-          // if (joueur.IntersectsWith(portail))
-           // { lancement = true; }
+            //if (joueur.IntersectsWith(portail))
+            //{ lancement = true; }
 
             return lancement;
         }
@@ -841,6 +838,7 @@ namespace King_Colin
 
             cv_Jeux.Visibility = Visibility.Hidden;
             cv_Secrete.Visibility = Visibility.Hidden;
+
             niveauBonusFenetre.Owner = this;
             niveauBonusFenetre.ShowDialog();
             temps.Stop();
