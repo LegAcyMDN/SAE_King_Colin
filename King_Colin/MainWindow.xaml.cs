@@ -115,6 +115,11 @@ namespace King_Colin
             if (fenetreMenu.DialogResult == false)
             {
                 Application.Current.Shutdown();
+            }
+
+            if (fenetreMenu.DialogResult == true)
+            {
+                int selectedDifficultyIndex = fenetreMenu.SelectedDifficultyIndex;
             }*/
 
             temps.Tick += Jeu;

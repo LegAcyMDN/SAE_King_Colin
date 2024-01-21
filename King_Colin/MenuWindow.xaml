@@ -38,7 +38,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             FontSize="25"
-            SelectedIndex="0">
+            SelectedIndex="0" SelectionChanged="cb_Difficulte_SelectionChanged">
             <ComboBoxItem Content="Facile" />
             <ComboBoxItem Content="Moyen" />
             <ComboBoxItem Content="Difficile" />

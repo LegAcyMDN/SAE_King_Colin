@@ -23,6 +23,8 @@ namespace King_Colin
 
         private MediaPlayer musiqueMenu = new MediaPlayer();
 
+        public int SelectedDifficultyIndex { get; private set; }
+
         public MenuWindow()
         {
             InitializeComponent();
@@ -42,6 +44,13 @@ namespace King_Colin
         {
             //musiqueMenu.Stop();
            // musiqueMenu.Play();
+        }
+        private void cb_Difficulte_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cb_Difficulte.SelectedIndex >= 0)
+            {
+                SelectedDifficultyIndex = cb_Difficulte.SelectedIndex;
+            }
         }
 
         private void bt_Jouer_Click(object sender, RoutedEventArgs e)
