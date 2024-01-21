@@ -77,8 +77,20 @@ namespace King_Colin
         private int vitesseDonkey = 3;
         private int vitesseJoueur = 5;
         private int vitesseEnnemi = 3;
-        private int vitesseTirEnnemi = 5;
-        private int vitesseTirTonneau = 5;
+        private int vitesseTirEnnemi = 3;
+        private int vitesseTirTonneau = 3;
+
+        public int VitesseTirEnnemi
+        {
+            get { return vitesseTirEnnemi; }
+            set { vitesseTirEnnemi = value; }
+        }
+
+        public int VitesseTirTonneau
+        {
+            get { return vitesseTirTonneau; }
+            set { vitesseTirTonneau = value; }
+        }
 
         //Différent DispatcherTimer pour gérer différent éléments
         private DispatcherTimer temps = new DispatcherTimer();
@@ -103,14 +115,13 @@ namespace King_Colin
         double velocityAAtteindre = 0;
 
         int plateformeActuelle = 0;
-        bool isGrounded = true;
-
+        bool isGrounded = true;      
 
         public MainWindow()
         {
             InitializeComponent();
 
-            /*MenuWindow fenetreMenu = new MenuWindow();
+            MenuWindow fenetreMenu = new MenuWindow();
             fenetreMenu.ShowDialog();
             if (fenetreMenu.DialogResult == false)
             {
@@ -120,7 +131,28 @@ namespace King_Colin
             if (fenetreMenu.DialogResult == true)
             {
                 int selectedDifficultyIndex = fenetreMenu.SelectedDifficultyIndex;
-            }*/
+
+                switch(selectedDifficultyIndex)
+                {
+                    case (0):
+                        VitesseTirEnnemi = 3;
+                        VitesseTirTonneau = 3;
+                        break;
+
+                    case (1):
+                        VitesseTirEnnemi = 5;
+                        VitesseTirTonneau = 5;
+                        break;
+
+                    case (2):
+                        VitesseTirEnnemi = 10;
+                        VitesseTirTonneau = 10;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
 
             temps.Tick += Jeu;
             temps.Interval = TimeSpan.FromMilliseconds(10);
@@ -808,7 +840,7 @@ namespace King_Colin
                 temps.Stop();
                 MessageBox.Show("Gagné !!", "Fin de partie", MessageBoxButton.OK,
                 MessageBoxImage.Exclamation);
-                AfficherLesCredits();
+                //AfficherLesCredits();
                 return;
             }
         }
@@ -819,7 +851,7 @@ namespace King_Colin
             tempstirEnnemi.Stop();
             MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK,
             MessageBoxImage.Stop);
-            AfficherLesCredits();
+            //AfficherLesCredits();
             return;
         }
 
