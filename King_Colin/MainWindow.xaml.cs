@@ -42,7 +42,6 @@ namespace King_Colin
         private int animeMarteau = 0;
         private int animeStatique = 0;
         private int animeCourir = 0;
-        private int animeDiard = 0;
 
         //img scene
         private ImageBrush imageJeux = new ImageBrush();
@@ -106,15 +105,15 @@ namespace King_Colin
 
         //gravié pour le joueur 
 
-        const float deltaTime = 0.016f;
+        const float deltaTemps = 0.016f;
         const float forceSaut = 20;
-        const float jumpMaxOffset = 1f;
+        const float jumpMax = 1f;
 
         double velociteY = 0;
-        double velocityAAtteindre = 0;
+        double velociteAAtteindre = 0;
 
         int plateformeActuelle = 0;
-        bool isGrounded = true;
+        bool auSol = true;
 
         public MainWindow()
         {
@@ -129,9 +128,9 @@ namespace King_Colin
 
             if (fenetreMenu.DialogResult == true)
             {
-                int selectedDifficultyIndex = fenetreMenu.SelectedDifficultyIndex;
+                int selectionDifficulteIndex = fenetreMenu.SelectedDifficultyIndex;
 
-                switch (selectedDifficultyIndex)
+                switch (selectionDifficulteIndex)
                 {
                     case (0):
                         VitesseTirEnnemi = 3;
@@ -276,24 +275,24 @@ namespace King_Colin
         private void AppliquerMiroirGauche(Rectangle rectangle)
         {
             double joueurX = Canvas.GetLeft(rectangle);
-            double joueurWidth = rectangle.Width;
+            double joueurLargeur = rectangle.Width;
             if (sensJoueur == true)
             {
                 ScaleTransform transformation = new ScaleTransform(-1, 1);
                 rectangle.RenderTransform = transformation;
-                Canvas.SetLeft(rectangle, joueurX + joueurWidth);
+                Canvas.SetLeft(rectangle, joueurX + joueurLargeur);
                 sensJoueur = false;
             }
         }
         private void AppliquerMiroirDroite(Rectangle rectangle)
         {
             double joueurX = Canvas.GetLeft(rectangle);
-            double joueurWidth = rectangle.Width;
+            double joueurLargeur = rectangle.Width;
             if (sensJoueur == false)
             {
                 ScaleTransform transformation = new ScaleTransform(1, 1);
                 rectangle.RenderTransform = transformation;
-                Canvas.SetLeft(rectangle, joueurX - joueurWidth);
+                Canvas.SetLeft(rectangle, joueurX - joueurLargeur);
                 sensJoueur = true;
             }
         }
@@ -498,28 +497,28 @@ namespace King_Colin
 
                 if (echelle != null)
                 {
-                    double topEchelle = Canvas.GetTop(echelle);
-                    double bottomEchelle = topEchelle + echelle.Height;
-                    double joueur1Top = Canvas.GetTop(Joueur1);
+                    double hautEchelle = Canvas.GetTop(echelle);
+                    double basEchelle = hautEchelle + echelle.Height;
+                    double joueur1Haut = Canvas.GetTop(Joueur1);
 
-                    if (haut && joueur1Top > topEchelle)
+                    if (haut && joueur1Haut > hautEchelle)
                     {
-                        Canvas.SetTop(Joueur1, Math.Max(topEchelle, joueur1Top - vitesseJoueur));
+                        Canvas.SetTop(Joueur1, Math.Max(hautEchelle, joueur1Haut - vitesseJoueur));
                     }
-                    else if (haut && joueur1Top <= topEchelle)
+                    else if (haut && joueur1Haut <= hautEchelle)
                     {
-                        Canvas.SetTop(Joueur1, joueur1Top - vitesseJoueur);
+                        Canvas.SetTop(Joueur1, joueur1Haut - vitesseJoueur);
                     }
-                    else if (bas && joueur1Top + Joueur1.Height < bottomEchelle)
+                    else if (bas && joueur1Haut + Joueur1.Height < basEchelle)
                     {
-                        Canvas.SetTop(Joueur1, Math.Min(bottomEchelle - Joueur1.Height, joueur1Top + vitesseJoueur));
+                        Canvas.SetTop(Joueur1, Math.Min(basEchelle - Joueur1.Height, joueur1Haut + vitesseJoueur));
                     }
 
                     for (int i = 0; i < plateformes.Count; i++)
                     {
                         Rect plateformeRect = new Rect(Canvas.GetLeft(plateformes[i]), Canvas.GetTop(plateformes[i]), plateformes[i].Width, plateformes[i].Height);
 
-                        if (joueur1Top + Joueur1.ActualHeight <= plateformeRect.Top + 10)
+                        if (joueur1Haut + Joueur1.ActualHeight <= plateformeRect.Top + 10)
                         {
                             plateformeActuelle = i;
                         }
@@ -530,7 +529,7 @@ namespace King_Colin
         }
         private void VelociteJoueur(object sender, EventArgs e)
         {
-            velociteY = Adoucissement(velociteY, velocityAAtteindre, 15 * deltaTime);
+            velociteY = Adoucissement(velociteY, velociteAAtteindre, 15 * deltaTemps);
         }
         private double Adoucissement(double premierFloat, double deuxiemeFloat, float by)
         {
@@ -539,11 +538,11 @@ namespace King_Colin
         private void Saut()
         {
 
-            if (isGrounded == true)
+            if (auSol == true)
             {
 
-                isGrounded = false;
-                velocityAAtteindre = forceSaut * -1;
+                auSol = false;
+                velociteAAtteindre = forceSaut * -1;
             }
 
         }
@@ -551,11 +550,11 @@ namespace King_Colin
         {
 
             //tailles joueur
-            double playerHeight = Joueur1.ActualHeight;
-            double playerWidth = Joueur1.ActualWidth;
+            double joueurHauteur = Joueur1.ActualHeight;
+            double joueurLargeur = Joueur1.ActualWidth;
 
             //Rect colliders
-            Rect joueurBornes = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), playerWidth, playerHeight);
+            Rect joueurBornes = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), joueurLargeur, joueurHauteur);
 
             //Effet de la gravité
             Canvas.SetTop(Joueur1, joueurBornes.Top + velociteY);
@@ -567,10 +566,10 @@ namespace King_Colin
                 Rectangle plateformeEnCours = plateformes[i];
                 Rect plateformeRect = new Rect(Canvas.GetLeft(plateformeEnCours), Canvas.GetTop(plateformeEnCours), plateformeEnCours.Width, plateformeEnCours.Height);
 
-                if (joueurBornes.IntersectsWith(plateformeRect) && velocityAAtteindre > 0)
+                if (joueurBornes.IntersectsWith(plateformeRect) && velociteAAtteindre > 0)
                 {
-                    isGrounded = true;
-                    velocityAAtteindre = 0;
+                    auSol = true;
+                    velociteAAtteindre = 0;
                     velociteY = 0;
                     Canvas.SetTop(Joueur1, plateformeRect.Top - Joueur1.Height);
                     return;
@@ -579,26 +578,23 @@ namespace King_Colin
 
 
 
-            if (-velociteY >= (forceSaut - jumpMaxOffset))
+            if (-velociteY >= (forceSaut - jumpMax))
             {
                 return;
             }
 
-            if (isGrounded == false)
+            if (auSol == false)
             {
-                velocityAAtteindre = velocityAAtteindre + forceSaut / 10;
+                velociteAAtteindre = velociteAAtteindre + forceSaut / 10;
                 return;
             }
         }
         private void MouvementHorizontaux()
         {
-            Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
-            Rect passage = new Rect(Canvas.GetLeft(Passage), Canvas.GetTop(Passage), Passage.Width, Passage.Height);
             double canvasMax = cv_Jeux.ActualWidth;
             double canvasMin = 0;
 
             double joueurX = Canvas.GetLeft(Joueur1);
-            double joueurWidth = Joueur1.Width;
             switch (cv_Secrete.Visibility)
             {
                 case Visibility.Visible:
@@ -640,10 +636,10 @@ namespace King_Colin
         private void MouvementDonkey()
         {
             double canvasMax = cv_Jeux.ActualWidth;
-            double donkeyWidth = DonkeyKong.ActualWidth;
+            double donkeyLargeur = DonkeyKong.ActualWidth;
             double donkey = Canvas.GetLeft(DonkeyKong);
 
-            if (droite && donkey + donkeyWidth <= canvasMax)
+            if (droite && donkey + donkeyLargeur <= canvasMax)
             {
                 Canvas.SetLeft(DonkeyKong, donkey + vitesseDonkey);
                 return;
@@ -658,9 +654,9 @@ namespace King_Colin
                 Canvas.SetLeft(DonkeyKong, 0);
                 return;
             }
-            else if (droite && donkey + donkeyWidth >= canvasMax)
+            else if (droite && donkey + donkeyLargeur >= canvasMax)
             {
-                Canvas.SetRight(DonkeyKong, canvasMax - donkeyWidth);
+                Canvas.SetRight(DonkeyKong, canvasMax - donkeyLargeur);
                 return;
             }
         }
