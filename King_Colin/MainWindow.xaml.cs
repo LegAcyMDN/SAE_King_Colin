@@ -135,6 +135,8 @@ namespace King_Colin
             this.cv_Jeux.KeyDown += new KeyEventHandler(this.cv_Jeux_KeyDown);
             this.cv_Jeux.KeyUp += new KeyEventHandler(this.cv_Jeux_KeyUp);
         }
+        
+        //Listes 
         private void ListeDesPlateformes()
         {
             plateformes.Add(Plateforme1);
@@ -160,6 +162,8 @@ namespace King_Colin
             echelles.Add(Echelle09);
             echelles.Add(Echelle10);
         }
+        
+        //images, animations et musiques 
         private void ChargeImage()
         {
             imagePlateforme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Element/plateforme.png"));
@@ -209,8 +213,6 @@ namespace King_Colin
 
             imageMarioSaut.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Courir/courir-5.png"));
         }
-
-
         private void AnimationImage()
         {
             animePortail++;
@@ -230,20 +232,82 @@ namespace King_Colin
             if (animeCourir > 18) { animeCourir = 0; }
             imageMarioCourir.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Img/Mario/Courir/courir-" + animeCourir / 2 + ".png"));
         }
-
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musique/RipeSeeds.mp3", UriKind.Relative);
             //  musiqueJeux.Open(uri);
             // musiqueJeux.Play();
         }
-
         private void MusiqueJeu_Fin(object sender, EventArgs e)
         {
            // musiqueJeux.Stop();
             //musiqueJeux.Play();
         }
+        private void AppliquerMiroirGauche(Rectangle rectangle)
+        {
+            double joueurX = Canvas.GetLeft(rectangle);
+            double joueurWidth = rectangle.Width;
+            if (sensJoueur == true)
+            {
+                ScaleTransform transformation = new ScaleTransform(-1, 1);
+                rectangle.RenderTransform = transformation;
+                Canvas.SetLeft(rectangle, joueurX + joueurWidth);
+                sensJoueur = false;
+            }
+        }
+        private void AppliquerMiroirDroite(Rectangle rectangle)
+        {
+            double joueurX = Canvas.GetLeft(rectangle);
+            double joueurWidth = rectangle.Width;
+            if (sensJoueur == false)
+            {
+                ScaleTransform transformation = new ScaleTransform(1, 1);
+                rectangle.RenderTransform = transformation;
+                Canvas.SetLeft(rectangle, joueurX - joueurWidth);
+                sensJoueur = true;
+            }
+        }
+        private void ActionMarteau()
+        {
+            Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
+            Rect marteau = new Rect(Canvas.GetLeft(Marteau), Canvas.GetTop(Marteau), Marteau.Width, Marteau.Height);
+            Rect passage = new Rect(Canvas.GetLeft(Passage), Canvas.GetTop(Passage), Passage.Width, Passage.Height);
 
+            if (joueur.IntersectsWith(marteau))
+            {
+                Joueur1.Fill = imageMarioMarteau;
+                Joueur1.Height = 60;
+                Joueur1.Width = 60;
+                Marteau.Visibility = Visibility.Hidden;
+                aMarteau = true;
+            }
+
+            /*foreach (var tirEnnemi in cv_Jeux.Children.OfType<System.Windows.Shapes.Rectangle>().Where(r => r.Tag.Equals("tirsEnnemi")))
+            {
+                Rect tirRect = new Rect(Canvas.GetLeft(tirEnnemi), Canvas.GetTop(tirEnnemi), tirEnnemi.Width, tirEnnemi.Height);
+
+                if (joueur.IntersectsWith(tirRect) && aMarteau)
+                { itemsARetirer.Add(tirEnnemi); }
+            }
+
+            foreach (var ennemiRect in ListeDesPigeons().Select(e => new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))
+            {
+                if (aMarteau && joueur.IntersectsWith(ennemiRect))
+                { itemsARetirer.Add(ListeDesPigeons().First(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))); }
+            }*/
+
+            if (aMarteau && passage.IntersectsWith(joueur))
+            {
+                cv_Secrete.Visibility = Visibility.Visible;
+
+                //if (Canvas.GetLeft(Joueur1) + Joueur1.Width >= Canvas.GetLeft(cv_Secrete) + cv_Secrete.Width)
+                //{ cv_Jeux.Visibility = Visibility.Hidden; }
+
+                aMarteau = false;
+            }
+        }
+
+        //controles des touches 
         private void cv_Jeux_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Q)
@@ -314,7 +378,6 @@ namespace King_Colin
             if (e.Key == Key.Escape)
             { Application.Current.Shutdown(); }
         }
-
         private void cv_Jeux_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Q)
@@ -370,32 +433,8 @@ namespace King_Colin
             }
         }
 
-        private void AppliquerMiroirGauche(Rectangle rectangle)
-        {
-            double joueurX = Canvas.GetLeft(rectangle);
-            double joueurWidth = rectangle.Width;
-            if (sensJoueur == true)
-            {
-                ScaleTransform transformation = new ScaleTransform(-1, 1);
-                rectangle.RenderTransform = transformation;
-                Canvas.SetLeft(rectangle, joueurX + joueurWidth);
-                sensJoueur = false;
-            }
-        }
 
-        private void AppliquerMiroirDroite(Rectangle rectangle)
-        {
-            double joueurX = Canvas.GetLeft(rectangle);
-            double joueurWidth = rectangle.Width;
-            if (sensJoueur == false)
-            {
-                ScaleTransform transformation = new ScaleTransform(1, 1);
-                rectangle.RenderTransform = transformation;
-                Canvas.SetLeft(rectangle, joueurX - joueurWidth);
-                sensJoueur = true;
-            }
-        }
-
+        //main 
         private void Jeu(object sender, EventArgs e)
         {
             switch (LancementNiveauBonus())
@@ -408,15 +447,15 @@ namespace King_Colin
                     AnimationImage();
                     MouvementDonkey();
                     MouvementEnnemis();
-                    ToucheEchelle();
+                    ToucheEchelleEtPlateformes();
                     MouvementHorizontaux();
-                    MouvementJoueurVertical();
+                    MouvementJoueurVerticaux();
                     RetireLesItems();
 
                     if (tirEnnemi.Next(1000) < 1)
                         LancerToastFeu();
 
-                    //  Victoire();
+                    Victoire();
                     break;
 
                 case true:
@@ -425,7 +464,9 @@ namespace King_Colin
             }
 
         }
-        private void ToucheEchelle()
+
+        //Gestion des mouvements du joueur et gravité
+        private void ToucheEchelleEtPlateformes()
         {
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
             bool devantEchelle = false;
@@ -475,62 +516,18 @@ namespace King_Colin
                 }
             }
         }
-
-        private void ActionMarteau()
-        {
-            Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
-            Rect marteau = new Rect(Canvas.GetLeft(Marteau), Canvas.GetTop(Marteau), Marteau.Width, Marteau.Height);
-            Rect passage = new Rect(Canvas.GetLeft(Passage), Canvas.GetTop(Passage), Passage.Width, Passage.Height);
-
-            if (joueur.IntersectsWith(marteau))
-            {
-                Joueur1.Fill = imageMarioMarteau;
-                Joueur1.Height = 60;
-                Joueur1.Width = 60;
-                Marteau.Visibility = Visibility.Hidden;
-                aMarteau = true;
-            }
-
-            /*foreach (var tirEnnemi in cv_Jeux.Children.OfType<System.Windows.Shapes.Rectangle>().Where(r => r.Tag.Equals("tirsEnnemi")))
-            {
-                Rect tirRect = new Rect(Canvas.GetLeft(tirEnnemi), Canvas.GetTop(tirEnnemi), tirEnnemi.Width, tirEnnemi.Height);
-
-                if (joueur.IntersectsWith(tirRect) && aMarteau)
-                { itemsARetirer.Add(tirEnnemi); }
-            }
-
-            foreach (var ennemiRect in ListeDesPigeons().Select(e => new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))
-            {
-                if (aMarteau && joueur.IntersectsWith(ennemiRect))
-                { itemsARetirer.Add(ListeDesPigeons().First(e => joueur.IntersectsWith(new Rect(Canvas.GetLeft(e), Canvas.GetTop(e), e.Width, e.Height)))); }
-            }*/
-
-            if (aMarteau && passage.IntersectsWith(joueur))
-            {
-                cv_Secrete.Visibility = Visibility.Visible;
-
-                //if (Canvas.GetLeft(Joueur1) + Joueur1.Width >= Canvas.GetLeft(cv_Secrete) + cv_Secrete.Width)
-                //{ cv_Jeux.Visibility = Visibility.Hidden; }
-
-                aMarteau = false;
-            }
-        }
-
         private void VelociteJoueur(object sender, EventArgs e)
         {
             velociteY = Adoucissement(velociteY, velocityAAtteindre, 15 * deltaTime);
         }
-
         private double Adoucissement(double premierFloat, double deuxiemeFloat, float by)
         {
             return premierFloat + (deuxiemeFloat - premierFloat) * by;
         }
-
         private void SautStart()
         {
             Saut();
         }
-
         private void Saut()
         {
 
@@ -542,11 +539,10 @@ namespace King_Colin
             }
 
         }
-        //ADD
-        private void MouvementJoueurVertical()
+        private void MouvementJoueurVerticaux()
         {
 
-            //Player sizes
+            //tailles joueur
             double playerHeight = Joueur1.ActualHeight;
             double playerWidth = Joueur1.ActualWidth;
 
@@ -586,7 +582,6 @@ namespace King_Colin
                 return;
             }
         }
-
         private void MouvementHorizontaux()
         {
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
@@ -633,6 +628,7 @@ namespace King_Colin
             }
         }
 
+        //Mouvements des ennemis et tirs
         private void MouvementDonkey()
         {
             double canvasMax = cv_Jeux.ActualWidth;
@@ -678,7 +674,7 @@ namespace King_Colin
             {
                 tempsTirBaril.Start();
                 Canvas.SetTop(tirsBoss, Canvas.GetTop(tirsBoss) + vitesseTirTonneau);
-               // CollisionTirs(tirsBoss);
+               CollisionTirs(tirsBoss);
                 if (Canvas.GetTop(tirsBoss) > cv_Jeux.ActualHeight)
                 {
                     itemsARetirer.Add(tirsBoss);
@@ -749,7 +745,7 @@ namespace King_Colin
                     tempstirEnnemi.Tick += (sender, e) =>
                     {
                         Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) - vitesseTirEnnemi);
-                        //CollisionTirs(tirsEnn);
+                        CollisionTirs(tirsEnn);
                         if (Canvas.GetLeft(tirsEnn) <= 0)
                         {
                             itemsARetirer.Add(tirsEnn);
@@ -764,12 +760,12 @@ namespace King_Colin
                     tempstirEnnemi.Tick += (sender, e) =>
                     {
                         Canvas.SetLeft(tirsEnn, Canvas.GetLeft(tirsEnn) + vitesseTirEnnemi);
-                        //CollisionTirs(tirsEnn);
+                        CollisionTirs(tirsEnn);
                         if (Canvas.GetLeft(tirsEnn) >= cv_Jeux.ActualWidth - tirsEnn.Width)
                         {
                             itemsARetirer.Add(tirsEnn);
                             RetireLesItems();
-                        }// remove toast a revoir 
+                        }
                         
                     };
                 }
@@ -778,7 +774,9 @@ namespace King_Colin
                 tempstirEnnemi.Start();
             }
         }
-      /*  private void CollisionTirs(System.Windows.Shapes.Rectangle rectangle)
+
+        //Collisions, victoire et défaite simple
+        private void CollisionTirs(System.Windows.Shapes.Rectangle rectangle)
         {
             Rect joueur = new Rect(Canvas.GetLeft(Joueur1), Canvas.GetTop(Joueur1), Joueur1.Width, Joueur1.Height);
 
@@ -821,8 +819,9 @@ namespace King_Colin
             MessageBoxImage.Stop);
             AfficherLesCredits();
             return;
-        }*/
+        }
 
+        //Niveau bonus
         private bool LancementNiveauBonus()
         {
             bool lancement = false;
@@ -835,7 +834,6 @@ namespace King_Colin
 
             return lancement;
         }
-
         private void NiveauStreetFighter()
         {
 
@@ -846,11 +844,7 @@ namespace King_Colin
             temps.Stop();
         }
 
-
-        private void AfficherLesCredits()
-        {
-
-        }
+        //retrait des tirs qui sortent du canvas 
         private void RetireLesItems()
         {
             foreach (Rectangle y in itemsARetirer)
@@ -859,17 +853,6 @@ namespace King_Colin
                 cv_Jeux.Children.Remove(y);
             }
         }
-
-
-
-        /*Niveaux de difficultés : 
-         * -facile : pas d'ennemis, juste Donkey qui tire des tonneaux, plateformes droites, beaucoup d'échelles
-         * -moyen : peu d'ennemis, tir de tonneaux plus rapides, plateformes droites, un peu moins d'échelles
-         * -difficile : plus d'ennemis, tir plus rapides et fréquents, plateformes penchées
-         * les ennemis ne se déplacent pas, donkey suit le joueur mais est moins rapide 
-         */
     }
 }
-
-// Gestion du mouvement horizontal si nécessaire (gauche et droite)
 
